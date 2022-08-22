@@ -1,58 +1,44 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
-const bcrypt = require("bcrypt");
 
-class Book extends Sequelize.Model {
-  encryptPassword(password, salt) {
-    return bcrypt.hash(password, salt);
-  }
-  validatePassword(password) {
-    return bcrypt
-      .hash(password, this.salt)
-      .then((hash) => hash === this.password);
-  }
-}
+class Book extends Sequelize.Model {}
 Book.init(
   {
-    email: {
+    title: {
       type: Sequelize.STRING,
       allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: true,
-      }
+
     },
-    password: {
-      type: Sequelize.STRING,
+    description: {
+      type: Sequelize.TEXT,
       allowNull: false,
     },
-    salt: {
-      type: Sequelize.STRING,
-    },
-    name: {
+    author: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    lastname: {
+    price: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    posterURL: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    BookName: {
-        type: Sequelize.STRING,
+    releaseDate: {
+        type: Sequelize.DATE,
         allowNull: false,
-        unique: true,
+    },
+    publisher: {
+        type: Sequelize.STRING,
+    },
+    rating: {
+        type: Sequelize.INTEGER,
+        defaultValue: 4
     }
   },
-  { sequelize: db, modelName: "Book" }
+  { sequelize: db, modelName: "book" }
 );
 
-
-
-Book.beforeCreate((Book) => {
-  Book.salt = bcrypt.genSaltSync();
-  return Book.encryptPassword(Book.password, Book.salt).then((hash) => {
-    Book.password = hash;
-  });
-});
 
 module.exports = Book;
