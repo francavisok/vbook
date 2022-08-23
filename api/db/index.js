@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize');
-const db = new Sequelize('vbook', "postgres", "123", {
-  host: 'localhost',
-  dialect: 'postgres',
+const Sequelize = require("sequelize");
+const db = new Sequelize("vbook", null, null, {
+  host: "localhost",
+  dialect: "postgres",
   logging: false,
 });
 
