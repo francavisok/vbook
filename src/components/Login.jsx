@@ -1,33 +1,70 @@
 import React from "react";
+
+import { useForm } from "react-hook-form";
 import {
-  Container,
-  Heading,
+  FormErrorMessage,
+  FormLabel,
+  FormControl,
   Input,
-  InputGroup,
-  InputLeftElement,
-  Stack,
+  Button,
 } from "@chakra-ui/react";
-import { EmailIcon, LockIcon } from "@chakra-ui/icons";
 
 const Login = () => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  function onSubmit(values) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        alert(JSON.stringify(values, null, 2));
+        resolve();
+      }, 3000);
+    });
+  }
+
   return (
-    <Container  maxW='xl' bg='lightgray' centerContent  >
-      <form>
-        <Stack>
-          <Heading as={"h2"} size="lg">
-            Login
-          </Heading>
-          <InputGroup>
-            <InputLeftElement children={<EmailIcon />} />
-            <Input type={"email"} placeholder="Email" />
-          </InputGroup>
-          <InputGroup>
-            <InputLeftElement children={<LockIcon />} />
-            <Input type={"password"} placeholder="Password" />
-          </InputGroup>
-        </Stack>
-      </form>
-    </Container>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <FormControl isInvalid={errors.email}>
+        <FormLabel htmlFor="email">Email</FormLabel>
+        <Input
+          id="email"
+          placeholder="email"
+          {...register("email", {
+            required: "This is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "invalid email address",
+            },
+          })}
+        />
+        <FormErrorMessage>
+          {errors.email && errors.email.message}
+        </FormErrorMessage>
+      </FormControl>
+
+      <FormControl isInvalid={errors.password}>
+        <FormLabel htmlFor="password">Password</FormLabel>
+        <Input
+          type={"password"}
+          id="password"
+          placeholder="password"
+          {...register("password", {
+            required: true,
+            minLength: { value: 8, message: "Minimum length should be 8" },
+          })}
+        />
+        <FormErrorMessage>
+          {errors.password && errors.password.message}
+        </FormErrorMessage>
+      </FormControl>
+
+      <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
+        Submit
+      </Button>
+    </form>
   );
 };
 
