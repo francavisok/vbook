@@ -11,7 +11,6 @@ export const getBoughtItems = createAsyncThunk(
   }
 );
 
-
 const boughtItemsReducer = createReducer([], {
   [getBoughtItems.fulfilled]: (state, action) => {
     state.favorites.push(action.payload);
