@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.router();
+const router = express.Router();
 const { validateAuth } = require("../middleware/auth");
 const {
   editUser,
@@ -8,12 +8,12 @@ const {
   getUsers,
 } = require("../controllers/users");
 
-router.put("/editUser", validateAuth, editUser(req, res, next));
+router.put("/editUser", validateAuth, editUser);
 
-router.put("/promote/:id", validateAuth, promoteUser(req, res, next));
+router.put("/promote/:id", validateAuth, promoteUser);
 
-router.delete("/:id", validateAuth, deleteUser(req, res, next));
+router.delete("/:id", validateAuth, deleteUser);
 
-router.get("/getAll", validateAuth, getUsers(req, res, next));
+router.get("/getAll", validateAuth, getUsers);
 
 module.exports = router
