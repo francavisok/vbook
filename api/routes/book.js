@@ -7,9 +7,11 @@ const {
   deleteBook,
 } = require("../controllers/book");
 
-router.post("book", validateAuth, addBook(req, res));
+router.post("/", validateAuth, addBook(req, res));
 
-router.put("book/:id", validateAuth, updateBook(req, res));
+router.put("/:id", validateAuth, updateBook(req, res));
 
-router.delete("book/:id", validateAuth, deleteBook(req, res));
+router.delete("/:id", validateAuth, deleteBook(req, res));
+
+module.exports = router
 
