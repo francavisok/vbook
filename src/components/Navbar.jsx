@@ -1,15 +1,21 @@
-import { Button, Flex, Input, InputGroup } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Input,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
 import React from "react";
 
 import { Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { SearchIcon } from "@chakra-ui/icons";
 
 //TODO:
 //1- Mostrar "Register" o "Login" dependiendo en qué estado está
 //2- Cambiar "Cart" por CartIcon
-//3- Agregar SearchIcon al input "Search" (dentro de InputGroup)
-//4- Corregir Link to="" de "Categories"
-//5- Tamaño de input search?
+//3- Corregir Link to="" de "Categories"
+//4- Tamaño de input search?
 
 const Navbar = () => {
   return (
@@ -22,10 +28,9 @@ const Navbar = () => {
         justify="center"
         w="100%"
       >
-        <Flex >
+        <Flex>
           <Link to="/">
             <Button
-            
               boxShadow="xl"
               rounded="md"
               as="a"
@@ -49,21 +54,24 @@ const Navbar = () => {
               my={5}
               w="100%"
               _hover="none"
-
             >
               Categories
             </Button>
           </Link>
-          <InputGroup>
+
+          <InputGroup mx={10} my={5}>
+            <InputLeftElement
+              pointerEvents="none"
+              children={<SearchIcon color="gray.300" />}
+            />
             <Input
+              type={"text"}
               focusBorderColor="pink.400"
               placeholder="Search here"
               boxShadow="xl"
               rounded="xl"
-              mx={10}
-              my={5}
               w="200%"
-            ></Input>
+            />
           </InputGroup>
           <Link to="/">
             <Button
@@ -75,7 +83,6 @@ const Navbar = () => {
               my={5}
               w="100%"
               _hover="none"
-
             >
               My shopping
             </Button>
