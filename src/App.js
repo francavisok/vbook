@@ -11,7 +11,7 @@ function App() {
   return (
     <Flex direction={"column"} minHeight="100vh">
       <Navbar />
-      <Box p={'9'} >
+      <Box p={'9'} flexGrow='1' bg={'whitesmoke'} >
         <Routes>
           <Route path="/" element={<div>MAIN</div>} />
           <Route path="/login" element={<Login />} />
