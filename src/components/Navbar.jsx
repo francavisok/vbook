@@ -13,7 +13,7 @@ import { SearchIcon } from "@chakra-ui/icons";
 
 //TODO:
 //1- Mostrar "Register" o "Login" dependiendo en qué estado está
-//2- Cambiar "Cart" por CartIcon
+//2- Cambiar "Cart" por CartIcon(no hay en chakra icons)
 //3- Corregir Link to="" de "Categories"
 //4- Tamaño de input search?
 
