@@ -1,12 +1,15 @@
+import { AtSignIcon, EmailIcon, UnlockIcon } from "@chakra-ui/icons";
 import {
   Button,
   Center,
   FormControl,
-  FormHelperText,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
-  Stack,
+  InputGroup,
+  InputLeftAddon,
+  InputLeftElement,
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
@@ -14,12 +17,8 @@ import { useForm } from "react-hook-form";
 
 //TODO:
 //1-Crear validaciones finales para cada input:
-//      a)@ y .com para el email,
-//      b)password con el mensaje de weak pass,
-//      c)Poner dos nombres en First Name,
 //      d)definir username lowercase
 
-//2-Manejar errores
 //3-Utilizar Redux para postear la info del user
 //4-Usar useNavigate para redirigir a /login
 //5-Styles y FormHelperText solucionados
@@ -28,7 +27,7 @@ const Register = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
   const onSubmit = (data) => console.log(data);
 
@@ -37,36 +36,6 @@ const Register = () => {
       <VStack>
         <Heading marginBottom={10}>Create your account</Heading>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl
-            isInvalid={errors.email}
-            isRequired
-            id="email"
-            marginBottom={5}
-          >
-            <FormLabel>Email address</FormLabel>
-            <Input
-              type="email"
-              placeholder=""
-              {...register("email", { required: true })}
-            />
-            <FormHelperText>We'll never share your email.</FormHelperText>
-          </FormControl>
-
-          <FormControl
-            isInvalid={errors.password}
-            isRequired
-            id="password"
-            marginBottom={5}
-          >
-            <FormLabel>Password</FormLabel>
-            <Input
-              type="password"
-              placeholder=""
-              {...register("password", { required: true, minLength: 8 })}
-            />
-            <FormHelperText>Put a strong password.</FormHelperText>
-          </FormControl>
-
           <FormControl
             isInvalid={errors.firstName}
             isRequired
@@ -78,11 +47,24 @@ const Register = () => {
               type="text"
               placeholder=""
               {...register("firstName", {
-                pattern: /^[A-Za-z]+$/i,
+                pattern: {
+                  value: /^[A-Za-z0-9\s]+$/g,
+                  message: "The name can only include letters.",
+                },
                 required: true,
-                maxLength: 20,
+                minLength:{
+                  value:2,
+                  message:"The name cannot be less than two characters."
+                },
+                maxLength: {
+                  value: 20,
+                  message: "The name cannot be longer than twenty characters.",
+                },
               })}
             />
+               <FormErrorMessage>
+              {errors.firstName && errors.firstName.message}
+            </FormErrorMessage>
           </FormControl>
 
           <FormControl
@@ -96,11 +78,71 @@ const Register = () => {
               type="text"
               placeholder=""
               {...register("lastName", {
-                pattern: /^[A-Za-z]+$/i,
+                pattern: {
+                  value: /^[A-Za-z\s]+$/g,
+                  message: "The name can only include letters.",
+                },
                 required: true,
-                maxLength: 20,
+                minLength:{
+                  value:2,
+                  message:"The name cannot be less than two characters."
+                },
+                maxLength: {
+                  value: 20,
+                  message: "The name cannot be longer than twenty characters.",
+                },
               })}
             />
+               <FormErrorMessage>
+              {errors.lastName && errors.lastName.message}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl isInvalid={errors.email} isRequired marginBottom={5}>
+            <FormLabel htmlFor="email">Email address</FormLabel>
+            <InputGroup>
+            <InputLeftElement  pointerEvents="none"
+              children={<EmailIcon color="gray.300" />}/>
+            <Input
+              id="email"
+              type="email"
+              placeholder=""
+              {...register("email", {
+                required: true,
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address.",
+                },
+              })}
+              />
+              </InputGroup>
+            <FormErrorMessage>
+              {errors.email && errors.email.message}
+            </FormErrorMessage>
+          </FormControl>
+
+            
+          <FormControl  isRequired isInvalid={errors.password} marginBottom={5}>
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <InputGroup>
+            <InputLeftElement pointerEvents="none"
+              children={<UnlockIcon color="gray.300" />}/>
+            <Input
+              id="password"
+              type="password"
+              placeholder=""
+              {...register("password", {
+                required: true,
+                minLength: {
+                  value: 8,
+                  message: "Weak password, minimum length should be 8.",
+                },
+              })}
+              />
+              </InputGroup>
+            <FormErrorMessage>
+              {errors.password && errors.password.message}
+            </FormErrorMessage>
           </FormControl>
 
           <FormControl
@@ -110,34 +152,41 @@ const Register = () => {
             marginBottom={5}
           >
             <FormLabel>Username</FormLabel>
+            <InputGroup>
+            <InputLeftElement pointerEvents="none"
+              children={<AtSignIcon color="gray.300" />}/>
             <Input
               type="text"
               placeholder=""
               {...register("userName", {
                 required: true,
-                minLength: 3,
+                pattern:{
+                  value: /^[A-Za-z0-9]+$/g,
+                  message:"The username must be a combination of numbers or letters without spaces."
+                },
+                minLength: {
+                value: 3,
+                message:"Put a username with more than 2 characters."
+              },
               })}
             />
+                </InputGroup>
+             <FormErrorMessage>
+              {errors.userName && errors.userName.message}
+            </FormErrorMessage>
           </FormControl>
 
-          {/* <input {...register("email",{ required: true }) } /> */}
-          {/* <input {...register("password", { required: true })} /> */}
-          {/* <input {...register("firstName", {pattern: /^[A-Za-z]+$/i,required: true,maxLength: 20,})}/> */}
-          {/* <input {...register("lastName", { pattern: /^[A-Za-z]+$/i,required: true,maxLength: 20,})}/> */}
-          {/* <input {...register("userName", { required: true, min: 3 })} /> */}
-
-          {/* errors will return when field validation fails  */}
-
-          
-          <Button 
-           boxShadow="xl"
-           rounded="md"
-           as="a"
-           colorScheme="pink"
-           aria-label="Home"
-           mx={1}
-           my={5}
-          type="submit">Send and continue</Button>
+          <Button
+            boxShadow="xl"
+            rounded="md"
+            type="submit"
+            colorScheme="pink"
+            mx={1}
+            my={5}
+            isLoading={isSubmitting}
+          >
+            Send and continue
+          </Button>
         </form>
       </VStack>
     </Center>
