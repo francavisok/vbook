@@ -39,14 +39,23 @@ const Login = () => {
 
   return (
     <>
-      <Flex
-        minH={"100vh"}
-        align={"center"}
-        justify={"center"}
-        bg={useColorModeValue("gray.50", "gray.800")}
-      >
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack align={"center"}>
+      <form onSubmit={handleSubmit(onSubmit)} >
+        <Flex
+          direction={"column"}
+          align={"center"}
+          justify={"center"}
+          rounded={"lg"}
+          bg={useColorModeValue("white", "gray.700")}
+          boxShadow={"lg"}
+          p={8}
+          spacing={4}
+          maxWidth='fit-content'
+          m={'auto'}
+        >
+          
+          
+          
+          <Stack align={"center"} mb='8' >
             <Heading fontSize={"4xl"}>Sign in to your account</Heading>
             <Text fontSize={"lg"} color={"gray.600"}>
               to enjoy our selection of books
@@ -68,7 +77,6 @@ const Login = () => {
               {errors.email && errors.email.message}
             </FormErrorMessage>
           </FormControl>
-
           <FormControl isInvalid={errors.password}>
             <FormLabel htmlFor="password">Password</FormLabel>
             <Input
@@ -86,7 +94,6 @@ const Login = () => {
               {errors.password && errors.password.message}
             </FormErrorMessage>
           </FormControl>
-
           <Button
             mt={4}
             colorScheme="pink"
@@ -103,8 +110,8 @@ const Login = () => {
           >
             Login with Google
           </Button>
-        </form>
-      </Flex>
+        </Flex>
+      </form>
     </>
   );
 };
