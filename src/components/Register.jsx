@@ -1,7 +1,10 @@
 import { AtSignIcon, EmailIcon, UnlockIcon } from "@chakra-ui/icons";
 import {
+  Alert,
+  AlertIcon,
   Button,
   Center,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -10,6 +13,7 @@ import {
   InputGroup,
   InputLeftAddon,
   InputLeftElement,
+  useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
@@ -21,9 +25,6 @@ import { postUser } from "../state/user";
 //TODO:
 //1-Crear validaciones finales para cada input:
 //      d)definir username lowercase
-//3-Utilizar Redux para postear la info del user
-//4-Usar useNavigate para redirigir a /login
-//5-Styles y FormHelperText solucionados
 
 const Register = () => {
   const {
@@ -33,20 +34,31 @@ const Register = () => {
   } = useForm();
 
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    
     dispatch(postUser(data))
-    .then((res) => {
-      navigate("/login")
-      console.log(res);
-    })
-    .catch(err=>console.log(err))
+      .then((res) => {
+        navigate("/login");
+        
+      })
+      .catch((err)=>alert(err));
   };
 
   return (
-    <Center>
+    <Flex
+          direction={"column"}
+          align={"center"}
+          justify={"center"}
+          rounded={"lg"}
+          bg={useColorModeValue("white", "gray.700")}
+          boxShadow={"lg"}
+          p={8}
+          spacing={4}
+          maxWidth='fit-content'
+          m={'auto'}
+        >
+          
       <VStack>
         <Heading marginBottom={10}>Create your account</Heading>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -209,7 +221,7 @@ const Register = () => {
           </Button>
         </form>
       </VStack>
-    </Center>
+    </Flex>
   );
 };
 
