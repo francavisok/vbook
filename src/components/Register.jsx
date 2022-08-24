@@ -14,9 +14,10 @@ import {
   InputLeftAddon,
   InputLeftElement,
   useColorModeValue,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -27,11 +28,14 @@ import { postUser } from "../state/user";
 //      d)definir username lowercase
 
 const Register = () => {
+const [error, setError]= useState(false)
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
+  const toast = useToast()
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,10 +43,24 @@ const Register = () => {
   const onSubmit = (data) => {
     dispatch(postUser(data))
       .then((res) => {
+        toast({
+          title: 'Account created.',
+          description: "We've created your account for you.",
+          status: 'success',
+          duration: 2500,
+          isClosable: true,
+        })
+
         navigate("/login");
         
       })
-      .catch((err)=>alert(err));
+      .catch((err)=>toast({
+        title:" Account not created.",
+        description: "We've an error, please try again.",
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+      }));
   };
 
   return (
