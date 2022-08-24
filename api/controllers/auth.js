@@ -42,7 +42,7 @@ class AuthController {
   };
 
   static logOut = (req, res) => {
-    res.cookie("userCreatedToken", "").send("sesión cerrada");
+    res.cookie("generatedToken", "").send("sesión cerrada");
   };
 }
 
