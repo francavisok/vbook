@@ -7,10 +7,10 @@ class CartController {
       where: { userId: req.user.id, state: "pending" },
     });
     if (order.length) {
-      order[0].setCart(newCart);
+      order[0].addCart(newCart);
     } else {
       const newOrder = await Order.create({ userId: req.user.id });
-      newOrder.setCart(newCart);
+      newOrder.addCart(newCart);
     }
     res.status(201).send(newCart);
   };
@@ -28,7 +28,9 @@ class CartController {
   };
 
   static editAmount = (req, res) => {
-    Cart.update({ amount: req.body.amount }, { where: { id: req.params.id } });
+    Cart.update({ amount: Number(req.body.amount) }, { where: { id: Number(req.params.id) } });
+    res.status(203).send("actualizado")
+    
   };
 }
 
