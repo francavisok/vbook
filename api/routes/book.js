@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.router();
+const router = express.Router();
 const { validateAuth } = require("../middleware/auth");
 const {
   addBook,
@@ -7,9 +7,11 @@ const {
   deleteBook,
 } = require("../controllers/book");
 
-router.post("book", validateAuth, addBook(req, res));
+router.post("/", validateAuth, addBook);
 
-router.put("book/:id", validateAuth, updateBook(req, res));
+router.put("/:id", validateAuth, updateBook);
 
-router.delete("book/:id", validateAuth, deleteBook(req, res));
+router.delete("/:id", validateAuth, deleteBook);
+
+module.exports = router
 

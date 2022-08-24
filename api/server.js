@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser");
 
 const models = require("./models");
 const db = require("./db");
-//const router = require("./routes");
+const router = require("./routes");
 
 // logging middleware
 app.use(morgan("tiny"));
@@ -18,7 +18,7 @@ app.use(cookieParser());
 
 app.use(cors());
 
-//app.use("/api", router);
+app.use("/api", router);
 
 // error middleware -> https://expressjs.com/es/guide/error-handling.html
 app.use((err, req, res, next) => {
