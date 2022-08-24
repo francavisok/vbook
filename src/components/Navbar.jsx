@@ -10,6 +10,7 @@ import React from "react";
 import { Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { SearchIcon } from "@chakra-ui/icons";
+import {FaShoppingCart} from "react-icons/fa"
 
 //TODO:
 //1- Mostrar "Register" o "Login" dependiendo en qué estado está
@@ -53,7 +54,7 @@ const Navbar = () => {
               mx={1}
               my={5}
               w="100%"
-              _hover="none"
+              _hover={{color:"#d43c8c"}}
             >
               Categories
             </Button>
@@ -82,7 +83,7 @@ const Navbar = () => {
               mx={1}
               my={5}
               w="100%"
-              _hover="none"
+              _hover={{color:"#d43c8c"}}
             >
               My shopping
             </Button>
@@ -95,10 +96,12 @@ const Navbar = () => {
               aria-label="Cart"
               mx={1}
               my={5}
+              marginRight={2}
               w="100%"
-              _hover="none"
+              _hover={{color:"#d43c8c"}}
+
             >
-              Cart
+             <FaShoppingCart/>
             </Button>
           </Link>
           <Link to="/login">
