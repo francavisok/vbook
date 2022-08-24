@@ -14,7 +14,7 @@ export const postUser = createAsyncThunk("NEW_USER", (userObj, thunkAPI) => {
 });
 
 export const postLoginUser = createAsyncThunk("LOGIN_USER", (userObj, thunkAPI) => {
-  return axios.post("/api/auth/login", userObj)
+  return axios.post("http://localhost:3001/api/auth/login", userObj)
   .then((res) => res.data)
   .catch(err=> console.log(err))
 });

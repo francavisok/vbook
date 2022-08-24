@@ -4,6 +4,12 @@ import { FcGoogle } from "react-icons/fc";
 
 import { useForm } from "react-hook-form";
 
+import { Link, useNavigate } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+
+import { postLoginUser } from "../state/user";
+
 import {
   FormErrorMessage,
   FormLabel,
@@ -12,17 +18,18 @@ import {
   Button,
   Flex,
   Box,
-  Checkbox,
   Stack,
-  Link,
   Heading,
   Text,
   useColorModeValue,
-  InputLeftElement,
-  Divider
+  Divider,
 } from "@chakra-ui/react";
 
 const Login = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -30,12 +37,9 @@ const Login = () => {
   } = useForm();
 
   function onSubmit(values) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        resolve();
-      }, 3000);
-    });
+    console.log(values)
+    dispatch(postLoginUser(values))
+    //useNavigate('/');
   }
 
   return (
@@ -108,13 +112,17 @@ const Login = () => {
           >
             Login with Google
           </Button>
-          
-          <Divider orientation='horizontal' mt={9} />
 
-          <Heading fontSize={"md"} mt={9} >New in our site ? </Heading>
-          <Button mt={6} colorScheme="blue">
-            Register
-          </Button>
+          <Divider orientation="horizontal" mt={9} />
+
+          <Heading fontSize={"md"} mt={9}>
+            New in our site ?{" "}
+          </Heading>
+          <Link to={'/register'}>
+            <Button mt={6} colorScheme="blue">
+              Register
+            </Button>
+          </Link>
         </Flex>
       </form>
     </>
