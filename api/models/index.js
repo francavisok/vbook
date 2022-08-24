@@ -1,19 +1,17 @@
 const User = require('./User');
 const Book = require('./Book');
 const Genre = require('./Genre');
+const Cart = require('./Cart');
+const Order = require('./Order');
 
-User.belongsToMany(Book, { as: "favorites", through: "favorites_books" });
-Book.belongsToMany(User, { as: "favorites", through: "favorites_books" });
+//Una orden pertenece a UN usuario
+Order.belongsTo(User)
+//Un usuario puede tener muchas ordenes
+User.hasMany(Order)
 
-User.belongsToMany(Book, { as: "cart", through: "cart_item" });
-Book.belongsToMany(User, { as: "cart", through: "cart_item" });
+//Un carro pertenece a UNA orden
+Cart.belongsTo(Order)
+//Una orden puede tener muchos carritos
+Order.hasMany(Cart)
 
-User.belongsToMany(Book, { as: "bought", through: "bought_item" });
-Book.belongsToMany(User, { as: "bought", through: "bought_item" });
-
-Genre.belongsToMany(Book, { as: "bookgenre", through: "genres_books" });
-Book.belongsToMany(Genre, { as: "bookgenre", through: "genres_books" });
-
-
-
-module.exports = {Book, User, Genre};
+module.exports = {Book, User, Genre, Cart, Order};
