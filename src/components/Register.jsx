@@ -13,11 +13,12 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 //TODO:
-//1-Crear validaciones finales para cada input (
+//1-Crear validaciones finales para cada input:
 //      a)@ y .com para el email,
 //      b)password con el mensaje de weak pass,
 //      c)Poner dos nombres en First Name,
-//      d)definir username lowercase)
+//      d)definir username lowercase
+
 //2-Manejar errores
 //3-Utilizar Redux para postear la info del user
 //4-Usar useNavigate para redirigir a /login
