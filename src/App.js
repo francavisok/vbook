@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Footer from "./components/Footer";
 import { Flex, Box } from "@chakra-ui/react";
 import Register from "./components/Register";
+import ProductPage from "./commons/ProductPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/cart" element={<div>CART</div>} />
           <Route path="/search" element={<div>SEARCH</div>} />
           <Route path="/category/:genre" element={<div>GENRE</div>} />
+          <Route path="/book/:id" element={<ProductPage />}/>
         </Routes>
       </Box>
 
