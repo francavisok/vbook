@@ -39,7 +39,7 @@ const Login = () => {
   function onSubmit(values) {
     console.log(values)
     dispatch(postLoginUser(values))
-    //useNavigate('/');
+    navigate('/');
   }
 
   return (

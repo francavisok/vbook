@@ -7,22 +7,25 @@ class AuthController {
   static userLogin = async (req, res) => {
     try {
       const { password, email } = req.body;
-      const user = await User.findOne({ where: { email } });
+      console.log("ELEMAILLLL", email);
 
-      const validation = user.validatePassword(password);
-      if (validation) {
-        res
-          .cookie(
-            "generatedToken",
-            generateToken({
-              name: user.name,
-              id: user.id,
-              email: user.email,
-              role: user.role,
-            })
-          )
-          .sendStatus(200);
-      }
+      const user = await User.findOne({ where: { email } });
+      console.log("user del back", user);
+
+      if (!user) return res.sendStatus(401);
+
+      const validation = await user.validatePassword(password);
+      if (!validation) return res.sendStatus(401);
+
+      const payload = {
+        name: user.name,
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      };
+      res.cookie( "generatedToken", generateToken(payload))
+      res.send(payload);
+
     } catch (error) {
       res.send(error);
     }
