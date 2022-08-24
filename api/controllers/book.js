@@ -1,21 +1,18 @@
 const Book = require("../models/Book");
 
 function addBook(req, res) {
-    if (req.user.role !== "admin") {
-        res.send("You are not an administrator");
-      }
-    Book.create(req.body).then(()=>res.sendStatus(204))
-
+  if (req.user.role !== "admin") {
+    res.send("You are not an administrator");
+  }
+  Book.create(req.body).then(() => res.sendStatus(204));
 }
 function updateBook(req, res) {
   if (req.user.role !== "admin") {
     res.send("You are not an administrator");
   }
-  Book.update(req.body, { where: { id: Number(req.params.id) } }).then(
-    () => {
-      res.send("actualizado");
-    }
-  );
+  Book.update(req.body, { where: { id: Number(req.params.id) } }).then(() => {
+    res.send("actualizado");
+  });
 }
 function deleteBook(req, res) {
   if (req.user.role !== "admin") {
@@ -27,4 +24,17 @@ function deleteBook(req, res) {
   });
 }
 
-module.exports = { addBook, updateBook, deleteBook };
+function getAllBooks(req, res) {
+  Book.findAll()
+    .then((book) => res.send(book))
+    .catch((error) => res.send(error));
+}
+
+function getBookById(req, res) {
+  const { id } = req.params;
+  const book = Book.findByPk(id)
+    .then((book) => res.send(book))
+    .catch((error) => res.send(error));
+}
+
+module.exports = { addBook, updateBook, deleteBook, getAllBooks, getBookById };

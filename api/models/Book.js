@@ -23,11 +23,11 @@ Book.init(
     },
     posterURL: {
       type: Sequelize.STRING,
-      allowNull: false,
+      
     },
     releaseDate: {
         type: Sequelize.DATE,
-        allowNull: false,
+        
     },
     publisher: {
         type: Sequelize.STRING,
