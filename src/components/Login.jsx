@@ -19,6 +19,7 @@ import {
   Text,
   useColorModeValue,
   InputLeftElement,
+  Divider
 } from "@chakra-ui/react";
 
 const Login = () => {
@@ -39,7 +40,7 @@ const Login = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Flex
           direction={"column"}
           align={"center"}
@@ -49,13 +50,10 @@ const Login = () => {
           boxShadow={"lg"}
           p={8}
           spacing={4}
-          maxWidth='fit-content'
-          m={'auto'}
+          maxWidth="fit-content"
+          m={"auto"}
         >
-          
-          
-          
-          <Stack align={"center"} mb='8' >
+          <Stack align={"center"} mb="8">
             <Heading fontSize={"4xl"}>Sign in to your account</Heading>
             <Text fontSize={"lg"} color={"gray.600"}>
               to enjoy our selection of books
@@ -109,6 +107,13 @@ const Login = () => {
             variant="outline"
           >
             Login with Google
+          </Button>
+          
+          <Divider orientation='horizontal' mt={9} />
+
+          <Heading fontSize={"md"} mt={9} >New in our site ? </Heading>
+          <Button mt={6} colorScheme="blue">
+            Register
           </Button>
         </Flex>
       </form>
