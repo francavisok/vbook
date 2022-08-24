@@ -11,6 +11,10 @@ class User extends Sequelize.Model {
       .hash(password, this.salt)
       .then((hash) => hash === this.password);
   }
+  setAdmin(){
+    this.role = "admin"
+    //User.update({role: "admin"}, {where:{id: 2}})
+  }
 }
 User.init(
   {
@@ -50,7 +54,9 @@ User.init(
   { sequelize: db, modelName: "user" }
 );
 
-
+User.afterCreate( async (user)=>{
+  if (user.id === 1) user.setAdmin()
+})
 
 User.beforeCreate((user) => {
   user.salt = bcrypt.genSaltSync();
