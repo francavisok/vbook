@@ -16,7 +16,7 @@ import {
   List,
   ListItem,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { MdLocalShipping, MdOutlineAddShoppingCart } from "react-icons/md";
 import {RiHeartAddFill} from "react-icons/ri"
@@ -30,13 +30,12 @@ import { getBook } from "../state/book";
 const ProductPage = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [book, setBook] = useState({});
+const book = useSelector(state=>state.book)
 
-  if (!book.id) {
+
+  useEffect(()=>{
     dispatch(getBook(id))
-      .then((res) => setBook(res.payload))
-      .then();
-  }
+  },[dispatch])
 
   return (
     <Container maxW={"6xl"}>
