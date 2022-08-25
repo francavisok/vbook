@@ -13,13 +13,13 @@ const Book = require("../models/Book");
 async function addBook(req, res) {
   if (req.user.role !== "admin") {
     res.send("You are not an administrator");
-  }
+  } 
   const book = await Book.create(req.body);
   const genre = await Genre.findByPk(req.body.idGenre);
   genre.addBook(book);
   res.sendStatus(200);
-
 }
+
 function updateBook(req, res) {
   if (req.user.role !== "admin") {
     res.send("You are not an administrator");

@@ -12,8 +12,7 @@ const {
 } = require("../controllers/book");
 
 
-router.post("/",  validateAuth , addBook);
-
+router.post("/", validateAuth , addBook);
 
 router.put("/:id", validateAuth, updateBook);
 
