@@ -23,6 +23,7 @@ import {RiHeartAddFill} from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getBook } from "../state/book";
+import { addToCart } from "../state/cart";
 
 //TODO:
 //FIX releaseDate format
@@ -36,6 +37,14 @@ const book = useSelector(state=>state.book)
   useEffect(()=>{
     dispatch(getBook(id))
   },[dispatch])
+
+
+  //FIX
+const handleAddToCart = (e)=>{
+  e.preventDefault();
+  dispatch(addToCart(book))
+}
+
 
   return (
     <Container maxW={"6xl"}>
@@ -127,6 +136,7 @@ const book = useSelector(state=>state.book)
           <Stack>
             <Box>
             <Button
+            onClick={handleAddToCart}
               rounded={"md"}
               w={"40%"}
               mt={8}
@@ -169,7 +179,7 @@ const book = useSelector(state=>state.book)
 
           <Stack direction="row" alignItems="center" justifyContent={"center"}>
             <MdLocalShipping />
-            <Text>After paying we'll send you the Ebook document</Text>
+            <Text>After paying we'll send you the e-book document.</Text>
           </Stack>
         </Stack>
       </SimpleGrid>
