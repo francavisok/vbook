@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
 import ProductPage from "./commons/ProductPage";
+import Home from "./components/Home";
 
 
 import { Flex, Box } from "@chakra-ui/react";
@@ -25,7 +26,7 @@ function App() {
       <Navbar />
       <Box p={'9'} flexGrow='1' bg={'whitesmoke'} >
         <Routes>
-          <Route path="/" element={<div>MAIN</div>} />
+          <Route path="/" element={ <Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<div>CART</div>} />
