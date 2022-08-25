@@ -37,7 +37,6 @@ const Login = () => {
   } = useForm();
 
   function onSubmit(values) {
-    console.log(values)
     dispatch(postLoginUser(values))
     navigate('/');
   }
@@ -85,7 +84,7 @@ const Login = () => {
               type={"password"}
               id="password"
               {...register("password", {
-                required: true,
+                required: "This is required",
                 minLength: {
                   value: 8,
                   message: "Minimum length should be 8",

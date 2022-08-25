@@ -3,14 +3,14 @@ import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 
 export const getUser = createAsyncThunk("USER", () => {
   return axios
-    .get("/api/user/me")
+    .get("/api/auth/me")
     .then((res) => res.data)
     .catch((err) => console.log(err));
 });
 
 export const postUser = createAsyncThunk("NEW_USER", (userObj, thunkAPI) => {
   return axios
-    .post("http://localhost:3001/api/auth/signin", userObj)
+    .post("/api/auth/signin", userObj) //no hace falta poner http://localhost:3001 ,probablemnte necesitabas poner esto porq habias intentado hacer npm start cuando ya estaba el serv corriendo en otro lado y se monto en el 3001, pero el proxy es el q se encarga de agregar para hacer el pedido al endpoint correcto
     .then((res) => res.data);
 });
 
@@ -18,7 +18,7 @@ export const postLoginUser = createAsyncThunk(
   "LOGIN_USER",
   (userObj, thunkAPI) => {
     return axios
-      .post("/api/auth/login", userObj, {withCredentials: true})
+      .post("/api/auth/login", userObj, {withCredentials: true}) //para que se monte correctamente la cookie tuve que agregar el withCredentials: true
       .then((res) => res.data)
       .catch((err) => console.log(err));
   }
@@ -26,10 +26,12 @@ export const postLoginUser = createAsyncThunk(
 
 export const postLogoutUser = createAsyncThunk(
   "LOGOUT_USER",
-  (userObj, thunkAPI) => {
+  () => {
     return axios
-      .post("/api/users/logout", userObj)
-      .then((res) => res.data)
+      .post("/api/auth/logout", {})
+      .then((res) => {
+        console.log(res.data, 'es la resdataaa')
+        return res.data})
       .catch((err) => console.log(err));
   }
 );

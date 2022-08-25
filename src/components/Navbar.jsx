@@ -10,7 +10,10 @@ import React from "react";
 import { Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { SearchIcon } from "@chakra-ui/icons";
-import {FaShoppingCart} from "react-icons/fa"
+import { FaShoppingCart } from "react-icons/fa";
+
+import { useDispatch, useSelector } from "react-redux";
+import { postLogoutUser } from "../state/user";
 
 //TODO:
 //1- Mostrar "Register" o "Login" dependiendo en qué estado está
@@ -19,6 +22,14 @@ import {FaShoppingCart} from "react-icons/fa"
 //4- Tamaño de input search?
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    dispatch(postLogoutUser());
+  };
+
   return (
     <Box>
       <Flex
@@ -54,7 +65,7 @@ const Navbar = () => {
               mx={1}
               my={5}
               w="100%"
-              _hover={{color:"#d43c8c"}}
+              _hover={{ color: "#d43c8c" }}
             >
               Categories
             </Button>
@@ -74,66 +85,69 @@ const Navbar = () => {
               w="200%"
             />
           </InputGroup>
-          <Link to="/">
-            <Button
-              rounded="md"
-              as="a"
-              variant="ghost"
-              aria-label="Cart"
-              mx={1}
-              my={5}
-              w="100%"
-              _hover={{color:"#d43c8c"}}
-            >
-              My shopping
-            </Button>
-          </Link>
-          <Link to="/cart">
-            <Button
-              rounded="md"
-              as="a"
-              variant="ghost"
-              aria-label="Cart"
-              mx={1}
-              my={5}
-              marginRight={2}
-              w="100%"
-              _hover={{color:"#d43c8c"}}
 
-            >
-             <FaShoppingCart/>
-            </Button>
-          </Link>
-          <Link to="/login">
-            <Button
-              colorScheme="pink"
-              boxShadow="xl"
-              rounded="md"
-              as="a"
-              variant="ghost"
-              aria-label="Login"
-              mx={1}
-              my={5}
-              w="100%"
-            >
-              Login
-            </Button>
-          </Link>
-          <Link to="/register">
-            <Button
-              boxShadow="xl"
-              colorScheme="pink"
-              rounded="md"
-              as="a"
-              variant="ghost"
-              aria-label="Register"
-              mx={1}
-              my={5}
-              w="100%"
-            >
-              Register
-            </Button>
-          </Link>
+          {user.id ? (
+            <>
+              <Link to="/">
+                <Button
+                  rounded="md"
+                  as="a"
+                  variant="ghost"
+                  aria-label="Cart"
+                  mx={1}
+                  my={5}
+                  w="100%"
+                  _hover={{ color: "#d43c8c" }}
+                >
+                  My shopping
+                </Button>
+              </Link>
+              <Link to="/cart">
+                <Button
+                  rounded="md"
+                  as="a"
+                  variant="ghost"
+                  aria-label="Cart"
+                  mx={1}
+                  my={5}
+                  marginRight={2}
+                  w="100%"
+                  _hover={{ color: "#d43c8c" }}
+                >
+                  <FaShoppingCart />
+                </Button>
+              </Link>
+              <Button
+                colorScheme="pink"
+                boxShadow="xl"
+                rounded="md"
+                variant="ghost"
+                aria-label="Logout"
+                mx={1}
+                my={5}
+                w="100%"
+                onClick={handleClick}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Link to="/login">
+              <Button
+                colorScheme="pink"
+                boxShadow="xl"
+                rounded="md"
+                as="a"
+                variant="ghost"
+                aria-label="Login"
+                mx={1}
+                my={5}
+                w="100%"
+              >
+                Login
+              </Button>
+            </Link>
+          )}
         </Flex>
       </Flex>
     </Box>
