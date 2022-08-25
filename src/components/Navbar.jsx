@@ -19,8 +19,14 @@ import React from "react";
 
 import { Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
+import {
+  ChevronDownIcon,
+  ExternalLinkIcon,
+  SearchIcon,
+} from "@chakra-ui/icons";
 import { FaShoppingCart } from "react-icons/fa";
+import {  BiBookBookmark } from "react-icons/bi";
+import {FaHeart} from "react-icons/fa"
 
 import { useDispatch, useSelector } from "react-redux";
 import { postLogoutUser } from "../state/user";
@@ -29,6 +35,8 @@ import { postLogoutUser } from "../state/user";
 //1- Corregir Link to="" de "Categories"
 
 const Navbar = () => {
+  const genres = [{genreName:"Ficcion" },{genreName:"Terror" },{genreName:"Fantasy" },{genreName:"Novel" }];
+
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
@@ -86,15 +94,16 @@ const Navbar = () => {
               my={5}
               w="50%"
               _hover="none"
-
             >
               Categories
             </MenuButton>
             <MenuList>
-              <Link to={`/category/ `}>{/* genreid */}
-              <MenuItem _hover={{ color: "#d43c8c" }}>Ejemplo 1</MenuItem>
-              </Link>
-            
+              {genres?.map((genre) => {
+                return(
+                <Link to={`/category/${genre.genreName} `}>
+                  <MenuItem _hover={{ color: "#d43c8c" }}>{genre.genreName}</MenuItem>
+                </Link>)
+              })}
             </MenuList>
           </Menu>
 
@@ -115,20 +124,6 @@ const Navbar = () => {
 
           {user.id ? (
             <>
-              <Link to="/">
-                <Button
-                  rounded="md"
-                  as="a"
-                  variant="ghost"
-                  aria-label="Cart"
-                  mx={1}
-                  my={5}
-                  w="100%"
-                  _hover={{ color: "#d43c8c" }}
-                >
-                  My shopping
-                </Button>
-              </Link>
               <Link to="/cart">
                 <Button
                   rounded="md"
@@ -144,22 +139,40 @@ const Navbar = () => {
                   <FaShoppingCart />
                 </Button>
               </Link>
-              <Link to="/me">
-                <Button
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rightIcon={<ChevronDownIcon />}
                   rounded="md"
-                  as="a"
                   variant="ghost"
-                  aria-label="Cart"
+                  aria-label="categories"
                   mx={1}
                   my={5}
-                  w="100%"
-                colorScheme="pink"
-
-                  _hover={{ color: "#d43c8c" }}
+                  w="50%"
+                  _hover="none"
                 >
-                  {user.name}
-                </Button>
-              </Link>
+                  {user.userName}
+                </MenuButton>
+                <MenuList>
+                  <Link to={`/favorites`}>
+                    <MenuItem  icon={<FaHeart/>} _hover={{ color: "#d43c8c" }}>
+                      Favorites{" "}
+                    </MenuItem>
+                  </Link>
+                  <Link to={`/boughtItems`}>
+                    <MenuItem icon={<BiBookBookmark/>} _hover={{ color: "#d43c8c" }}>My books</MenuItem>
+                  </Link>
+                  <MenuDivider />
+                  <Link to={`/me`}>
+                    <MenuItem
+                      icon={<ExternalLinkIcon />}
+                      _hover={{ color: "#d43c8c" }}
+                    >
+                      Your account
+                    </MenuItem>
+                  </Link>
+                </MenuList>
+              </Menu>
               <Button
                 colorScheme="pink"
                 boxShadow="xl"
