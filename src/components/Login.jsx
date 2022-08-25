@@ -26,7 +26,6 @@ import {
 } from "@chakra-ui/react";
 
 const Login = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,8 +36,13 @@ const Login = () => {
   } = useForm();
 
   function onSubmit(values) {
-    dispatch(postLoginUser(values))
-    navigate('/');
+    dispatch(postLoginUser(values)).then((res) => {
+      if (res.payload?.id) {
+        navigate("/");
+      } else {
+        alert("password or mail incorrect. please try again!");
+      }
+    });
   }
 
   return (
@@ -117,7 +121,7 @@ const Login = () => {
           <Heading fontSize={"md"} mt={9}>
             New in our site ?{" "}
           </Heading>
-          <Link to={'/register'}>
+          <Link to={"/register"}>
             <Button mt={6} colorScheme="blue">
               Register
             </Button>

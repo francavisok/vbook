@@ -20,7 +20,7 @@ export const postLoginUser = createAsyncThunk(
     return axios
       .post("/api/auth/login", userObj, {withCredentials: true}) //para que se monte correctamente la cookie tuve que agregar el withCredentials: true
       .then((res) => res.data)
-      .catch((err) => console.log(err));
+      .catch((err) => err.response.data);
   }
 );
 
