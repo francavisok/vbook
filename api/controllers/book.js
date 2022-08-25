@@ -1,9 +1,9 @@
 const Book = require("../models/Book");
 
 function addBook(req, res) {
-  if (req.user.role !== "admin") {
+   if (req.user.role !== "admin") {
     res.send("You are not an administrator");
-  }
+  } 
   Book.create(req.body).then(() => res.sendStatus(204));
 }
 function updateBook(req, res) {
