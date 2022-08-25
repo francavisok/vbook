@@ -37,6 +37,8 @@ class OrderController {
   };
 
   static payOrder = async (req, res) => {
+
+    //domicilio paymentmethod
     await Order.update(
       { state: "fullfiled" },
       { where: { userId: req.user.id, state: "procesing" } }
@@ -65,7 +67,7 @@ class OrderController {
 
 
 
-    res.status(203).send("comprado");
+    res.status(203).send(cart);
   };
   static getFullfiled = async (req, res) => {
     const order = await Order.findAll({
@@ -76,7 +78,7 @@ class OrderController {
           },
         ],
       });
-      res.send(order[0].carts);
+      res.send(order);
   };
 }
 
