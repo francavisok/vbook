@@ -32,7 +32,7 @@ function getAllBooks(req, res) {
 
 function getBookById(req, res) {
   const { id } = req.params;
-  const book = Book.findByPk(id)
+  Book.findByPk(id)
     .then((book) => res.send(book))
     .catch((error) => res.send(error));
 }

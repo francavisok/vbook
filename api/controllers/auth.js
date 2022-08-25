@@ -39,9 +39,11 @@ class AuthController {
   };
 
   static logOut = (req, res) => {
+
     res.clearCookie("generatedToken");
     res.sendStatus(204);
     //res.cookie("userCreatedToken", "").send("sesión cerrada"); //comente esta linea porq aca estabamos creando una nueva cookie vacia y no estabamos borrando la del usuario logueado
+
   };
 }
 
