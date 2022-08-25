@@ -8,6 +8,12 @@ Order.init(
       type: Sequelize.STRING,
       defaultValue: "pending",
     },
+    direction: {
+      type: Sequelize.STRING,
+    },
+    paymentMethod: {
+      type: Sequelize.STRING,
+    },
     userId: {
       type: Sequelize.INTEGER,
       allowNull: false,
