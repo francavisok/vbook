@@ -1,10 +1,22 @@
+const { Op } = require("sequelize");
+const { Genre } = require("../models");
 const Book = require("../models/Book");
 
-function addBook(req, res) {
+// function addBook(req, res) {
+//   if (req.user.role !== "admin") {
+//     res.send("You are not an administrator");
+//   }
+//   Book.create(req.body).then(() => res.sendStatus(204))
+// }
+
+async function addBook(req, res) {
   if (req.user.role !== "admin") {
     res.send("You are not an administrator");
   }
-  Book.create(req.body).then(() => res.sendStatus(204));
+  const book = await Book.create(req.body);
+  const genre = await Genre.findByPk(req.body.idGenre);
+  genre.addBook(book);
+  res.sendStatus(200);
 }
 function updateBook(req, res) {
   if (req.user.role !== "admin") {
@@ -37,4 +49,23 @@ function getBookById(req, res) {
     .catch((error) => res.send(error));
 }
 
-module.exports = { addBook, updateBook, deleteBook, getAllBooks, getBookById };
+async function getBookByTitle(req, res) {
+  const { title } = req.params;
+  const books = await Book.findAll({
+    where: {
+      title: {
+        [Op.substring]: title,
+      },
+    },
+  });
+  res.send(books);
+}
+
+module.exports = {
+  addBook,
+  updateBook,
+  deleteBook,
+  getAllBooks,
+  getBookById,
+  getBookByTitle,
+};

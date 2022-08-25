@@ -35,7 +35,7 @@ Book.init(
     rating: {
         type: Sequelize.INTEGER,
         defaultValue: 4
-    }
+    },
   },
   { sequelize: db, modelName: "book" }
 );
