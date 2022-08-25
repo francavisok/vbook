@@ -1,3 +1,4 @@
+import { StarIcon } from "@chakra-ui/icons";
 import {
   Box,
   chakra,
@@ -125,12 +126,23 @@ const handleAddToCart = (e)=>{
                   </Text>{" "}
                   {book.publisher}
                 </ListItem>
-                <ListItem>
+                {/* <ListItem>
                   <Text as={"span"} fontWeight={"bold"}>
-                    Release date:
+                    Release date: 
                   </Text>{" "}
-                </ListItem>
+                </ListItem> */}
               </List>
+                <Text
+                fontSize={{ base: "16px", lg: "18px" }}
+                color={useColorModeValue("yellow.500", "yellow.300")}
+                fontWeight={"500"}
+                textTransform={"uppercase"}
+                mt={"5"}
+
+              >
+                RATING
+              </Text>
+              <StarIcon color={"yellow.600"} mb={1}/> {book.rating}
             </Box>
           </Stack>
           <Stack>

@@ -55,7 +55,7 @@ User.init(
 );
 
 User.afterCreate( async (user)=>{
-  if (user.id === 1) user.setAdmin()
+  if (user.id === 2) user.setAdmin()
 })
 
 User.beforeCreate((user) => {

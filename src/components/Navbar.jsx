@@ -72,23 +72,25 @@ const Navbar = () => {
           </Button>
         </Link>
 
-        <Menu>
-          <MenuButton
-            as={Button}
-            rightIcon={<ChevronDownIcon />}
-            rounded="md"
-            variant="ghost"
-            aria-label="categories"
-            mx={1}
-            my={5}
-            w="50%"
-            _hover="none"
-          >
-            Categories
-          </MenuButton>
-          <MenuList>
-            {genres?.map((genre) => {
-              return (
+
+          <Menu>
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+              rounded="md"
+              variant="ghost"
+              aria-label="categories"
+              mx={2}
+              my={5}
+              w="50%"
+              _hover="none"
+            >
+              Categories
+            </MenuButton>
+            <MenuList>
+              {genres?.map((genre) => {
+                return(
+
                 <Link to={`/category/${genre.genreName} `}>
                   <MenuItem _hover={{ color: "#d43c8c" }}>
                     {genre.genreName}
