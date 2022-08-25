@@ -9,10 +9,10 @@ class AuthController {
       const { password, email } = req.body;
 
       const user = await User.findOne({ where: { email } });
-      if (!user) return res.sendStatus(401); //agregue esta linea p chequear si encontraba bien el usuario
+      if (!user) return res.status(401).send('user not found'); //agregue esta linea p chequear si encontraba bien el usuario
 
       const validation = await user.validatePassword(password); //agregue el await xq nunca validaba el passw
-      if (!validation) return res.sendStatus(401);
+      if (!validation) return res.status(401).send('password invalid');
 
       const payload = {  //puse el obj en una const para no repetir codigo y mandarlo en la cookie y en el res.send
         id: user.id,
@@ -24,7 +24,7 @@ class AuthController {
       };
 
       res.cookie("generatedToken", generateToken(payload));
-      res.send(payload);
+      res.status(200).send(payload);
 
     } catch (error) {
       res.send(error);
