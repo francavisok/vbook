@@ -14,4 +14,9 @@ Cart.belongsTo(Order)
 //Una orden puede tener muchos carritos
 Order.hasMany(Cart)
 
+//Un genero pertenece a varios libros
+Genre.hasMany(Book)
+//Un producto pertenece a una categoría
+Book.belongsTo(Genre)
+
 module.exports = {Book, User, Genre, Cart, Order};
