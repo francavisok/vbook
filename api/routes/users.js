@@ -4,6 +4,7 @@ const { validateAuth } = require("../middleware/auth");
 const {
   editUser,
   promoteUser,
+  demoteUser,
   deleteUser,
   getUsers,
 } = require("../controllers/users");
@@ -11,6 +12,8 @@ const {
 router.put("/editUser", validateAuth, editUser);
 
 router.put("/promote/:id", validateAuth, promoteUser);
+router.put("/demote/:id", validateAuth, demoteUser);
+
 
 router.delete("/:id", validateAuth, deleteUser);
 

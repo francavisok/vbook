@@ -15,6 +15,21 @@ function promoteUser(req, res, next) {
     }
   );
 }
+//añadida función para quitarle privilegios de ADMIN a un usuario. Imposibilita quitarse los privilegios a uno mismo.
+function demoteUser(req, res, next) {
+  if (req.user.role !== "admin") {
+    res.send("You are not an administrator");
+  }
+  if(req.user.id === Number(req.params.id)){
+     res.send("You can't revoke permissions yourself!");
+  }
+ 
+  User.update({ role: "user" }, { where: { id: Number(req.params.id) } }).then(
+    () => {
+      res.send("actualizado");
+    }
+  );
+}
 function deleteUser(req, res, next) {
   if (req.user.role !== "admin") {
     res.send("You are not allowed to delete users");
@@ -32,4 +47,4 @@ function getUsers(req, res, next) {
     res.send(usuarios);
   });
 }
-module.exports = { editUser, promoteUser, deleteUser, getUsers };
+module.exports = { editUser, promoteUser, demoteUser, deleteUser, getUsers};
