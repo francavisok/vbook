@@ -5,20 +5,46 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from "@chakra-ui/react";
 import React from "react";
 
 import { Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { SearchIcon } from "@chakra-ui/icons";
-import {FaShoppingCart} from "react-icons/fa"
+import {
+  ChevronDownIcon,
+  ExternalLinkIcon,
+  SearchIcon,
+} from "@chakra-ui/icons";
+import { FaShoppingCart } from "react-icons/fa";
+import {  BiBookBookmark } from "react-icons/bi";
+import {FaHeart} from "react-icons/fa"
+
+import { useDispatch, useSelector } from "react-redux";
+import { postLogoutUser } from "../state/user";
 
 //TODO:
-//1- Mostrar "Register" o "Login" dependiendo en qué estado está
-//2- Cambiar "Cart" por CartIcon(no hay en chakra icons)
-//3- Corregir Link to="" de "Categories"
-//4- Tamaño de input search?
+//1- Corregir Link to="" de "Categories"
 
 const Navbar = () => {
+  const genres = [{genreName:"Ficcion" },{genreName:"Terror" },{genreName:"Fantasy" },{genreName:"Novel" }];
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    dispatch(postLogoutUser());
+  };
+
   return (
     <Box>
       <Flex
@@ -45,20 +71,29 @@ const Navbar = () => {
             </Button>
           </Link>
 
-          <Link to="/">
-            <Button
+          <Menu>
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
               rounded="md"
-              as="a"
               variant="ghost"
-              aria-label="Home"
-              mx={1}
+              aria-label="categories"
+              mx={2}
               my={5}
-              w="100%"
-              _hover={{color:"#d43c8c"}}
+              w="50%"
+              _hover="none"
             >
               Categories
-            </Button>
-          </Link>
+            </MenuButton>
+            <MenuList>
+              {genres?.map((genre) => {
+                return(
+                <Link to={`/category/${genre.genreName} `}>
+                  <MenuItem _hover={{ color: "#d43c8c" }}>{genre.genreName}</MenuItem>
+                </Link>)
+              })}
+            </MenuList>
+          </Menu>
 
           <InputGroup mx={10} my={5}>
             <InputLeftElement
@@ -74,66 +109,89 @@ const Navbar = () => {
               w="200%"
             />
           </InputGroup>
-          <Link to="/">
-            <Button
-              rounded="md"
-              as="a"
-              variant="ghost"
-              aria-label="Cart"
-              mx={1}
-              my={5}
-              w="100%"
-              _hover={{color:"#d43c8c"}}
-            >
-              My shopping
-            </Button>
-          </Link>
-          <Link to="/cart">
-            <Button
-              rounded="md"
-              as="a"
-              variant="ghost"
-              aria-label="Cart"
-              mx={1}
-              my={5}
-              marginRight={2}
-              w="100%"
-              _hover={{color:"#d43c8c"}}
 
-            >
-             <FaShoppingCart/>
-            </Button>
-          </Link>
-          <Link to="/login">
-            <Button
-              colorScheme="pink"
-              boxShadow="xl"
-              rounded="md"
-              as="a"
-              variant="ghost"
-              aria-label="Login"
-              mx={1}
-              my={5}
-              w="100%"
-            >
-              Login
-            </Button>
-          </Link>
-          <Link to="/register">
-            <Button
-              boxShadow="xl"
-              colorScheme="pink"
-              rounded="md"
-              as="a"
-              variant="ghost"
-              aria-label="Register"
-              mx={1}
-              my={5}
-              w="100%"
-            >
-              Register
-            </Button>
-          </Link>
+          {user.id ? (
+            <>
+              <Link to="/cart">
+                <Button
+                  rounded="md"
+                  as="a"
+                  variant="ghost"
+                  aria-label="Cart"
+                  mx={1}
+                  my={5}
+                  marginRight={2}
+                  w="100%"
+                  _hover={{ color: "#d43c8c" }}
+                >
+                  <FaShoppingCart />
+                </Button>
+              </Link>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rightIcon={<ChevronDownIcon />}
+                  rounded="md"
+                  variant="ghost"
+                  aria-label="categories"
+                  mx={1}
+                  my={5}
+                  w="50%"
+                  _hover="none"
+                >
+                  {user.userName}
+                </MenuButton>
+                <MenuList>
+                  <Link to={`/favorites`}>
+                    <MenuItem  icon={<FaHeart/>} _hover={{ color: "#d43c8c" }}>
+                      Favorites{" "}
+                    </MenuItem>
+                  </Link>
+                  <Link to={`/boughtItems`}>
+                    <MenuItem icon={<BiBookBookmark/>} _hover={{ color: "#d43c8c" }}>My books</MenuItem>
+                  </Link>
+                  <MenuDivider />
+                  <Link to={`/me`}>
+                    <MenuItem
+                      icon={<ExternalLinkIcon />}
+                      _hover={{ color: "#d43c8c" }}
+                    >
+                      Your account
+                    </MenuItem>
+                  </Link>
+                </MenuList>
+              </Menu>
+              <Button
+                colorScheme="pink"
+                boxShadow="xl"
+                rounded="md"
+                variant="ghost"
+                aria-label="Logout"
+                mx={1}
+                my={5}
+                w="40%"
+                onClick={handleClick}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Link to="/login">
+              <Button
+                colorScheme="pink"
+                boxShadow="xl"
+                rounded="md"
+                as="a"
+                variant="ghost"
+                aria-label="Login"
+                mx={1}
+                my={5}
+                w="100%"
+              >
+                Login
+              </Button>
+            </Link>
+          )}
         </Flex>
       </Flex>
     </Box>

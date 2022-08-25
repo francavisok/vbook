@@ -2,6 +2,7 @@ const { Op } = require("sequelize");
 const { Genre } = require("../models");
 const Book = require("../models/Book");
 
+
 // function addBook(req, res) {
 //   if (req.user.role !== "admin") {
 //     res.send("You are not an administrator");
@@ -17,6 +18,7 @@ async function addBook(req, res) {
   const genre = await Genre.findByPk(req.body.idGenre);
   genre.addBook(book);
   res.sendStatus(200);
+
 }
 function updateBook(req, res) {
   if (req.user.role !== "admin") {

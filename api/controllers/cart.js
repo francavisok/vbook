@@ -28,9 +28,11 @@ class CartController {
   };
 
   static editAmount = (req, res) => {
-    Cart.update({ amount: Number(req.body.amount) }, { where: { id: Number(req.params.id) } });
-    res.status(203).send("actualizado")
-    
+    Cart.update(
+      { amount: Number(req.body.amount) },
+      { where: { id: Number(req.params.id) } }
+    );
+    res.status(203).send("actualizado");
   };
 }
 
