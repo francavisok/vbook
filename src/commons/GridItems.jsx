@@ -2,10 +2,8 @@ import React from "react";
 
 import {
   Flex,
-  Circle,
   Box,
   Image,
-  Badge,
   useColorModeValue,
   Icon,
   chakra,
