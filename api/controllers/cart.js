@@ -2,6 +2,7 @@ const { Cart, Order } = require("../models");
 
 class CartController {
   static addToCart = async (req, res) => {
+                          //"productId -> "amount" opcional"
     const newCart = await Cart.create(req.body);
     const order = await Order.findAll({
       where: { userId: req.user.id, state: "pending" },
@@ -16,6 +17,7 @@ class CartController {
   };
 
   static deleteFromCart = async (req, res) => {
+            //
     const cart = await Cart.findOne({
       where: { id: req.params.id, state: "pending" },
     });
@@ -28,6 +30,7 @@ class CartController {
   };
 
   static editAmount = (req, res) => {
+          //req.params.id ====> {"amount"}
     Cart.update(
       { amount: Number(req.body.amount) },
       { where: { id: Number(req.params.id) } }
