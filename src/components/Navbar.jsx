@@ -71,18 +71,6 @@ const Navbar = () => {
             </Button>
           </Link>
 
-          <Link to="/">
-            <Button
-              rounded="md"
-              as="a"
-              variant="ghost"
-              aria-label="Home"
-              mx={1}
-              my={5}
-              w="100%"
-              _hover={{ color: "#d43c8c" }}
-            ></Button>
-          </Link>
           <Menu>
             <MenuButton
               as={Button}
@@ -90,7 +78,7 @@ const Navbar = () => {
               rounded="md"
               variant="ghost"
               aria-label="categories"
-              mx={1}
+              mx={2}
               my={5}
               w="50%"
               _hover="none"
