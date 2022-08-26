@@ -27,8 +27,7 @@ User.init(
       }
     },
     password: {
-      type: Sequelize.STRING,
-      allowNull: false,
+      type: Sequelize.STRING
     },
     salt: {
       type: Sequelize.STRING,
@@ -49,6 +48,10 @@ User.init(
     role: {
         type: Sequelize.STRING,
         defaultValue: 'admin',
+    },
+    loginWithGoogle: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
     }
   },
   { sequelize: db, modelName: "user" }
