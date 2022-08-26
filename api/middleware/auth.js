@@ -12,4 +12,13 @@ function validateAuth(req, res, next) {
   next();
 }
 
-module.exports = { validateAuth };
+function validateAdmin(req, res, next) {
+  if (req.user.role === "admin") {
+    next();
+  } else {
+    return res
+      .status(401)
+      .send("You need to be an administrator to perform this task");
+  }
+}
+module.exports = { validateAuth, validateAdmin };
