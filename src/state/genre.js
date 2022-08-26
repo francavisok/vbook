@@ -9,7 +9,7 @@ export const getGenresOfBook = createAsyncThunk("GENRES_OF_BOOK", (bookId) => {
     .catch(err=> console.log(err))
   });
 
-const genreReducer = createReducer([], {
+const genreReducer = createReducer({}, {
   [getGenresOfBook.fulfilled]: (state, action) => action.payload,
 });
 

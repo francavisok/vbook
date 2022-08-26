@@ -12,15 +12,16 @@ const genre = useSelector(state=>state.genre)
 
 useEffect(()=>{
 dispatch(getGenresOfBook(genreId))
+},[genreId,dispatch])
 
-},[genreId])
+
 
   return <> 
   
-  {genre[0]?.books?.length ? (<>
-    <Heading>{genre[0].genreName} books</Heading>
+  {genre.length ? (<>
+    <Heading>{genre.genreName} books</Heading>
     <Grid templateColumns='repeat(2, 1fr)' > 
-      {genre[0]?.books?.map(book => (
+      {genre?.map(book => (
         <GridItems key={book.id} book={book} />
       ))}
     </Grid>

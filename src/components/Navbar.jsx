@@ -101,21 +101,6 @@ const Navbar = () => {
             </MenuList>
           </Menu>
 
-          <InputGroup mx={10} my={5}>
-            <InputLeftElement
-              pointerEvents="none"
-              children={<SearchIcon color="gray.300" />}
-            />
-            <Input
-              type={"text"}
-              focusBorderColor="pink.400"
-              placeholder="Search here"
-              boxShadow="xl"
-              rounded="xl"
-              w="200%"
-            />
-          </InputGroup>
-
           {user.id ? (
             <>
               <Link to="/cart">
