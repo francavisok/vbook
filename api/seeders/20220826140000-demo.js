@@ -5,7 +5,7 @@ module.exports = {
     
       //Add seed commands here.
       await queryInterface.bulkInsert('users', [{
-        id:1,
+    
         name:"franca",
         lastname: "visokolskis",
         email: "franca@gmail.com",
@@ -17,7 +17,7 @@ module.exports = {
 
        },
        {
-        id:2,
+        
         name:"santi",
         lastname: "Posse",
         email: "santi@gmail.com",
@@ -28,7 +28,7 @@ module.exports = {
         createdAt: "2022-08-23T22:40:23.479Z",
        },
        {
-        id:3,
+        
         name:"Marcos",
         lastname: "Rueda",
         email: "marcos@gmail.com",
@@ -39,7 +39,7 @@ module.exports = {
         createdAt: "2022-08-23T22:40:23.479Z",
        },
        {
-        id:4,
+        
         name:"Lucas",
         lastname: "De Lellis",
         email: "lucas@gmail.com",
