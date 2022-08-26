@@ -6,6 +6,7 @@
 .pnp.js
 /api/db/index.js
 /package-lock.json
+.env
 
 # testing
 /coverage
