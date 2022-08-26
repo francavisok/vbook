@@ -12,6 +12,7 @@ import { Flex, Box } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUser } from "./state/user";
+import CategoriesPage from "./commons/CategoriesPage";
 
 function App() {
   const dispatch= useDispatch();
@@ -31,7 +32,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<div>CART</div>} />
           <Route path="/search" element={<div>SEARCH</div>} />
-          <Route path="/category/:genre" element={<div>GENRE</div>} />
+          <Route path="/category/:genre" element={<CategoriesPage/>} />
           <Route path="/book/:id" element={<ProductPage />}/>
         </Routes>
       </Box>
