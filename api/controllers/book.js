@@ -3,11 +3,6 @@ const { Genre } = require("../models");
 const Book = require("../models/Book");
 
 async function addBook(req, res) {
-
-  if (req.user.role !== "admin") {
-    res.send("You are not an administrator");
-  } 
-
   const book = await Book.create(req.body);
   const genre = await Genre.findByPk(req.body.idGenre);
   genre.addBook(book);
@@ -20,7 +15,7 @@ function updateBook(req, res) {
   });
 }
 function deleteBook(req, res) {
-  Book.destroy({ where : {id: Number(req.params.id)} }).then(() => {
+  Book.destroy({ where: { id: Number(req.params.id) } }).then(() => {
     res.send("Libro eliminado");
   });
 }
