@@ -13,8 +13,6 @@ const GridComponent = () => {
   const dispatch = useDispatch();
   const books = useSelector((state) => state.books);
 
-  console.log("BOOOKSS", books);
-
   useEffect(() => {
     dispatch(getBooks());
   }, [dispatch]);
@@ -26,7 +24,7 @@ const GridComponent = () => {
             <GridItems key={book.id} book={book} />
           ))}
         </Grid>
-    ) : 'loading'
+    ) : 'Nothing was found, try again'
   );
 };
 
