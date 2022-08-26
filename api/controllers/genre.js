@@ -12,9 +12,8 @@ class genreController {
 
   static getProductByGenre = async (req, res) => {
     const { id } = req.params;
-    const genreBooks = await Genre.findAll({
-      where: { id: id },
-      include: { model: Book },
+    const genreBooks = await Book.findAll({
+      where: { idGenre: id },
     });
 
     console.log(genreBooks);
