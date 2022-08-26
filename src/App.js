@@ -21,6 +21,8 @@ function App() {
   useEffect(()=>{
     dispatch(getUser());
   }, [dispatch])
+  
+
 
   return (
     <Flex direction={"column"} minHeight="100vh">

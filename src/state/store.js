@@ -10,7 +10,7 @@ import boughtItemsReducer from "./boughtItems";
 import genresReducer from "./genres";
 
 const store = configureStore({
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  //middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   reducer: {
     user: userReducer,
     book: bookReducer,
