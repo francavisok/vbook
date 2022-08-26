@@ -24,7 +24,7 @@ const GridComponent = () => {
             <GridItems key={book.id} book={book} />
           ))}
         </Grid>
-    ) : 'loading'
+    ) : 'Nothing was found, try again'
   );
 };
 

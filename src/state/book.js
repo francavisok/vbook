@@ -8,8 +8,11 @@ export const getBook = createAsyncThunk("BOOK", (bookId) => {
   .catch(err=> console.log(err))
 });
 
+
+
 const bookReducer = createReducer({}, {
   [getBook.fulfilled]: (state, action) => action.payload,
+
 });
 
 export default bookReducer;
