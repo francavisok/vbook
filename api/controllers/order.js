@@ -1,17 +1,18 @@
+const { Op } = require("sequelize")
 const { Cart, Order } = require("../models");
 const transporter= require("../config/transporter")
 
 class OrderController {
   static getOrder = async (req, res) => {
     const order = await Order.findAll({
-      where: { userId: req.user.id, state : "pending" },
+      where: { [Op.or]:  [{userId: req.user.id, state : "pending"}, {userId: req.user.id, state : "procesing"}]},
       include: [
         {
           model: Cart,
         },
       ],
     });
-    res.send(order[0].carts);
+    order.length? res.send(order[0]) : res.send(order)
   };
 
   static continueOrder = async (req, res) => {
@@ -79,6 +80,21 @@ class OrderController {
         ],
       });
       res.send(order);
+  };
+
+  static deleteOrder = async (req, res) => {
+    const order = await Order.findOne({
+        where: { [Op.or]: [{id: req.params.id, state : "pending"}, {id: req.params.id, state : "procesing"}] },
+        include: [
+          {
+            model: Cart,
+          },
+        ],
+      });
+      order.carts.forEach(async (cart) => {
+        await Cart.destroy({where : {id : cart.id}})})
+      Order.destroy({where : {id : order.id}})
+      res.send("eliminado");
   };
 }
 

@@ -48,7 +48,7 @@ User.init(
     },
     role: {
         type: Sequelize.STRING,
-        defaultValue: 'user',
+        defaultValue: 'admin',
     }
   },
   { sequelize: db, modelName: "user" }

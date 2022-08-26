@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { validateAuth } = require("../middleware/auth");
+const { validateAuth, validateAdmin } = require("../middleware/auth");
 const {
   addBook,
   updateBook,
@@ -8,24 +8,21 @@ const {
   getAllBooks,
   getBookById,
 
-  getBookByTitle
+  getBookByTitle,
 } = require("../controllers/book");
 
+router.post("/", validateAuth, validateAdmin, addBook);
 
-router.post("/", validateAuth , addBook);
+router.put("/:id", validateAuth, validateAdmin, updateBook);
 
-router.put("/:id", validateAuth, updateBook);
-
-router.delete("/:id", validateAuth, deleteBook);
+router.delete("/:id", validateAuth, validateAdmin, deleteBook);
 
 router.get("/", getAllBooks);
 
+router.get("/:id", getBookById);
 
-router.get("/:id", getBookById)
+router.get("/find/:title", getBookByTitle);
 
-router.get("/find/:title", getBookByTitle )
-
-module.exports = router
-
+module.exports = router;
 
 module.exports = router;

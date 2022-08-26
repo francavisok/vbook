@@ -2,18 +2,12 @@ const { Op } = require("sequelize");
 const { Genre } = require("../models");
 const Book = require("../models/Book");
 
-
-// function addBook(req, res) {
-//   if (req.user.role !== "admin") {
-//     res.send("You are not an administrator");
-//   }
-//   Book.create(req.body).then(() => res.sendStatus(204))
-// }
-
 async function addBook(req, res) {
+
   if (req.user.role !== "admin") {
     res.send("You are not an administrator");
   } 
+
   const book = await Book.create(req.body);
   const genre = await Genre.findByPk(req.body.idGenre);
   genre.addBook(book);
@@ -21,19 +15,12 @@ async function addBook(req, res) {
 }
 
 function updateBook(req, res) {
-  if (req.user.role !== "admin") {
-    res.send("You are not an administrator");
-  }
   Book.update(req.body, { where: { id: Number(req.params.id) } }).then(() => {
     res.send("actualizado");
   });
 }
 function deleteBook(req, res) {
-  if (req.user.role !== "admin") {
-    res.send("You are not allowed to delete users");
-  }
-
-  Book.delete({ id: Number(req.params.id) }).then(() => {
+  Book.destroy({ where : {id: Number(req.params.id)} }).then(() => {
     res.send("Libro eliminado");
   });
 }
