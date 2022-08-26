@@ -5,7 +5,7 @@ const { validateAuth, validateAdmin } = require("../middleware/auth");
 
 router.get("/", genreController.getAllGenres);
 
-router.post("/", validateAuth, validateAdmin, genreController.addGenre);
+router.post("/",  validateAuth, validateAdmin,  genreController.addGenre);
 
 router.get("/:id", genreController.getProductByGenre);
 
