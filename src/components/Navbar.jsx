@@ -15,7 +15,7 @@ import {
   MenuOptionGroup,
   MenuDivider,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
@@ -30,21 +30,27 @@ import {FaHeart} from "react-icons/fa"
 
 import { useDispatch, useSelector } from "react-redux";
 import { postLogoutUser } from "../state/user";
+import { getGenres } from "../state/genres";
 
 //TODO:
 //1- Corregir Link to="" de "Categories"
 
 const Navbar = () => {
-  const genres = [{genreName:"Ficcion" },{genreName:"Terror" },{genreName:"Fantasy" },{genreName:"Novel" }];
-
+  
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
+  const genres = useSelector(state=>state.genres)
+  
+  
+  useEffect(()=>{
+    dispatch(getGenres()).then()
+  },[dispatch])
+  
   const handleClick = (e) => {
     e.preventDefault();
     dispatch(postLogoutUser());
   };
-
+  
   return (
     <Box>
       <Flex
@@ -88,7 +94,7 @@ const Navbar = () => {
             <MenuList>
               {genres?.map((genre) => {
                 return(
-                <Link to={`/category/${genre.genreName} `}>
+                <Link to={`/category/${genre.id} `}>
                   <MenuItem _hover={{ color: "#d43c8c" }}>{genre.genreName}</MenuItem>
                 </Link>)
               })}
