@@ -36,6 +36,9 @@ Book.init(
         type: Sequelize.INTEGER,
         defaultValue: 4
     },
+    idGenre: {
+      type: Sequelize.INTEGER
+    }
   },
   { sequelize: db, modelName: "book" }
 );
