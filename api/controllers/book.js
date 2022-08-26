@@ -14,7 +14,7 @@ function updateBook(req, res) {
   });
 }
 function deleteBook(req, res) {
-  Book.delete({ id: Number(req.params.id) }).then(() => {
+  Book.destroy({ where : {id: Number(req.params.id)} }).then(() => {
     res.send("Libro eliminado");
   });
 }

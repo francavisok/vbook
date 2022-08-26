@@ -1,11 +1,17 @@
 const { Cart, Order } = require("../models");
+const { Op } = require("sequelize");
 
 class CartController {
   static addToCart = async (req, res) => {
-                          //"productId -> "amount" opcional"
+    //"productId -> "amount" opcional"
     const newCart = await Cart.create(req.body);
     const order = await Order.findAll({
-      where: { userId: req.user.id, state: "pending" },
+      where: {
+        [Op.or]: [
+          { userId: req.user.id, state: "pending" },
+          { userId: req.user.id, state: "procesing" },
+        ],
+      },
     });
     if (order.length) {
       order[0].addCart(newCart);
@@ -17,9 +23,13 @@ class CartController {
   };
 
   static deleteFromCart = async (req, res) => {
-            //
     const cart = await Cart.findOne({
-      where: { id: req.params.id, state: "pending" },
+      where: {
+        [Op.or]: [
+          { productId: Number(req.params.id), state: "pending" },
+          { productId: Number(req.params.id), state: "procesing" },
+        ],
+      },
     });
     if (cart) {
       Cart.destroy(cart);
@@ -30,10 +40,17 @@ class CartController {
   };
 
   static editAmount = (req, res) => {
-          //req.params.id ====> {"amount"}
+    //req.params.id ====> {"amount"}
     Cart.update(
       { amount: Number(req.body.amount) },
-      { where: { id: Number(req.params.id) } }
+      {
+        where: {
+          [Op.or]: [
+            { id: Number(req.params.id), state: "pending" },
+            { id: Number(req.params.id), state: "procesing" },
+          ],
+        },
+      }
     );
     res.status(203).send("actualizado");
   };

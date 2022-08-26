@@ -8,11 +8,10 @@ const {
   getAllBooks,
   getBookById,
 
-  getBookByTitle
+  getBookByTitle,
 } = require("../controllers/book");
 
-
-router.post("/",  validateAuth, validateAdmin, addBook);
+router.post("/", validateAuth, validateAdmin, addBook);
 
 router.put("/:id", validateAuth, validateAdmin, updateBook);
 
@@ -20,11 +19,10 @@ router.delete("/:id", validateAuth, validateAdmin, deleteBook);
 
 router.get("/", getAllBooks);
 
-router.get("/:id", getBookById)
+router.get("/:id", getBookById);
 
-router.get("/find/:title", getBookByTitle )
+router.get("/find/:title", getBookByTitle);
 
-module.exports = router
-
+module.exports = router;
 
 module.exports = router;
