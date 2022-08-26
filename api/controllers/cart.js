@@ -52,7 +52,7 @@ class CartController {
         },
       }
     );
-    res.status(203).send("actualizado");
+    res.status(203).send("Updated");
   };
 }
 

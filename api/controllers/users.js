@@ -2,13 +2,13 @@ const User = require("../models/User");
 
 function editUser(req, res, next) {
   User.update(req.body, { where: { id: req.user.id } }).then(() => {
-    res.send("actualizado");
+    res.send("updated");
   });
 }
 function promoteUser(req, res, next) {
   User.update({ role: "admin" }, { where: { id: Number(req.params.id) } }).then(
     () => {
-      res.send("actualizado");
+      res.send("updated");
     }
   );
 }
@@ -21,7 +21,7 @@ function demoteUser(req, res, next) {
       { role: "user" },
       { where: { id: Number(req.params.id) } }
     ).then(() => {
-      res.send("actualizado");
+      res.send("updated");
     });
   }
 }
@@ -30,7 +30,7 @@ function deleteUser(req, res, next) {
     res.send("You can't delete yourself!");
   } else {
     User.delete({ id: Number(req.params.id) }).then(() => {
-      res.send("Usuario eliminado");
+      res.send("deleted user");
     });
   }
 }

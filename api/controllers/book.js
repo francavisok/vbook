@@ -11,12 +11,12 @@ async function addBook(req, res) {
 
 function updateBook(req, res) {
   Book.update(req.body, { where: { id: Number(req.params.id) } }).then(() => {
-    res.send("actualizado");
+    res.send("updated");
   });
 }
 function deleteBook(req, res) {
   Book.destroy({ where: { id: Number(req.params.id) } }).then(() => {
-    res.send("Libro eliminado");
+    res.send("You have succesfully deleted this book");
   });
 }
 
