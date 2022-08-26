@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { validateAuth } = require("../middleware/auth");
+const { validateAuth, validateAdmin } = require("../middleware/auth");
 const {
   addBook,
   updateBook,
@@ -12,15 +12,13 @@ const {
 } = require("../controllers/book");
 
 
-router.post("/",  validateAuth , addBook);
+router.post("/",  validateAuth, validateAdmin, addBook);
 
+router.put("/:id", validateAuth, validateAdmin, updateBook);
 
-router.put("/:id", validateAuth, updateBook);
-
-router.delete("/:id", validateAuth, deleteBook);
+router.delete("/:id", validateAuth, validateAdmin, deleteBook);
 
 router.get("/", getAllBooks);
-
 
 router.get("/:id", getBookById)
 
