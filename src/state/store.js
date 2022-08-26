@@ -7,6 +7,7 @@ import booksReducer from "./books";
 import favoritesReducer from "./favorites";
 import cartReducer from "./cart";
 import boughtItemsReducer from "./boughtItems";
+import genresReducer from "./genres";
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
@@ -17,6 +18,7 @@ const store = configureStore({
     favorites: favoritesReducer,
     cart: cartReducer,
     boughtItems: boughtItemsReducer,
+    genres: genresReducer
   },
 });
 

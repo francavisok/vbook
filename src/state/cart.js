@@ -3,16 +3,12 @@ import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 
 export const addToCart = createAsyncThunk(
   "ADD_TO_CART",
-  (book, thunkAPI) => {
+  (productId, thunkAPI) => {
     const { user } = thunkAPI.getState();
     if (!user.id) throw new Error("You need to be logged in");
     return axios
-      .put(`/api/cart`, book, {
-        params: {
-          userId: user.id
-        }
-      })
-      .then((res) => res.data)
+      .post(`/api/cart`, {productId})
+      .then((res) =>  res.data)
       .catch((error) => console.log(error));
   }
 );
