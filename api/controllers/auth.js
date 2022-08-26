@@ -32,13 +32,14 @@ class AuthController {
             loginWithGoogle: req.body.loginWithGoogle,
           },
         });
+
         payload = {
-          id: user.id,
-          name: user.name,
-          lastname: user.lastname,
-          userName: user.userName,
-          email: user.email,
-          role: user.role,
+          id: user[0].id,
+          name: user[0].name,
+          lastname: user[0].lastname,
+          userName: user[0].userName,
+          email: user[0].email,
+          role: user[0].role,
         };
       }
 
