@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <GridComponent />
+      <GridComponent id='gridView' />
     </>
   );
 };
