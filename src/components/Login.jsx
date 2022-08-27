@@ -96,7 +96,7 @@ const Login = () => {
           m={"auto"}
         >
           <Stack align={"center"} mb="8">
-            <Heading fontSize={"4xl"}>Sing in to your account</Heading>
+            <Heading fontSize={"4xl"}>Sign in to your account</Heading>
             <Text fontSize={"lg"} color={"gray.600"}>
               to enjoy our selection of books
             </Text>
