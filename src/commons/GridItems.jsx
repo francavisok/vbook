@@ -19,12 +19,14 @@ import { GridItem } from "@chakra-ui/react";
 
 const GridItems = ({ book }) => {
   return (
-    <GridItem>
+    <GridItem >
       <Link to={`/book/${book.id}`}>
-        <Flex p={50} w="full" alignItems="center" justifyContent="center">
+        <Flex  w="full" alignItems="center" justifyContent="center">
           <Box
             bg={useColorModeValue("white", "gray.800")}
             maxW="sm"
+            minW='100%'
+            minH={'100%'}
             borderWidth="1px"
             rounded="lg"
             shadow="lg"
@@ -34,6 +36,9 @@ const GridItems = ({ book }) => {
               src={book.posterURL}
               alt={`Picture of ${book.title}`}
               roundedTop="lg"
+              width={'200px'}
+              margin='0 auto'
+              
             />
 
             <Box p="6">
@@ -47,33 +52,6 @@ const GridItems = ({ book }) => {
                 >
                   {book.title}
                 </Box>
-                <Tooltip
-                  label="Add to favorites"
-                  bg="white"
-                  placement={"top"}
-                  color={"gray.800"}
-                  fontSize={"1.2em"}
-                >
-                  <chakra.a href={"#"} display={"flex"}>
-                    <Icon as={FaHeart} h={7} w={7} alignSelf={"center"} />
-                  </chakra.a>
-                </Tooltip>
-                <Tooltip
-                  label="Add to cart"
-                  bg="white"
-                  placement={"top"}
-                  color={"gray.800"}
-                  fontSize={"1.2em"}
-                >
-                  <chakra.a href={"#"} display={"flex"}>
-                    <Icon
-                      as={FiShoppingCart}
-                      h={7}
-                      w={7}
-                      alignSelf={"center"}
-                    />
-                  </chakra.a>
-                </Tooltip>
               </Flex>
 
               <Flex justifyContent="space-between" alignContent="center">
@@ -86,7 +64,35 @@ const GridItems = ({ book }) => {
                   </Box>
                   {book.price.toFixed(2)}
                 </Box>
+                <Tooltip
+                  label="Add to favorites"
+                  bg="white"
+                  placement={"top"}
+                  color={"gray.800"}
+                  fontSize={"1.2em"}
+                >
+                  <chakra.a href={"#"} display={"flex"}>
+                    <Icon as={FaHeart} h={5} w={5} alignSelf={"center"} />
+                  </chakra.a>
+                </Tooltip>
+                <Tooltip
+                  label="Add to cart"
+                  bg="white"
+                  placement={"top"}
+                  color={"gray.800"}
+                  fontSize={"1.2em"}
+                >
+                  <chakra.a href={"#"} display={"flex"}>
+                    <Icon
+                      as={FiShoppingCart}
+                      h={5}
+                      w={5}
+                      alignSelf={"center"}
+                    />
+                  </chakra.a>
+                </Tooltip>
               </Flex>
+
             </Box>
           </Box>
         </Flex>
