@@ -25,6 +25,24 @@ class genreController {
     const titleBook = await Book.findAll({ where: { title: title } });
     res.send(titleBook);
   };
+
+  static editGenre = async (req, res) => {
+    const { id } = req.params;
+    const { genreName } = req.body;
+    //cambio el nombre del género, pero y los libros asignados a ese género?
+    const editedGenre = await Genre.update({ where: { id } });
+  };
+
+  static deleteGenre = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deleted = await Genre.destroy({ where: { id } });
+      res.sendStatus(204);
+    } catch (error) {
+      //revisar como devolver el error
+      res.send(error);
+    }
+  };
 }
 
 module.exports = genreController;
