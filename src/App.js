@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUser } from "./state/user";
 import CategoriesPage from "./commons/CategoriesPage";
+import Cart from "./components/Cart";
 
 function App() {
   const dispatch= useDispatch();
@@ -32,7 +33,7 @@ function App() {
           <Route path="/" element={ <Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/cart" element={<div>CART</div>} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/search" element={<div>SEARCH</div>} />
           <Route path="/category/:genreId" element={<CategoriesPage/>} />
           <Route path="/book/:id" element={<ProductPage />}/>
