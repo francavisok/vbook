@@ -6,25 +6,27 @@ import { getBooks } from "../state/books";
 
 import AdminBookItem from "../commons/AdminBookItem";
 
-
-import { Flex } from "@chakra-ui/react";
+import { Flex, Button } from "@chakra-ui/react";
 
 const AdminBooks = () => {
   const dispatch = useDispatch();
-  const books = useSelector(state => state.books)
-  console.log('BOOOOKS', books)
+  const books = useSelector((state) => state.books);
+  console.log("BOOOOKS", books);
 
   useEffect(() => {
-    dispatch(getBooks())
+    dispatch(getBooks());
   }, [dispatch]);
 
   return (
     <Flex direction={'column'}>
-        {books.map(book => (
-            <AdminBookItem book={book} />
+      <Button mb={'40px'} >Add new book</Button>
+      <Flex direction={"column"}>
+        {books.map((book) => (
+          <AdminBookItem book={book} />
         ))}
+      </Flex>
     </Flex>
-  )
+  );
 };
 
 export default AdminBooks;

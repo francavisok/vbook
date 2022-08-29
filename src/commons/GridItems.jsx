@@ -11,6 +11,7 @@ import {
   Tooltip,
   useMediaQuery,
   GridItem,
+  Text
 } from "@chakra-ui/react";
 
 //iconos reactIcons
@@ -23,7 +24,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const GridItems = ({ book }) => {
-  const user = useSelector(state => state.user)
+  const user = useSelector((state) => state.user);
   //const [isNotSmallerScreen] = useMediaQuery("(min-width: 700px)");
 
   //array de rating para cantidad de estrellas
@@ -37,7 +38,7 @@ const GridItems = ({ book }) => {
         h={4}
         w={4}
         alignSelf={"center"}
-        mr="20px"
+        mr="10px"
       />
     );
   }
@@ -60,6 +61,7 @@ const GridItems = ({ book }) => {
           shadow="lg"
           position="relative"
           objectFit={"cover"}
+          pt='24px'
         >
           <Link to={`/book/${book.id}`}>
             <Image
@@ -111,9 +113,9 @@ const GridItems = ({ book }) => {
                     color={"gray.800"}
                     fontSize={"1.2em"}
                   >
-                    <chakra.a href={"#"} display={"flex"}>
-                      <Icon as={FaHeart} h={5} w={5} alignSelf={"center"} />
-                    </chakra.a>
+                    <Text as={'span'} alignSelf='center' >
+                      <Icon as={FaHeart} h={5} w={5} alignSelf={"center"} _hover={{color: 'red'}}/>
+                    </Text>
                   </Tooltip>
 
                   <Tooltip
@@ -123,15 +125,16 @@ const GridItems = ({ book }) => {
                     color={"gray.800"}
                     fontSize={"1.2em"}
                   >
-                    <chakra.a href={"#"} display={"flex"}>
+                    <Text as={'span'} alignSelf='center' >
                       <Icon
                         as={FiShoppingCart}
                         h={5}
                         w={5}
                         alignSelf={"center"}
                         ml="20px"
+                        _hover={{color: 'blue'}}
                       />
-                    </chakra.a>
+                    </Text>
                   </Tooltip>
                 </>
               )}

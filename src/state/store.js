@@ -12,7 +12,7 @@ import genreReducer from "./genre";
 import orderReducer from "./order";
 
 const store = configureStore({
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  //middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   reducer: {
     user: userReducer,
     book: bookReducer,
