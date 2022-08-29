@@ -14,6 +14,7 @@ import {
   MenuGroup,
   MenuOptionGroup,
   MenuDivider,
+  Spacer
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 
@@ -24,9 +25,8 @@ import {
   ExternalLinkIcon,
   SearchIcon,
 } from "@chakra-ui/icons";
-import { FaShoppingCart } from "react-icons/fa";
-import {  BiBookBookmark } from "react-icons/bi";
-import {FaHeart} from "react-icons/fa"
+import { FaShoppingCart, FaHeart} from "react-icons/fa";
+import { BiBookBookmark } from "react-icons/bi";
 
 import { useDispatch, useSelector } from "react-redux";
 import { postLogoutUser } from "../state/user";
@@ -36,21 +36,19 @@ import { getGenres } from "../state/genres";
 //1- Corregir Link to="" de "Categories"
 
 const Navbar = () => {
-  
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const genres = useSelector(state=>state.genres)
-  
-  
-  useEffect(()=>{
-    dispatch(getGenres()).then()
-  },[dispatch])
-  
+  const genres = useSelector((state) => state.genres);
+
+  useEffect(() => {
+    dispatch(getGenres()).then();
+  }, [dispatch]);
+
   const handleClick = (e) => {
     e.preventDefault();
     dispatch(postLogoutUser());
   };
-  
+
   return (
     <Box>
       <Flex
@@ -93,10 +91,13 @@ const Navbar = () => {
             </MenuButton>
             <MenuList>
               {genres?.map((genre) => {
-                return(
-                <Link to={`/category/${genre.id} `}>
-                  <MenuItem _hover={{ color: "#d43c8c" }}>{genre.genreName}</MenuItem>
-                </Link>)
+                return (
+                  <Link to={`/category/${genre.id} `}>
+                    <MenuItem _hover={{ color: "#d43c8c" }}>
+                      {genre.genreName}
+                    </MenuItem>
+                  </Link>
+                );
               })}
             </MenuList>
           </Menu>
@@ -132,14 +133,22 @@ const Navbar = () => {
                 >
                   {user.userName}
                 </MenuButton>
+
+                <Spacer></Spacer>
+
                 <MenuList>
                   <Link to={`/favorites`}>
-                    <MenuItem  icon={<FaHeart/>} _hover={{ color: "#d43c8c" }}>
+                    <MenuItem icon={<FaHeart />} _hover={{ color: "#d43c8c" }}>
                       Favorites{" "}
                     </MenuItem>
                   </Link>
                   <Link to={`/boughtItems`}>
-                    <MenuItem icon={<BiBookBookmark/>} _hover={{ color: "#d43c8c" }}>My books</MenuItem>
+                    <MenuItem
+                      icon={<BiBookBookmark />}
+                      _hover={{ color: "#d43c8c" }}
+                    >
+                      My books
+                    </MenuItem>
                   </Link>
                   <MenuDivider />
                   <Link to={`/me`}>
