@@ -28,7 +28,7 @@ const AdminPanel = () => {
       minW={'70%'}
       m={"auto"}
     >
-      <Tabs isFitted variant="enclosed">
+      <Tabs isFitted variant="enclosed" minW={'100%'}>
         <TabList mb="1em">
           <Tab>Users</Tab>
           <Tab>Genres</Tab>
