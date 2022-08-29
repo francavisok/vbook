@@ -7,35 +7,34 @@ import Register from "./components/Register";
 import ProductPage from "./commons/ProductPage";
 import Home from "./components/Home";
 
-
-import { Flex, Box } from "@chakra-ui/react";
+import { Flex, Box, useMediaQuery } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUser } from "./state/user";
 import CategoriesPage from "./commons/CategoriesPage";
 
 function App() {
-  const dispatch= useDispatch();
+  const dispatch = useDispatch();
 
   //se ejecuta una sola vez cuando carga la pagina y ahce un pedido a /me para ver si hay un token
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getUser());
-  }, [dispatch])
-  
+  }, [dispatch]);
 
+  const [isNotSmallerScreen] = useMediaQuery("(min-width: 700px)");
 
   return (
     <Flex direction={"column"} minHeight="100vh">
       <Navbar />
-      <Box p={'9'} flexGrow='1' bg={'#F7F0F5'} >
+      <Box p={isNotSmallerScreen ? "9" : '0'} flexGrow="1" bg={"#F7F0F5"}>
         <Routes>
-          <Route path="/" element={ <Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<div>CART</div>} />
           <Route path="/search" element={<div>SEARCH</div>} />
-          <Route path="/category/:genreId" element={<CategoriesPage/>} />
-          <Route path="/book/:id" element={<ProductPage />}/>
+          <Route path="/category/:genreId" element={<CategoriesPage />} />
+          <Route path="/book/:id" element={<ProductPage />} />
         </Routes>
       </Box>
 

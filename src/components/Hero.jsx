@@ -18,7 +18,7 @@ import {
   InputGroup,
 } from "@chakra-ui/react";
 
-const Hero = () => {
+const Hero = ({setGridTitle}) => {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,7 +33,8 @@ const Hero = () => {
     e.preventDefault();
     dispatch(searchBooksByTitle(value));
     setValue("");
-    navigate("#prueba"); // esto todavia no me anda.. buscar solucion para que onsubmit me lleve mas abajo en la pagina ver el grid de productos
+    setGridTitle('RESULTS OF YOUR SEARCH')
+    window.scrollTo(0, 500)
   };
 
   const handleClick = (e) =>{
