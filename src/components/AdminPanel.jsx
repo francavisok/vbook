@@ -1,5 +1,7 @@
 import React from "react";
 
+import AdminBooks from "./AdminBooks";
+
 import {
   Tabs,
   TabList,
@@ -41,7 +43,7 @@ const AdminPanel = () => {
             <p>genres!</p>
           </TabPanel>
           <TabPanel>
-            <p>books!</p>
+            <AdminBooks />
           </TabPanel>
           <TabPanel>
             <p>orders!</p>
