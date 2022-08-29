@@ -38,7 +38,7 @@ const GridItems = ({ book }) => {
         h={4}
         w={4}
         alignSelf={"center"}
-        ml="20px"
+        mr="20px"
       />
     );
   }
