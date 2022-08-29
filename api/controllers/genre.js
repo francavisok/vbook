@@ -5,6 +5,12 @@ class genreController {
     res.send(await Genre.findAll());
   };
 
+  static getGenreById = async (req, res) => {
+    const { id } = req.params;
+    const genre = await Genre.findByPk(id);
+    res.send(genre);
+  };
+
   static addGenre = async (req, res) => {
     //const newgenre = await Genre.create(req.body)
     const [newGenre, created] = await Genre.findOrCreate({ where: req.body });
