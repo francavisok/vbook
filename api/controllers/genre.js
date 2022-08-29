@@ -5,11 +5,13 @@ class genreController {
     res.send(await Genre.findAll());
   };
 
+
   static getGenreById = async (req, res) => {
     const { id } = req.params;
     const genre = await Genre.findByPk(id);
     res.send(genre);
   };
+
 
   static addGenre = async (req, res) => {
     //const newgenre = await Genre.create(req.body)
@@ -22,12 +24,13 @@ class genreController {
 
   static getProductByGenre = async (req, res) => {
     const { id } = req.params;
+    const genre = await Genre.findByPk(id)
     const genreBooks = await Book.findAll({
       where: { idGenre: id },
     });
 
     console.log(genreBooks);
-    res.send(genreBooks);
+    res.send({genreBooks, genre});
   };
 
   static getProductByTitle = async (req, res) => {
