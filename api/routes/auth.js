@@ -1,5 +1,5 @@
 const express = require("express");
-const User = require("../models/User");
+const { User, Favorite } = require("../models");
 const router = express.Router();
 const { validateAuth } = require("../middleware/auth");
 const AuthController = require("../controllers/auth");
@@ -10,8 +10,16 @@ router.post("/signin", AuthController.userSignUp);
 
 router.post("/logout", AuthController.logOut);
 
-router.get("/me", validateAuth, (req, res) => {
-  res.send(req.user);
+router.get("/me", validateAuth, async (req, res) => {
+  const user = await User.findOne({
+    where: req.user,
+    include: [
+      {
+        model: Favorite,
+      },
+    ],
+  });
+  res.send(user);
 });
 
 module.exports = router;

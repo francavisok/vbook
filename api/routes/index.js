@@ -4,6 +4,7 @@ const Book = require("./book");
 const User = require("./users");
 const Auth = require("./auth");
 const Cart = require("./cart");
+const Favorites = require("./favorites")
 
 const Genre = require("./genre");
 
@@ -14,6 +15,7 @@ router.use("/book", Book);
 router.use("/user", User);
 router.use("/auth", Auth);
 router.use("/cart", Cart);
+router.use("/favorites", Favorites);
 
 router.use("/genres", Genre);
 
