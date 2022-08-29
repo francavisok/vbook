@@ -11,12 +11,13 @@ const Home = () => {
       <Hero setGridTitle={setGridTitle} />
       <Heading
         w="100%"
+        //bgColor={'pink.300'}
         bgGradient="linear(to-r, green.200, pink.500)"
         mb={"100px"}
         textAlign="center"
         //bgColor={"#d53f8c"}
         color="#f7f0f5"
-        py={"70Px"}
+        py={"40Px"}
       >
         {gridTitle}
       </Heading>
