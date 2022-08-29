@@ -20,8 +20,10 @@ import { FiShoppingCart } from "react-icons/fi";
 
 //otros
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const GridItems = ({ book }) => {
+  const user = useSelector(state => state.user)
   //const [isNotSmallerScreen] = useMediaQuery("(min-width: 700px)");
 
   //array de rating para cantidad de estrellas
@@ -99,34 +101,40 @@ const GridItems = ({ book }) => {
                 </Box>
                 {book.price.toFixed(2)}
               </Box>
-              <Tooltip
-                label="Add to favorites"
-                bg="white"
-                placement={"top"}
-                color={"gray.800"}
-                fontSize={"1.2em"}
-              >
-                <chakra.a href={"#"} display={"flex"}>
-                  <Icon as={FaHeart} h={5} w={5} alignSelf={"center"} />
-                </chakra.a>
-              </Tooltip>
-              <Tooltip
-                label="Add to cart"
-                bg="white"
-                placement={"top"}
-                color={"gray.800"}
-                fontSize={"1.2em"}
-              >
-                <chakra.a href={"#"} display={"flex"}>
-                  <Icon
-                    as={FiShoppingCart}
-                    h={5}
-                    w={5}
-                    alignSelf={"center"}
-                    ml="20px"
-                  />
-                </chakra.a>
-              </Tooltip>
+
+              {user.id && (
+                <>
+                  <Tooltip
+                    label="Add to favorites"
+                    bg="white"
+                    placement={"top"}
+                    color={"gray.800"}
+                    fontSize={"1.2em"}
+                  >
+                    <chakra.a href={"#"} display={"flex"}>
+                      <Icon as={FaHeart} h={5} w={5} alignSelf={"center"} />
+                    </chakra.a>
+                  </Tooltip>
+
+                  <Tooltip
+                    label="Add to cart"
+                    bg="white"
+                    placement={"top"}
+                    color={"gray.800"}
+                    fontSize={"1.2em"}
+                  >
+                    <chakra.a href={"#"} display={"flex"}>
+                      <Icon
+                        as={FiShoppingCart}
+                        h={5}
+                        w={5}
+                        alignSelf={"center"}
+                        ml="20px"
+                      />
+                    </chakra.a>
+                  </Tooltip>
+                </>
+              )}
             </Flex>
           </Box>
         </Box>
