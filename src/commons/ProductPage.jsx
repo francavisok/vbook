@@ -38,10 +38,10 @@ const book = useSelector(state=>state.book)
   },[dispatch])
 
 
-  //FIX
+
 const handleAddToCart = (e)=>{
   e.preventDefault();
-  dispatch(addToCart(id))
+  dispatch(addToCart(  Number(id)  ))
 }
 
 

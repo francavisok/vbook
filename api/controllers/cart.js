@@ -32,7 +32,7 @@ class CartController {
       },
     });
     if (cart) {
-      Cart.destroy(cart);
+      Cart.destroy({where:{id:cart.id}});
       res.status(204).send("deleted");
     } else {
       res.status(404).send("This article can't be reached");
