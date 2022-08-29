@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Register from "./components/Register";
 import ProductPage from "./commons/ProductPage";
 import Home from "./components/Home";
+import AdminPanel from "./components/AdminPanel";
 
 import { Flex, Box, useMediaQuery } from "@chakra-ui/react";
 import { useEffect } from "react";
@@ -35,6 +36,7 @@ function App() {
           <Route path="/search" element={<div>SEARCH</div>} />
           <Route path="/category/:genreId" element={<CategoriesPage />} />
           <Route path="/book/:id" element={<ProductPage />} />
+          <Route path='/admin' element={<AdminPanel />} />
         </Routes>
       </Box>
 
