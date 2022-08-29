@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Cart, Order } = require("../models");
+const { Cart, Order, User } = require("../models");
 const transporter = require("../config/transporter");
 
 class OrderController {
@@ -106,6 +106,50 @@ class OrderController {
     });
     Order.destroy({ where: { id: order.id } });
     res.send("deleted");
+  };
+
+  static getAllOrders = async (req, res) => {
+    const orders = await Order.findAll({
+      include: [
+        {
+          model: User,
+        },
+        {
+          model: Cart,
+        },
+      ],
+    });
+    res.send(orders);
+  };
+
+  static modifyOrderStatus = async (req, res) => {
+    if (
+      req.params.state !== "fulfilled" &&
+      req.params.state !== "procesing" &&
+      req.params.state !== "pending" &&
+      req.params.state !== "rejected"
+    ) {
+      return res.send("invalid state")
+    }
+
+    const order = await Order.findOne({
+      where: { id: req.params.id },
+      include: [
+        {
+          model: Cart,
+        },
+      ],
+    });
+
+    order.carts.forEach(async (cart) => {
+      await Cart.update(
+        { state: req.params.state },
+        { where: { id: cart.id } }
+      );
+    });
+
+    Order.update({ state: req.params.state }, { where: { id: req.params.id } });
+    res.send("Updated order status");
   };
 }
 
