@@ -27,7 +27,7 @@ app.use((err, req, res, next) => {
   res.status(500).send(err.message);
 });
 
-db.sync({ force: false})
+db.sync({ force: false })
   .then(function () {
     // Recién ahora estamos seguros que la conexión fue exitosa
     app.listen(3001, () =>

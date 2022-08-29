@@ -6,8 +6,12 @@ class genreController {
   };
 
   static addGenre = async (req, res) => {
-    const newGenre = await Genre.create(req.body);
-    res.send(newGenre);
+    //const newgenre = await Genre.create(req.body)
+    const [newGenre, created] = await Genre.findOrCreate({ where: req.body });
+    created
+      ? res.send(newGenre)
+      : res.status(300).send("this genre already exists");
+    //res.send(newGenre);
   };
 
   static getProductByGenre = async (req, res) => {
@@ -24,6 +28,27 @@ class genreController {
     const { title } = req.body;
     const titleBook = await Book.findAll({ where: { title: title } });
     res.send(titleBook);
+  };
+
+  static editGenre = async (req, res) => {
+    try {
+      const { id } = req.params;
+      let { genreName } = req.body;
+      const editedGenre = await Genre.update({ genreName }, { where: { id } });
+      res.send(editedGenre);
+    } catch (error) {
+      res.send(error.message);
+    }
+  };
+
+  static deleteGenre = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deleted = await Genre.destroy({ where: { id } });
+      res.sendStatus(204);
+    } catch (error) {
+      res.send(error.message);
+    }
   };
 }
 
