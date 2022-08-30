@@ -21,7 +21,6 @@ export const removeFromCart = createAsyncThunk(
     return axios
       .delete(`/api/cart/${productId}`)
       .then((res) => {
-        console.log(res);
         return res.data;
       })
       .catch((error) => console.log(error));
