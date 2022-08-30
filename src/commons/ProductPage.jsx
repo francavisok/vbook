@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getBook } from "../state/book";
 import { addToCart } from "../state/cart";
+import { starGenerator } from "../utils/starsGenerator";
 
 //TODO:
 
@@ -136,12 +137,14 @@ const handleAddToCart = (e)=>{
                 color={useColorModeValue("yellow.500", "yellow.300")}
                 fontWeight={"500"}
                 textTransform={"uppercase"}
-                mt={"5"}
+                mt={"8"}
+                mb={"2"}
+
 
               >
                 RATING
               </Text>
-              <StarIcon color={"yellow.600"} mb={1}/> {book.rating}
+              {starGenerator(book.rating)}
             </Box>
           </Stack>
           <Stack>

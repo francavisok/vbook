@@ -22,7 +22,9 @@ const CategoriesPage = () => {
     <>
       {genreData.genreBooks?.length ? (
         <>
-          <Heading>{genreData.genre?.genreName} books</Heading>
+          <Heading
+          mb={"6"}
+          >{genreData.genre?.genreName} books</Heading>
           <SimpleGrid
              minChildWidth="300px"
             spacing="40px"

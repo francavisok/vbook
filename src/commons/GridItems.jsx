@@ -22,26 +22,12 @@ import { FiShoppingCart } from "react-icons/fi";
 //otros
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { starGenerator } from "../utils/starsGenerator";
 
 const GridItems = ({ book }) => {
   const user = useSelector((state) => state.user);
   //const [isNotSmallerScreen] = useMediaQuery("(min-width: 700px)");
 
-  //array de rating para cantidad de estrellas
-  let arrayRating = [];
-  for (let i = 1; i <= 5; i++) {
-    arrayRating.push(
-      <Icon
-        key={i}
-        as={BsStarFill}
-        color={i <= book.rating ? "gold" : "blackAlpha.400"}
-        h={4}
-        w={4}
-        alignSelf={"center"}
-        mr="10px"
-      />
-    );
-  }
 
   return (
     <GridItem>
@@ -90,7 +76,7 @@ const GridItems = ({ book }) => {
               </Box>
             </Flex>
 
-            <Flex>{arrayRating}</Flex>
+            <Flex>{starGenerator(book.rating)}</Flex>
 
             <Flex justifyContent="space-between" alignContent="center">
               <Box
