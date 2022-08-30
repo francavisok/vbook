@@ -39,6 +39,7 @@ const Profile = () => {
         rounded={"md"}
         overflow={"hidden"}
       >
+        
         <Image
           h={"120px"}
           w={"full"}
