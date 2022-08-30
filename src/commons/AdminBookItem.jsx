@@ -6,7 +6,6 @@ import {
   Spacer,
   Icon,
   Tooltip,
-  VisuallyHidden,
 } from "@chakra-ui/react";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 
@@ -24,7 +23,6 @@ const AdminBookItem = ({ book }) => {
 
   return (
     <Flex width={"100%"} my="10px" >
-      <VisuallyHidden id="bookId">{book.id}</VisuallyHidden>
       <Image src={book.posterURL} boxSize="30px" objectFit={"cover"} />
       <Text ml={"30px"}>{book.title}</Text>
 
