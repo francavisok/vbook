@@ -39,7 +39,7 @@ function App() {
           <Route path="/category/:genreId" element={<CategoriesPage />} />
           <Route path="/book/:id" element={<ProductPage />} />
           <Route path='/admin' element={<AdminPanel />} />
-          <Route path='/me' element={<Profile />} />
+          <Route path='/me' element={<Profile/>} />
         </Routes>
       </Box>
 
