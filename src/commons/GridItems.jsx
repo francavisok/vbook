@@ -11,6 +11,7 @@ import {
   Tooltip,
   useMediaQuery,
   GridItem,
+  Text
 } from "@chakra-ui/react";
 
 //iconos reactIcons
@@ -20,22 +21,24 @@ import { FiShoppingCart } from "react-icons/fi";
 
 //otros
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const GridItems = ({ book }) => {
+  const user = useSelector((state) => state.user);
   //const [isNotSmallerScreen] = useMediaQuery("(min-width: 700px)");
 
   //array de rating para cantidad de estrellas
   let arrayRating = [];
-  for (let i = 0; i < book.rating; i++) {
+  for (let i = 1; i <= 5; i++) {
     arrayRating.push(
       <Icon
         key={i}
         as={BsStarFill}
-        color="gold"
+        color={i <= book.rating ? "gold" : "blackAlpha.400"}
         h={4}
         w={4}
         alignSelf={"center"}
-        mr="20px"
+        mr="10px"
       />
     );
   }
@@ -58,6 +61,7 @@ const GridItems = ({ book }) => {
           shadow="lg"
           position="relative"
           objectFit={"cover"}
+          pt='24px'
         >
           <Link to={`/book/${book.id}`}>
             <Image
@@ -86,7 +90,7 @@ const GridItems = ({ book }) => {
               </Box>
             </Flex>
 
-            <Flex>{arrayRating.map((e, i) => e)}</Flex>
+            <Flex>{arrayRating}</Flex>
 
             <Flex justifyContent="space-between" alignContent="center">
               <Box
@@ -99,34 +103,41 @@ const GridItems = ({ book }) => {
                 </Box>
                 {book.price.toFixed(2)}
               </Box>
-              <Tooltip
-                label="Add to favorites"
-                bg="white"
-                placement={"top"}
-                color={"gray.800"}
-                fontSize={"1.2em"}
-              >
-                <chakra.a href={"#"} display={"flex"}>
-                  <Icon as={FaHeart} h={5} w={5} alignSelf={"center"} />
-                </chakra.a>
-              </Tooltip>
-              <Tooltip
-                label="Add to cart"
-                bg="white"
-                placement={"top"}
-                color={"gray.800"}
-                fontSize={"1.2em"}
-              >
-                <chakra.a href={"#"} display={"flex"}>
-                  <Icon
-                    as={FiShoppingCart}
-                    h={5}
-                    w={5}
-                    alignSelf={"center"}
-                    ml="20px"
-                  />
-                </chakra.a>
-              </Tooltip>
+
+              {user.id && (
+                <>
+                  <Tooltip
+                    label="Add to favorites"
+                    bg="white"
+                    placement={"top"}
+                    color={"gray.800"}
+                    fontSize={"1.2em"}
+                  >
+                    <Text as={'span'} alignSelf='center' >
+                      <Icon as={FaHeart} h={5} w={5} alignSelf={"center"} _hover={{color: 'red'}}/>
+                    </Text>
+                  </Tooltip>
+
+                  <Tooltip
+                    label="Add to cart"
+                    bg="white"
+                    placement={"top"}
+                    color={"gray.800"}
+                    fontSize={"1.2em"}
+                  >
+                    <Text as={'span'} alignSelf='center' >
+                      <Icon
+                        as={FiShoppingCart}
+                        h={5}
+                        w={5}
+                        alignSelf={"center"}
+                        ml="20px"
+                        _hover={{color: 'blue'}}
+                      />
+                    </Text>
+                  </Tooltip>
+                </>
+              )}
             </Flex>
           </Box>
         </Box>

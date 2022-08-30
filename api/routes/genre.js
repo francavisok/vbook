@@ -9,6 +9,8 @@ router.post("/", validateAuth, validateAdmin, genreController.addGenre);
 
 router.get("/:id", genreController.getProductByGenre);
 
+router.get("/find/:id", genreController.getGenreById);
+
 router.put("/:id", validateAuth, validateAdmin, genreController.editGenre);
 
 router.delete("/:id", validateAuth, validateAdmin, genreController.deleteGenre);
