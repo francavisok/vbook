@@ -10,10 +10,12 @@ import {
   Box,
   GridItem,
   Heading,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import CartItem from "../commons/CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../state/order";
+import { cartTotal } from "../utils/cartTotal";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
@@ -24,17 +26,19 @@ const Cart = () => {
     dispatch(getOrder());
   }, [dispatch]);
 
+  const [isNotSmallerScreen] = useMediaQuery('(min-width: 1200px)')
+
+
   return (
     <>
       <SimpleGrid
-        mx={60}
         minChildWidth="300px"
-        spacing="40px"
-        h="200px"
+
         templateRows="repeat(2, 1fr)"
-        gap={4}
+        justifyItems={"center"}
+        ml={isNotSmallerScreen? "300px" : "0"}
       >
-        <GridItem
+        <Box
           rowSpan={1}
           colSpan={2}
           align={"center"}
@@ -47,20 +51,24 @@ const Cart = () => {
         >
           {order.carts?.length
             ? order.carts?.map((book) => {
-                return <CartItem book={book} key={book.productId} />;
+                return <CartItem 
+                book={book} key={book.productId} />;
               })
             : "You have nothing in your cart yet."}
-        </GridItem>
-        <GridItem
+        </Box>
+        <Box
+        maxWidth={"300px"}
+        w={"100%"}
+        mt={isNotSmallerScreen? "8px" : "0px"}
           rounded={"md"}
           h={242}
           boxShadow={"lg"}
           bg={useColorModeValue("white", "gray.700")}
           justifyItems={"center"}
-          align={"center"}
+          align={"center"} 
         >
           <Heading m={5}>TOTAL</Heading>
-          <Text>AR$: </Text>
+          <Text>AR$ {order.carts ? cartTotal(order.carts) : 0} </Text>
           <Button
             rounded={"md"}
             w={"40%"}
@@ -77,7 +85,7 @@ const Cart = () => {
           >
             Buy{" "}
           </Button>
-        </GridItem>
+        </Box>
       </SimpleGrid>
     </>
   );
