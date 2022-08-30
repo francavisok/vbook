@@ -7,7 +7,6 @@ const {
   deleteBook,
   getAllBooks,
   getBookById,
-
   getBookByTitle,
 } = require("../controllers/book");
 
@@ -22,7 +21,5 @@ router.get("/", getAllBooks);
 router.get("/:id", getBookById);
 
 router.get("/find/:title", getBookByTitle);
-
-module.exports = router;
 
 module.exports = router;

@@ -32,7 +32,6 @@ class AuthController {
   static userSignUp = async (req, res) => {
     User.create(req.body)
       .then((user) => res.sendStatus(201)) //cuando se registra no necesitamos el envio de la data del user xq eos se tiene q cargar en el login
-
       .catch((error) => res.send("new error", error));
   };
 
@@ -41,4 +40,4 @@ class AuthController {
   };
 }
 
-module.exports = AuthController;
+module.exports = AuthController;  
