@@ -54,7 +54,7 @@ const AdminBookItem = ({ book }) => {
     async function onSubmit(values) {
       await dispatch(editBook({...values, bookId: book.id }));
       dispatch(getBooks());
-      
+      onClose()
     }
 
   return (
@@ -209,7 +209,6 @@ const AdminBookItem = ({ book }) => {
                   mr={3}
                   isLoading={isSubmitting}
                   type="submit"
-                  onClick={onClose}
                 >
                   Save
                 </Button>

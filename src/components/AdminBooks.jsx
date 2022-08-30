@@ -55,7 +55,7 @@ const AdminBooks = () => {
   async function onSubmit(values) {
     await dispatch(postBook(values));
     dispatch(getBooks());
-    
+    onClose()
   }
 
   return (
@@ -200,7 +200,6 @@ const AdminBooks = () => {
                   mr={3}
                   isLoading={isSubmitting}
                   type="submit"
-                  onClick={onClose}  //como hago para q no se cierre si hay errores?
                 >
                   Save
                 </Button>

@@ -1,6 +1,7 @@
 import React from "react";
 
 import AdminBooks from "./AdminBooks";
+import { AdminGenres } from "./AdminGenres";
 
 import {
   Tabs,
@@ -40,7 +41,7 @@ const AdminPanel = () => {
             <p>users!</p>
           </TabPanel>
           <TabPanel>
-            <p>genres!</p>
+            <AdminGenres />
           </TabPanel>
           <TabPanel>
             <AdminBooks />
