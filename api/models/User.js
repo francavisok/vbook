@@ -11,8 +11,8 @@ class User extends Sequelize.Model {
       .hash(password, this.salt)
       .then((hash) => hash === this.password);
   }
-  setAdmin(){
-    this.role = "admin"
+  setAdmin() {
+    this.role = "admin";
     //User.update({role: "admin"}, {where:{id: 2}})
   }
 }
@@ -24,11 +24,10 @@ User.init(
       unique: true,
       validate: {
         isEmail: true,
-      }
+      },
     },
     password: {
       type: Sequelize.STRING,
-      allowNull: false,
     },
     salt: {
       type: Sequelize.STRING,
@@ -42,27 +41,35 @@ User.init(
       allowNull: false,
     },
     userName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
     },
     role: {
-        type: Sequelize.STRING,
-        defaultValue: 'admin',
-    }
+      type: Sequelize.STRING,
+      defaultValue: "admin",
+    },
+    loginWithGoogle: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
   },
   { sequelize: db, modelName: "user" }
 );
 
-User.afterCreate( async (user)=>{
-  if (user.id === 2) user.setAdmin()
-})
+User.afterCreate(async (user) => {
+  if (user.id === 2) user.setAdmin();
+});
 
 User.beforeCreate((user) => {
-  user.salt = bcrypt.genSaltSync();
-  return user.encryptPassword(user.password, user.salt).then((hash) => {
-    user.password = hash;
-  });
+  if (user.password) {
+    user.salt = bcrypt.genSaltSync();
+    return user.encryptPassword(user.password, user.salt).then((hash) => {
+      user.password = hash;
+    });
+  } else {
+    return;
+  }
 });
 
 module.exports = User;

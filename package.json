@@ -19,6 +19,7 @@
     "express": "^4.18.1",
     "framer-motion": "^6.5.1",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "morgan": "^1.10.0",
     "nodemailer": "^6.7.8",
     "nodemon": "^2.0.19",
@@ -41,7 +42,9 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "server": "nodemon api/server.js",
-    "client": "react-scripts start"
+    "client": "react-scripts start",
+    "make-seed": "npx sequelize-cli seed:generate --name demo",
+    "seed": "npx sequelize-cli db:seed:all"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {
@@ -61,5 +64,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.4.1"
   }
 }

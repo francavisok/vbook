@@ -18,7 +18,6 @@ import {
   ListItem,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { MdLocalShipping, MdOutlineAddShoppingCart } from "react-icons/md";
 import {RiHeartAddFill} from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +26,6 @@ import { getBook } from "../state/book";
 import { addToCart } from "../state/cart";
 
 //TODO:
-//FIX releaseDate format
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -40,10 +38,10 @@ const book = useSelector(state=>state.book)
   },[dispatch])
 
 
-  //FIX
+
 const handleAddToCart = (e)=>{
   e.preventDefault();
-  dispatch(addToCart(book))
+  dispatch(addToCart(  Number(id)  ))
 }
 
 
@@ -126,11 +124,12 @@ const handleAddToCart = (e)=>{
                   </Text>{" "}
                   {book.publisher}
                 </ListItem>
-                {/* <ListItem>
+                <ListItem>
                   <Text as={"span"} fontWeight={"bold"}>
                     Release date: 
                   </Text>{" "}
-                </ListItem> */}
+                  {book?.releaseDate?.slice(0,10)}
+                </ListItem>
               </List>
                 <Text
                 fontSize={{ base: "16px", lg: "18px" }}

@@ -1,6 +1,10 @@
 import React from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { searchBooksByTitle } from "../state/books";
+import { useNavigate } from "react-router-dom";
 
-import { Search2Icon } from '@chakra-ui/icons'
+import { Search2Icon } from "@chakra-ui/icons";
 import {
   Box,
   Heading,
@@ -11,10 +15,38 @@ import {
   Icon,
   Input,
   InputLeftElement,
-  InputGroup
+  InputGroup,
 } from "@chakra-ui/react";
 
-const Hero = () => {
+const Hero = ({setGridTitle}) => {
+  const [value, setValue] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const books = useSelector((state)=>state.books)
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setValue(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(searchBooksByTitle(value));
+    setValue("");
+    setGridTitle('RESULTS OF YOUR SEARCH')
+    window.scrollTo(0, 500)
+  };
+
+  const handleClick = (e) =>{
+    e.preventDefault()
+    if(books.length){
+        const totalBooks = books.length;
+        const randomIndex = Math.floor(Math.random() * totalBooks);
+        const randomId = books[randomIndex].id
+        navigate(`/book/${randomId}`)
+    }
+  }
+
   return (
     <>
       <Container maxW={"3xl"}>
@@ -29,22 +61,30 @@ const Hero = () => {
             fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
             lineHeight={"110%"}
           >
-            Already now what you are looking for ? <br />
+            Already know what you are looking for ? <br />
             <Text as={"span"} color={"green.400"}>
               search here
             </Text>
           </Heading>
-          <InputGroup>
-            <InputLeftElement
-              pointerEvents="none"
-              color="grey.600"
-              fontSize="1.2em"
-              children={<Search2Icon color='green.500' />}
-            />
-            <Input borderColor='black.600' />
-          </InputGroup>
+          <form onSubmit={handleSubmit}>
+            <InputGroup>
+              <InputLeftElement
+                pointerEvents="none"
+                color="grey.600"
+                fontSize="1.2em"
+                children={<Search2Icon color="green.500" />}
+              />
+              <Input
+                borderColor="black.600"
+                value={value}
+                onChange={handleChange}
+              />
+            </InputGroup>
+          </form>
+
           <Text color={"gray.500"}>
-            Still not sure ? Dont worry, click in the button below and get a random book!
+            Still not sure ? Dont worry, click in the button below and get a
+            random book!
           </Text>
           <Stack
             direction={"column"}
@@ -54,6 +94,7 @@ const Hero = () => {
             position={"relative"}
           >
             <Button
+            onClick={handleClick}
               colorScheme={"green"}
               bg={"green.400"}
               rounded={"full"}

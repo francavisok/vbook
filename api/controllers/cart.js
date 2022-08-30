@@ -3,8 +3,8 @@ const { Op } = require("sequelize");
 
 class CartController {
   static addToCart = async (req, res) => {
-    //"productId -> "amount" opcional"
     const newCart = await Cart.create(req.body);
+    let alreadyInOrder = false;
     const order = await Order.findAll({
       where: {
         [Op.or]: [
@@ -12,14 +12,29 @@ class CartController {
           { userId: req.user.id, state: "procesing" },
         ],
       },
+      include: [
+        {
+          model: Cart,
+        },
+      ],
     });
-    if (order.length) {
-      order[0].addCart(newCart);
+    order[0].carts.forEach((cart) => {
+      if (cart.productId === req.body.productId) {
+        alreadyInOrder = true;
+      }
+    });
+
+    if (alreadyInOrder) {
+      res.send("That product is already in your cart");
     } else {
-      const newOrder = await Order.create({ userId: req.user.id });
-      newOrder.addCart(newCart);
+      if (order.length) {
+        order[0].addCart(newCart);
+      } else {
+        const newOrder = await Order.create({ userId: req.user.id });
+        newOrder.addCart(newCart);
+      }
+      res.status(201).send(newCart);
     }
-    res.status(201).send(newCart);
   };
 
   static deleteFromCart = async (req, res) => {
@@ -32,7 +47,7 @@ class CartController {
       },
     });
     if (cart) {
-      Cart.destroy(cart);
+      Cart.destroy({where:{id:cart.id}});
       res.status(204).send("deleted");
     } else {
       res.status(404).send("This article can't be reached");

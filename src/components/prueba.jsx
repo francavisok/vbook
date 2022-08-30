@@ -8,8 +8,6 @@ import { useDispatch } from "react-redux";
 
 import { postLoginUser } from "../state/user";
 
-import jwt_decode from "jwt-decode";
-
 import {
   FormErrorMessage,
   FormLabel,
@@ -22,7 +20,6 @@ import {
   Text,
   useColorModeValue,
   Divider,
-  Box
 } from "@chakra-ui/react";
 
 import { useEffect } from "react";
@@ -31,36 +28,27 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //google login
+//google login
 
-  function handleCallbackResponse(response) {
-    //console.log('encoded jwt', response.credential)
-    let userObject = jwt_decode(response.credential);
-    //console.log('token decoded', userObject)
-    const payload = {
-      name: userObject.given_name,
-      lastname: userObject.family_name,
-      email: userObject.email,
-      userName: userObject.name,
-      loginWithGoogle: true,
-    };
-    dispatch(postLoginUser(payload));
-    navigate("/");
+   function handleCallbackResponse (response){
+    console.log('encoded jwt', response.credential)
   }
 
-  useEffect(() => {
+  useEffect(()=>{ 
     /* global google */
-    google.accounts.id.initialize({
-      client_id:
-        "562725990282-c2kv3hgfmtb2jcs9uknpq9gkarc07d5j.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
+     google.accounts.id.initialize({
+      client_id: "562725990282-c2kv3hgfmtb2jcs9uknpq9gkarc07d5j.apps.googleusercontent.com",
+      callback: handleCallbackResponse
     });
 
-    google.accounts.id.renderButton(document.getElementById("SignInDiv"), {
-      theme: "outline",
-      size: "large",
-    });
+    google.accounts.id.renderbutton(
+      document.getElementById('SignInDiv'),
+      {theme: 'outline', size: 'large'}
+    )
+
   }, []);
+
+   
 
   const {
     handleSubmit,
@@ -69,15 +57,13 @@ const Login = () => {
   } = useForm();
 
   function onSubmit(values) {
-    dispatch(postLoginUser({ ...values, loginWithGoogle: false })).then(
-      (res) => {
-        if (res.payload?.id) {
-          navigate("/");
-        } else {
-          alert("password or mail incorrect. please try again!");
-        }
+    dispatch(postLoginUser(values)).then((res) => {
+      if (res.payload?.id) {
+        navigate("/");
+      } else {
+        alert("password or mail incorrect. please try again!");
       }
-    );
+    });
   }
 
   return (
@@ -142,18 +128,17 @@ const Login = () => {
           >
             Sing in
           </Button>
-          {/*  <Button
+{/*           <Button
             mt={4}
             color={"black"}
             leftIcon={<FcGoogle />}
             variant="outline"
           >
             Login with Google
-          </Button>  */}
-          <Box
-            id="SignInDiv"
-            mt={6}
-          ></Box>
+          </Button> */}
+          <div id="SignInDiv" >
+            
+          </div>
 
           <Divider orientation="horizontal" mt={9} />
 
