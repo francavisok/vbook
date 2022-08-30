@@ -9,6 +9,7 @@ const Favorites = require("./favorites")
 const Genre = require("./genre");
 
 const Order = require("./order");
+const Reviews = require("./reviews")
 
 
 router.use("/book", Book);
@@ -20,6 +21,7 @@ router.use("/favorites", Favorites);
 router.use("/genres", Genre);
 
 router.use("/order", Order);
+router.use("/reviews", Reviews);
 
 
 

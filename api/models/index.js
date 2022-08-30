@@ -4,6 +4,8 @@ const Genre = require("./Genre");
 const Cart = require("./Cart");
 const Order = require("./Order");
 const Favorite = require("./Favorite");
+const Reviews = require('./Reviews');
+const { getNextKeyDef } = require('@testing-library/user-event/dist/keyboard/getNextKeyDef');
 
 //Una orden pertenece a UN usuario
 Order.belongsTo(User);
@@ -16,13 +18,25 @@ Cart.belongsTo(Order);
 Order.hasMany(Cart);
 
 //Un genero pertenece a varios libros
-Genre.hasMany(Book);
+
+Book.belongsTo(Genre)
 //Un producto pertenece a una categoría
-Book.belongsTo(Genre);
+Genre.hasMany(Book)
 
 //Un usuario tiene muchos favoritos
 User.hasMany(Favorite)
 //Cada favorito pertenece a UN usuario
 Favorite.belongsTo(User)
 
-module.exports = { Book, User, Genre, Cart, Order, Favorite };
+//UNA review pertenece a UN libro
+Reviews.belongsTo(Book);
+//Un libro puede tener muchas reviews
+Book.hasMany(Reviews);
+
+//UNA review pertenece a UN user
+Reviews.belongsTo(User);
+//Un user puede tener muchas reviews
+User.hasMany(Reviews);
+
+
+module.exports = {Book, User, Genre, Cart, Order, Favorite, Reviews};

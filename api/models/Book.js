@@ -33,7 +33,7 @@ Book.init(
         type: Sequelize.STRING,
     },
     rating: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         defaultValue: 4
     },
     idGenre: {

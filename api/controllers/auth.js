@@ -53,8 +53,8 @@ class AuthController {
   static userSignUp = async (req, res) => {
     User.create(req.body)
       .then((user) => res.sendStatus(201)) //cuando se registra no necesitamos el envio de la data del user xq eos se tiene q cargar en el login
-
       .catch((error) => res.status(404).send(error.message));
+
   };
 
   static logOut = (req, res) => {
@@ -62,4 +62,4 @@ class AuthController {
   };
 }
 
-module.exports = AuthController;
+module.exports = AuthController;  

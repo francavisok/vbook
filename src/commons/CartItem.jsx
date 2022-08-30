@@ -9,6 +9,8 @@ import {
   Image,
   SimpleGrid,
   Link,
+  Box,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { FaTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +20,7 @@ import { getOrder } from "../state/order";
 const CartItem = ({ book }) => {
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order);
+  const [isNotSmallerScreen] = useMediaQuery("(min-width: 1300px)");
 
   const handleRemove = (e) => {
     e.preventDefault();
@@ -27,19 +30,46 @@ const CartItem = ({ book }) => {
 
   return (
     <>
-      <SimpleGrid columns={4} spacingX={"3rem"} rounded={"lg"}>
-        <Stack p="10" m="4" borderRadius="sm">
-          <Image objectFit="cover" boxSize={"100%"} src={book.productImage} />
-        </Stack>
+      <SimpleGrid
+        templateColumns={
+          isNotSmallerScreen ? "repeat(6, 1fr)" : "repeat(1, 1fr)"
+        }
+        columns={4}
+        spacingX={"3rem"}
+        rounded={"lg"}
+        p={4}
+      >
+        {isNotSmallerScreen ? (
+          <Box  borderRadius="sm">
+            <Image objectFit="cover" boxSize={"100%"} src={book.productImage} />
+          </Box>
+        ) : (
+          ""
+        )}
 
         <Stack
-          ddirection={{ base: "column", md: "row" }}
+          direction={{ base: "column", md: "row" }}
           justifyContent="center"
           align="center"
         >
-          <Text fontWeight="semibold">{book.productTitle}</Text>
+          <Text >{book.productTitle}</Text>
         </Stack>
 
+        <Stack
+          direction={{ base: "column", md: "row" }}
+          justifyContent="center"
+          align={"center"}
+        >
+   
+        </Stack>
+
+        <Stack
+          direction={{ base: "column", md: "row" }}
+          justifyContent="center"
+          align={"center"}
+        >
+          <Text  fontWeight="semibold"> AR${book.totalPrice}</Text>
+        </Stack>
         <Stack
           direction={{ base: "column", md: "row" }}
           justifyContent="center"
@@ -50,13 +80,6 @@ const CartItem = ({ book }) => {
           </Link>
         </Stack>
 
-        <Stack
-          direction={{ base: "column", md: "row" }}
-          justifyContent="center"
-          align={"center"}
-        >
-          <Text> AR${book.totalPrice}</Text>
-        </Stack>
       </SimpleGrid>
       <Divider />
     </>
