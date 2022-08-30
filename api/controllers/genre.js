@@ -28,8 +28,6 @@ class genreController {
     const genreBooks = await Book.findAll({
       where: { idGenre: id },
     });
-
-    console.log(genreBooks);
     res.send({genreBooks, genre});
   };
 
@@ -60,5 +58,6 @@ class genreController {
     }
   };
 }
+
 
 module.exports = genreController;
