@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
 import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   Stack,
   Text,
   Button,
@@ -11,22 +18,43 @@ import {
   GridItem,
   Heading,
   useMediaQuery,
+  useDisclosure,
+  FormControl,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react";
 import CartItem from "../commons/CartItem";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrder } from "../state/order";
+import { continueOrder, getOrder, payOrder } from "../state/order";
 import { cartTotal } from "../utils/cartTotal";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const order = useSelector((state) => state.order);
   const dispatch = useDispatch();
+  const [isNotSmallerScreen] = useMediaQuery('(min-width: 1200px)')
+
+  
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { register, handleSubmit } = useForm();
+
+
+  const handleBuy = ()=>{
+    dispatch(continueOrder())
+    onOpen()
+  }
+  const onSubmit = (values)=>{
+    console.log(values);
+    // dispatch(payOrder())
+    // onClose()
+  }
 
   useEffect(() => {
     dispatch(getOrder());
   }, [dispatch]);
 
-  const [isNotSmallerScreen] = useMediaQuery('(min-width: 1200px)')
 
 
   return (
@@ -69,7 +97,9 @@ const Cart = () => {
         >
           <Heading m={5}>TOTAL</Heading>
           <Text>AR$ {order.carts ? cartTotal(order.carts) : 0} </Text>
+          
           <Button
+          onClick={handleBuy}
             rounded={"md"}
             w={"40%"}
             mt={8}
@@ -82,9 +112,38 @@ const Cart = () => {
               transform: "translateY(2px)",
               boxShadow: "xl",
             }}
-          >
+            >
             Buy{" "}
           </Button>
+            <Modal
+     
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Please complete these fields to continue</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl >
+              <FormLabel>Address</FormLabel>
+              <Input placeholder='Your address' {...register('Address')}/>
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Payment method</FormLabel>
+              <Input disabled placeholder='Credit card' {...register('Method')}/>
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='pink' mr={3} type="submit">
+              Confirm purchase
+            </Button>
+            <Button onClick={onClose} >Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
         </Box>
       </SimpleGrid>
     </>

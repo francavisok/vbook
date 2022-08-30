@@ -39,7 +39,7 @@ class OrderController {
         await Cart.update({ state: "procesing" }, { where: { id: cart.id } });
       });
     }
-    res.status(203).send("Updated");
+    res.status(203).send(cart[0]);
   };
 
   static payOrder = async (req, res) => {
