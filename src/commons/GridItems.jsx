@@ -29,12 +29,12 @@ const GridItems = ({ book }) => {
 
   //array de rating para cantidad de estrellas
   let arrayRating = [];
-  for (let i = 0; i < book.rating; i++) {
+  for (let i = 1; i <= 5; i++) {
     arrayRating.push(
       <Icon
         key={i}
         as={BsStarFill}
-        color="gold"
+        color={i <= book.rating ? "gold" : "blackAlpha.400"}
         h={4}
         w={4}
         alignSelf={"center"}
@@ -90,7 +90,7 @@ const GridItems = ({ book }) => {
               </Box>
             </Flex>
 
-            <Flex>{arrayRating.map((e, i) => e)}</Flex>
+            <Flex>{arrayRating}</Flex>
 
             <Flex justifyContent="space-between" alignContent="center">
               <Box

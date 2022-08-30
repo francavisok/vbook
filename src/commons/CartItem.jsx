@@ -16,16 +16,14 @@ import { removeFromCart } from "../state/cart";
 import { getOrder } from "../state/order";
 
 const CartItem = ({ book }) => {
+  const dispatch = useDispatch();
+  const order = useSelector((state) => state.order);
 
-  const dispatch = useDispatch()
-const order = useSelector(state=>state.order)
-
-const handleRemove = (e) =>{
-  e.preventDefault()
-  dispatch(removeFromCart(book.productId))
-  dispatch(getOrder());
-}
-
+  const handleRemove = (e) => {
+    e.preventDefault();
+    dispatch(removeFromCart(book.productId));
+    dispatch(getOrder());
+  };
 
   return (
     <>
@@ -46,17 +44,18 @@ const handleRemove = (e) =>{
           direction={{ base: "column", md: "row" }}
           justifyContent="center"
           align={"center"}
-        ><Link>
-          <FaTrashAlt color="#BB421E" onClick={handleRemove}/>
+        >
+          <Link>
+            <FaTrashAlt color="#BB421E" onClick={handleRemove} />
           </Link>
         </Stack>
-        
+
         <Stack
           direction={{ base: "column", md: "row" }}
           justifyContent="center"
           align={"center"}
         >
-          <Text > AR${book.totalPrice}</Text>
+          <Text> AR${book.totalPrice}</Text>
         </Stack>
       </SimpleGrid>
       <Divider />

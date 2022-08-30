@@ -41,7 +41,8 @@ const Hero = ({setGridTitle}) => {
     e.preventDefault()
     if(books.length){
         const totalBooks = books.length;
-        const randomId = Math.ceil(Math.random() * totalBooks);
+        const randomIndex = Math.floor(Math.random() * totalBooks);
+        const randomId = books[randomIndex].id
         navigate(`/book/${randomId}`)
     }
   }
@@ -60,7 +61,7 @@ const Hero = ({setGridTitle}) => {
             fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
             lineHeight={"110%"}
           >
-            Already now what you are looking for ? <br />
+            Already know what you are looking for ? <br />
             <Text as={"span"} color={"green.400"}>
               search here
             </Text>

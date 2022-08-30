@@ -86,8 +86,8 @@ const Navbar = () => {
           <MenuList>
             {genres?.map((genre, i) => {
               return (
-                <Link to={`/category/${genre.id} `}>
-                  <MenuItem _hover={{ color: "#d43c8c" }} key={i}>
+                <Link to={`/category/${genre.id} `} key={i}>
+                  <MenuItem _hover={{ color: "#d43c8c" }} >
                     {genre.genreName}
                   </MenuItem>
                 </Link>
@@ -102,7 +102,6 @@ const Navbar = () => {
           <>
             <Link to="/cart">
               <Button
-                as="a"
                 variant="ghost"
                 aria-label="Cart"
                 minW={"fit-content"}
@@ -175,7 +174,6 @@ const Navbar = () => {
             <Button
               colorScheme="pink"
               rounded="md"
-              as="a"
               variant="ghost"
               aria-label="Login"
               mx={1}
