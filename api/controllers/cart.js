@@ -18,7 +18,7 @@ class CartController {
         },
       ],
     });
-    order[0].carts.forEach((cart) => {
+    order[0]?.carts.forEach((cart) => {
       if (cart.productId === req.body.productId) {
         alreadyInOrder = true;
       }
