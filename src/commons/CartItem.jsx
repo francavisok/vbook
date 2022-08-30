@@ -24,8 +24,7 @@ const CartItem = ({ book }) => {
 
   const handleRemove = (e) => {
     e.preventDefault();
-    dispatch(removeFromCart(book.productId));
-    dispatch(getOrder());
+    dispatch(removeFromCart(book.productId)).then(() => dispatch(getOrder()));
   };
 
   return (
@@ -40,7 +39,7 @@ const CartItem = ({ book }) => {
         p={4}
       >
         {isNotSmallerScreen ? (
-          <Box  borderRadius="sm">
+          <Box borderRadius="sm">
             <Image objectFit="cover" boxSize={"100%"} src={book.productImage} />
           </Box>
         ) : (
@@ -52,23 +51,21 @@ const CartItem = ({ book }) => {
           justifyContent="center"
           align="center"
         >
-          <Text >{book.productTitle}</Text>
+          <Text>{book.productTitle}</Text>
         </Stack>
 
         <Stack
           direction={{ base: "column", md: "row" }}
           justifyContent="center"
           align={"center"}
-        >
-   
-        </Stack>
+        ></Stack>
 
         <Stack
           direction={{ base: "column", md: "row" }}
           justifyContent="center"
           align={"center"}
         >
-          <Text  fontWeight="semibold"> AR${book.totalPrice}</Text>
+          <Text fontWeight="semibold"> AR${book.totalPrice}</Text>
         </Stack>
         <Stack
           direction={{ base: "column", md: "row" }}
@@ -79,7 +76,6 @@ const CartItem = ({ book }) => {
             <FaTrashAlt color="#BB421E" onClick={handleRemove} />
           </Link>
         </Stack>
-
       </SimpleGrid>
       <Divider />
     </>
