@@ -27,7 +27,7 @@ import { starGenerator } from "../utils/starsGenerator";
 
 const GridItems = ({ book, favorites }) => {
   const user = useSelector(async (state) => state.user);
-  console.log(user)
+  //console.log(user)
   const isInFavorites = (favorites?.indexOf(book.id) !== -1)
 
   const handleFavorite = (e) => {
