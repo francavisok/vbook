@@ -17,6 +17,7 @@ import { getUser } from "./state/user";
 import CategoriesPage from "./commons/CategoriesPage";
 import Cart from "./components/Cart";
 import CheckOut from "./components/CheckOut";
+import FavoritesPage from "./components/FavoritesPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<CheckOut />} />
-          <Route path="/search" element={<div>SEARCH</div>} />
+          <Route path="/favorites" element={<FavoritesPage/>} />
           <Route path="/category/:genreId" element={<CategoriesPage />} />
           <Route path="/book/:id" element={<ProductPage />} />
           <Route path='/admin' element={<AdminPanel />} />
