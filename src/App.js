@@ -18,6 +18,7 @@ import CategoriesPage from "./commons/CategoriesPage";
 import Cart from "./components/Cart";
 import CheckOut from "./components/CheckOut";
 import FavoritesPage from "./components/FavoritesPage";
+import { getAllFavoritesFromUser } from "./state/favorites";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function App() {
   //se ejecuta una sola vez cuando carga la pagina y ahce un pedido a /me para ver si hay un token
   useEffect(() => {
     dispatch(getUser());
+    dispatch(getAllFavoritesFromUser())
   }, [dispatch]);
 
   const [isNotSmallerScreen] = useMediaQuery("(min-width: 700px)");
