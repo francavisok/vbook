@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { getUser } from "./state/user";
 import CategoriesPage from "./commons/CategoriesPage";
 import Cart from "./components/Cart";
-import PaymentPage from "./components/PaymentPage";
+import CheckOut from "./components/CheckOut";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/pay" element={<PaymentPage />} />
+          <Route path="/checkout" element={<CheckOut />} />
           <Route path="/search" element={<div>SEARCH</div>} />
           <Route path="/category/:genreId" element={<CategoriesPage />} />
           <Route path="/book/:id" element={<ProductPage />} />
