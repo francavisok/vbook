@@ -18,7 +18,10 @@ router.put("/demote/:id", validateAuth, validateAdmin, demoteUser);
 
 router.delete("/:id", validateAuth, validateAdmin, deleteUser);
 
+//para traer todos los usuarios
 router.get("/getAll", validateAuth, validateAdmin, getUsers);
+
+//para traer todos los usuarios menos el logueado
 router.get("/getAllUsers", validateAuth, validateAdmin, getAllUsers);
 
 module.exports = router;

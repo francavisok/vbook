@@ -3,7 +3,7 @@ import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 
 export const getUsers = createAsyncThunk("USERS", () => {
   return axios
-    .get("/api/user/getAll")
+    .get("/api/user/getAllUsers")
     .then((res) => res.data)
     .catch((err) => console.log(err));
 });
