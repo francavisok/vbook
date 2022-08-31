@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 
 import userReducer from "./user";
+import usersReducer from "./users";
+import userAdminActionsReducer from "./userAdminActions";
 import bookReducer from "./book";
 import booksReducer from "./books";
 import favoritesReducer from "./favorites";
@@ -12,9 +14,11 @@ import genreReducer from "./genre";
 import orderReducer from "./order";
 
 const store = configureStore({
-  //middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   reducer: {
     user: userReducer,
+    users: usersReducer,
+    userAdminActions: userAdminActionsReducer,
     book: bookReducer,
     books: booksReducer,
     favorites: favoritesReducer,

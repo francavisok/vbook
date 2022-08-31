@@ -29,7 +29,7 @@ function deleteUser(req, res, next) {
   if (req.user.id === Number(req.params.id)) {
     res.send("You can't delete yourself!");
   } else {
-    User.delete({ id: Number(req.params.id) }).then(() => {
+    User.destroy({where: { id: Number(req.params.id) }}).then(() => {  //cambie delete por destroy y agregue el where
       res.send("deleted user");
     });
   }
