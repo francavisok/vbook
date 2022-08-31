@@ -50,7 +50,6 @@ function getAllUsers(req, res, next) {
     }
   }).then((users) => {
     res.send(users)
-  })
-  
+  });
 }
 module.exports = { editUser, promoteUser, demoteUser, deleteUser, getUsers, getAllUsers };
