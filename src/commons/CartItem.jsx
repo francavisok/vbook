@@ -51,7 +51,7 @@ const CartItem = ({ book }) => {
       >
         {isNotSmallerScreen ? (
           <Box borderRadius="sm">
-            <Image objectFit="cover" boxSize={"100%"} src={book.productImage} />
+            <Image objectFit="cover" boxSize={"1sm"} src={book.productImage} />
           </Box>
         ) : (
           ""

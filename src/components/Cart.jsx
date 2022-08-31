@@ -35,6 +35,7 @@ import {
   MenuItemOption,
   Radio,
   RadioGroup,
+  Container,
 } from "@chakra-ui/react";
 import CartItem from "../commons/CartItem";
 import { useDispatch, useSelector } from "react-redux";
@@ -86,11 +87,11 @@ const Cart = () => {
 
   return (
     <>
+    <Container maxW='8xl'>
       <SimpleGrid
         minChildWidth="300px"
         templateRows="repeat(2, 1fr)"
         justifyItems={"center"}
-        ml={isNotSmallerScreen ? "300px" : "0"}
       >
         <Box
           rowSpan={1}
@@ -112,7 +113,7 @@ const Cart = () => {
         <Box
           maxWidth={"300px"}
           w={"100%"}
-          mt={isNotSmallerScreen ? "8px" : "0px"}
+          mt={isNotSmallerScreen ? "8px" : "10px"}
           rounded={"md"}
           h={242}
           boxShadow={"lg"}
@@ -193,6 +194,7 @@ const Cart = () => {
           </Modal>
         </Box>
       </SimpleGrid>
+      </Container>
     </>
   );
 };
