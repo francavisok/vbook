@@ -1,3 +1,4 @@
+const { Op} = require('sequelize')
 const User = require("../models/User");
 
 function editUser(req, res, next) {
@@ -39,4 +40,17 @@ function getUsers(req, res, next) {
     res.send(usuarios);
   });
 }
-module.exports = { editUser, promoteUser, demoteUser, deleteUser, getUsers };
+
+function getAllUsers(req, res, next) {
+  User.findAll({
+    where:{
+      id: {
+        [Op.ne]: req.user.id,
+      }
+    }
+  }).then((users) => {
+    res.send(users)
+  })
+  
+}
+module.exports = { editUser, promoteUser, demoteUser, deleteUser, getUsers, getAllUsers };
