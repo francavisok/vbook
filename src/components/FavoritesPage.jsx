@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 
-import { Container, Flex, Heading, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import { Container, Flex, Heading, SimpleGrid, useColorModeValue, useToast } from "@chakra-ui/react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrdersFromUser } from "../state/orders";
@@ -8,13 +8,22 @@ import { getAllOrdersFromUser } from "../state/orders";
 import OrderFullfiledCard from "../commons/OrderFullfiledCard";
 import { getAllFavoritesFromUser } from "../state/favorites";
 import GridItems from "../commons/GridItems";
+import { useNavigate } from "react-router-dom";
 
 const FavoritesPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const toast = useToast()
+
+
   const favorites = useSelector(state=> state.favorites)
+  const user = useSelector((state) => state.user);
+
 
   useEffect(()=>{
-    dispatch(getAllFavoritesFromUser())
+    user?.id ?   dispatch(getAllFavoritesFromUser()):
+    navigate("/login");
+
   }, [dispatch])
 
 
