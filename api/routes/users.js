@@ -7,6 +7,7 @@ const {
   demoteUser,
   deleteUser,
   getUsers,
+  getAllUsers,
 } = require("../controllers/users");
 
 router.put("/editUser", validateAuth, editUser);
@@ -18,5 +19,6 @@ router.put("/demote/:id", validateAuth, validateAdmin, demoteUser);
 router.delete("/:id", validateAuth, validateAdmin, deleteUser);
 
 router.get("/getAll", validateAuth, validateAdmin, getUsers);
+router.get("/getAllUsers", validateAuth, validateAdmin, getAllUsers);
 
 module.exports = router;
