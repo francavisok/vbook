@@ -34,7 +34,7 @@ class OrderController {
       ],
     });
 
-    if (cart[0].carts) {
+    if (cart[0]?.carts) {
       cart[0].carts.forEach(async (cart) => {
         await Cart.update({ state: "procesing" }, { where: { id: cart.id } });
       });
@@ -66,12 +66,12 @@ class OrderController {
         await Cart.update({ state: "fulfilled" }, { where: { id: cart.id } });
       });
     }
-    await transporter.sendMail({
-      from: '"Vbook team 🕶" <VbookP5@gmail.com>',
-      to: req.user.email, // list of receivers
-      subject: "Your order has been fulfilled ✔🛒", // Subject line
-      html: "<h1>Thank you for choosing us!</h1>", // html body
-    });
+    // await transporter.sendMail({
+    //   from: '"Vbook team 🕶" <VbookP5@gmail.com>',
+    //   to: req.user.email, // list of receivers
+    //   subject: "Your order has been fulfilled ✔🛒", // Subject line
+    //   html: "<h1>Thank you for choosing us!</h1>", // html body
+    // });
 
     res.status(203).send(cart);
   };

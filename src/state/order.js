@@ -23,9 +23,9 @@ export const getOrder = createAsyncThunk(
 
   export const payOrder = createAsyncThunk(
     "PAY_ORDER",
-    (direction, paymentMethod) => {
+    ({direction, paymentMethod}) => {
       return axios
-        .put(`/api/order/pay`,{direction, paymentMethod})
+        .put(`/api/order/pay`,{direction, paymentMethod:"Credit card"})
         .then((res) => res.data)
         .catch((error) => console.log(error));
     }

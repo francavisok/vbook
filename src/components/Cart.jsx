@@ -45,10 +45,9 @@ const Cart = () => {
     dispatch(continueOrder())
     onOpen()
   }
-  const onSubmit = (values)=>{
-    console.log(values);
-    // dispatch(payOrder())
-    // onClose()
+  const onSubmit = async (values)=>{
+    await dispatch(payOrder(values))
+     onClose()
   }
 
   useEffect(() => {
@@ -123,25 +122,29 @@ const Cart = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Please complete these fields to continue</ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton 
+          />
+          <form onSubmit={handleSubmit(onSubmit)}>
+
           <ModalBody pb={6}>
             <FormControl >
               <FormLabel>Address</FormLabel>
-              <Input placeholder='Your address' {...register('Address')}/>
+              <Input placeholder='Your address' {...register('direction')}/>
             </FormControl>
 
             <FormControl mt={4}>
               <FormLabel>Payment method</FormLabel>
-              <Input disabled placeholder='Credit card' {...register('Method')}/>
+              <Input disabled placeholder='Credit card' {...register('paymentMethod')}/>
             </FormControl>
-          </ModalBody>
-
-          <ModalFooter>
+          <Flex mt={7} justify={"end"}>
             <Button colorScheme='pink' mr={3} type="submit">
               Confirm purchase
             </Button>
             <Button onClick={onClose} >Cancel</Button>
-          </ModalFooter>
+            </Flex>
+            </ModalBody>
+
+            </form>
         </ModalContent>
       </Modal>
         </Box>
