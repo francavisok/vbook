@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react";
 
 import { useForm, Controller } from "react-hook-form";
-import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import { FaTrashAlt, FaEdit, FaUserEdit, FaUserAlt } from "react-icons/fa";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -72,7 +72,8 @@ const AdminUserItem = ({ user }) => {
   }
 
   return (
-    <Flex width={"100%"} my="10px">
+    <Flex width={"100%"} my="10px" align={'center'}>
+      <Icon as={FaUserAlt}/>
       <Text ml={"30px"}>{`${user.name} ${user.lastname} (${user.role})`}</Text>
 
       <Spacer />
@@ -84,7 +85,7 @@ const AdminUserItem = ({ user }) => {
         fontSize={"1.2em"}
       >
         <span>
-          <Icon as={FaEdit} _hover={{ color: "blue" }} onClick={onOpen} />
+          <Icon as={FaUserEdit} _hover={{ color: "blue" }} onClick={onOpen} />
         </span>
       </Tooltip>
       <Modal
