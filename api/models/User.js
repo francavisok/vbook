@@ -49,7 +49,7 @@ User.init(
       type: Sequelize.STRING,
       defaultValue: "admin",
     },
-    loginWithGoogle: {
+    loginWithOauth: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
     },

@@ -18,23 +18,21 @@ export const postLoginUser = createAsyncThunk(
   "LOGIN_USER",
   (userObj, thunkAPI) => {
     return axios
-      .post("/api/auth/login", userObj, {withCredentials: true}) //para que se monte correctamente la cookie tuve que agregar el withCredentials: true
+      .post("/api/auth/login", userObj, { withCredentials: true }) //para que se monte correctamente la cookie tuve que agregar el withCredentials: true
       .then((res) => res.data)
       .catch((err) => err.response.data);
   }
 );
 
-export const postLogoutUser = createAsyncThunk(
-  "LOGOUT_USER",
-  () => {
-    return axios
-      .post("/api/auth/logout", {})
-      .then((res) => {
-        console.log(res.data, 'es la resdataaa')
-        return res.data})
-      .catch((err) => console.log(err));
-  }
-);
+export const postLogoutUser = createAsyncThunk("LOGOUT_USER", () => {
+  return axios
+    .post("/api/auth/logout", {})
+    .then((res) => {
+      console.log(res.data, "es la resdataaa");
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+});
 
 const userReducer = createReducer(
   {},
