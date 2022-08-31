@@ -1,7 +1,7 @@
 import React from "react";
 import GridItems from "./GridItems";
 
-import { Grid, SimpleGrid } from '@chakra-ui/react'
+import { Container, Grid, SimpleGrid } from '@chakra-ui/react'
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -23,11 +23,13 @@ const GridComponent = () => {
 
   return (
     books.length ? (
+      <Container maxW='6xl'>
         <SimpleGrid /* templateColumns={isNotSmallerScreen ?  'repeat(3, 1fr)' : 'repeat(1, 1fr)' } gap={'40px'} */ minChildWidth='300px' spacing='40px'> 
           {books.map(book => (
             <GridItems key={book.id} book={book} favorites={favorites}/>
           ))}
         </SimpleGrid>
+        </Container>
     ) : 'Nothing was found, try again'
   );
 };
