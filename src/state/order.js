@@ -25,14 +25,14 @@ export const getOrder = createAsyncThunk(
     "PAY_ORDER",
     ({direction, paymentMethod}) => {
       return axios
-        .put(`/api/order/pay`,{direction, paymentMethod:"Credit card"})
+        .put(`/api/order/pay`,{direction, paymentMethod})
         .then((res) => res.data)
         .catch((error) => console.log(error));
     }
   );
 
 
-  const orderReducer = createReducer([], {
+  const orderReducer = createReducer({}, {
 
     [getOrder.fulfilled]: (state, action) => action.payload,
     [continueOrder.fulfilled]: (state, action) => action.payload,
