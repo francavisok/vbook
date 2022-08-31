@@ -27,7 +27,7 @@ import CartItem from "../commons/CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { continueOrder, getOrder, payOrder } from "../state/order";
 import { cartTotal } from "../utils/cartTotal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const Cart = () => {
@@ -39,7 +39,7 @@ const Cart = () => {
   
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, handleSubmit } = useForm();
-
+const navigate = useNavigate()
 
   const handleBuy = ()=>{
     dispatch(continueOrder())
@@ -47,7 +47,7 @@ const Cart = () => {
   }
   const onSubmit = async (values)=>{
     await dispatch(payOrder(values))
-     onClose()
+     navigate("/checkout")
   }
 
   useEffect(() => {
