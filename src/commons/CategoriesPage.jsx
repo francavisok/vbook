@@ -1,4 +1,4 @@
-import { Grid, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Container, Grid, Heading, SimpleGrid } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -25,6 +25,7 @@ const CategoriesPage = () => {
           <Heading
           mb={"6"}
           >{genreData.genre?.genreName} books</Heading>
+          <Container maxW='6xl'>
           <SimpleGrid
              minChildWidth="300px"
             spacing="40px"
@@ -33,6 +34,7 @@ const CategoriesPage = () => {
               <GridItems key={book.id} book={book} />
             ))}
           </SimpleGrid>
+          </Container>
         </>
       ) : (
         "Nothing was found, try again"

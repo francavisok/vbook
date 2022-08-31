@@ -28,32 +28,52 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { starGenerator } from "../utils/starsGenerator";
 import { addToCart } from "../state/cart";
+import {
+  addFavorite,
+  getAllFavoritesFromUser,
+  removeFavorite,
+} from "../state/favorites";
+import { isInFavorites } from "../utils/isInFavorites";
 
 const GridItems = ({ book, favorites }) => {
-
   const dispatch = useDispatch();
-  const toast = useToast()
+  const toast = useToast();
 
-  const user = useSelector( (state) => state.user);
-  const isInFavorites = (favorites?.indexOf(book.id) !== -1)
-
-
-  const handleFavorite = (e) => {
-    e.preventDefault();
-  };
+  const user = useSelector((state) => state.user);
 
   //const [isNotSmallerScreen] = useMediaQuery("(min-width: 700px)");
-  const handleAddToCart = async (e)=>{
+  const handleAddToCart = async (e) => {
+    let message;
+    let typeOfMessage;
     e.preventDefault();
-    await dispatch(addToCart(  book.id  ))
+    await dispatch(addToCart(book.bookId || book.id)).then((res) => {
+      if (typeof res.payload !== "string") {
+        message = `Book added to your cart`;
+        typeOfMessage = "success";
+      } else {
+        message = `The book is already in your cart`;
+        typeOfMessage = "warning";
+      }
+    });
+
     toast({
-      description: `Book added to your cart`,
-      status: "success",
+      description: message,
+      status: typeOfMessage,
       position: "top",
       duration: 3000,
       isClosable: true,
-    })
-  }
+    });
+  };
+
+  const handleAddToFavorites = async (e) => {
+    e.preventDefault();
+    await dispatch(addFavorite(book.bookId || book.id));
+  };
+  const handleRemoveFromFavorites = async (e) => {
+    e.preventDefault();
+    await dispatch(removeFavorite(book.bookId || book.id));
+    dispatch(getAllFavoritesFromUser());
+  };
 
   return (
     <GridItem>
@@ -77,8 +97,8 @@ const GridItems = ({ book, favorites }) => {
         >
           <Link to={`/book/${book.id}`}>
             <Image
-              src={book.posterURL}
-              alt={`Picture of ${book.title}`}
+              src={book.posterURL || book.bookImage}
+              alt={`Picture of ${book.title || book.bookTitle}`}
               roundedTop="lg"
               //width={"200px"}
               height={"160px"}
@@ -98,7 +118,7 @@ const GridItems = ({ book, favorites }) => {
                 lineHeight="tight"
                 noOfLines={1}
               >
-                {book.title}
+                {book.title || book.bookTitle}
               </Box>
             </Flex>
 
@@ -116,46 +136,47 @@ const GridItems = ({ book, favorites }) => {
                 {book.price.toFixed(2)}
               </Box>
 
-              {user?.id ? 
+              {user?.id ? (
                 <>
-                  {isInFavorites ? (<Tooltip
-                    label="Remove from favorites"
-                    bg="white"
-                    placement={"top"}
-                    color={"gray.800"}
-                    fontSize={"1.2em"}
-                  >
-                    <Text as={"span"} alignSelf="center">
-                      <Icon
-                        as={FaHeart}
-                        h={5}
-                        w={5}
-                        alignSelf={"center"}
-                        _hover={ {color: "#D83201"} }
-                        onClick={handleFavorite}
-                      />
-                    </Text>
-                  </Tooltip>)
-                  :
-                  (<Tooltip
-                  label="Add to favorites"
-                  bg="white"
-                  placement={"top"}
-                  color={"gray.800"}
-                  fontSize={"1.2em"}
-                >
-                  <Text as={"span"} alignSelf="center">
-                    <Icon
-                      as={FaRegHeart}
-                      h={5}
-                      w={5}
-                      alignSelf={"center"}
-                      _hover={{ color: "#D83201" }}
-                      onClick={handleFavorite}
-                    />
-                  </Text>
-                </Tooltip>)
-                  }
+                  {isInFavorites(favorites, book.bookId || book.id) ? (
+                    <Tooltip
+                      label="Remove from favorites"
+                      bg="white"
+                      placement={"top"}
+                      color={"gray.800"}
+                      fontSize={"1.2em"}
+                    >
+                      <Text as={"span"} alignSelf="center">
+                        <Icon
+                          as={FaHeart}
+                          h={5}
+                          w={5}
+                          alignSelf={"center"}
+                          _hover={{ color: "#D83201" }}
+                          onClick={handleRemoveFromFavorites}
+                        />
+                      </Text>
+                    </Tooltip>
+                  ) : (
+                    <Tooltip
+                      label="Add to favorites"
+                      bg="white"
+                      placement={"top"}
+                      color={"gray.800"}
+                      fontSize={"1.2em"}
+                    >
+                      <Text as={"span"} alignSelf="center">
+                        <Icon
+                          as={FaRegHeart}
+                          h={5}
+                          w={5}
+                          alignSelf={"center"}
+                          _hover={{ color: "#D83201" }}
+                          onClick={handleAddToFavorites}
+                        />
+                      </Text>
+                    </Tooltip>
+                  )}
 
                   <Tooltip
                     label="Add to cart"
@@ -176,10 +197,10 @@ const GridItems = ({ book, favorites }) => {
                       />
                     </Text>
                   </Tooltip>
-                </>:<></>
-              
-              
-          }
+                </>
+              ) : (
+                <></>
+              )}
             </Flex>
           </Box>
         </Box>
