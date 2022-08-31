@@ -10,6 +10,10 @@ import { postLoginUser } from "../state/user";
 
 import jwt_decode from "jwt-decode";
 
+import FacebookLogin from "react-facebook-login";
+
+import ReactDOM from "react-dom";
+
 import {
   FormErrorMessage,
   FormLabel,
@@ -22,7 +26,7 @@ import {
   Text,
   useColorModeValue,
   Divider,
-  Box
+  Box,
 } from "@chakra-ui/react";
 
 import { useEffect } from "react";
@@ -42,11 +46,25 @@ const Login = () => {
       lastname: userObject.family_name,
       email: userObject.email,
       userName: userObject.name,
-      loginWithGoogle: true,
+      loginWithOauth: true,
     };
     dispatch(postLoginUser(payload));
     navigate("/");
   }
+
+  const responseFacebook = (response) => {
+    console.log("soy split", response.name.split(" "));
+
+    const payload = {
+      name: response.name.split(" ")[0],
+      lastname: response.name.split(" ")[1],
+      email: response.email,
+      userName: response.name,
+      loginWithOauth: true,
+    };
+    dispatch(postLoginUser(payload));
+    navigate("/");
+  };
 
   useEffect(() => {
     /* global google */
@@ -60,6 +78,11 @@ const Login = () => {
       theme: "outline",
       size: "large",
     });
+
+    // ReactDOM.render(
+
+    //   document.getElementById("SignInDivFacebook")
+    // );
   }, []);
 
   const {
@@ -69,7 +92,7 @@ const Login = () => {
   } = useForm();
 
   function onSubmit(values) {
-    dispatch(postLoginUser({ ...values, loginWithGoogle: false })).then(
+    dispatch(postLoginUser({ ...values, loginWithOauth: false })).then(
       (res) => {
         if (res.payload?.id) {
           navigate("/");
@@ -150,10 +173,15 @@ const Login = () => {
           >
             Login with Google
           </Button>  */}
-          <Box
-            id="SignInDiv"
-            mt={6}
-          ></Box>
+          <Box id="SignInDiv" mt={6}></Box>
+          <Box id="SignInDivFacebook" mt={6}>
+            <FacebookLogin
+              appId="500567122070563"
+              autoLoad={false}
+              fields="name,email"
+              callback={responseFacebook}
+            />
+          </Box>
 
           <Divider orientation="horizontal" mt={9} />
 

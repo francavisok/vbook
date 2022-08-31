@@ -7,7 +7,7 @@ class AuthController {
       const { password, email } = req.body;
       let payload;
 
-      if (!req.body.loginWithGoogle) {
+      if (!req.body.loginWithOauth) {
         const user = await User.findOne({ where: { email } });
         if (!user) return res.status(401).send("user not found"); //agregue esta linea p chequear si encontraba bien el usuario
 
@@ -29,7 +29,7 @@ class AuthController {
             lastname: req.body.lastname,
             userName: req.body.userName,
             email: req.body.email,
-            loginWithGoogle: req.body.loginWithGoogle,
+            loginWithOauth: req.body.loginWithOauth,
           },
         });
 
