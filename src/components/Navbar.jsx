@@ -33,6 +33,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postLogoutUser } from "../state/user";
 import { getGenres } from "../state/genres";
 
+import { useNavigate } from "react-router-dom";
 //TODO:
 //1- Corregir Link to="" de "Categories"
 
@@ -40,6 +41,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const genres = useSelector((state) => state.genres);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getGenres()).then();
@@ -48,6 +50,7 @@ const Navbar = () => {
   const handleClick = (e) => {
     e.preventDefault();
     dispatch(postLogoutUser());
+    navigate('/login')
   };
 
   return (
