@@ -68,11 +68,25 @@ const GridItems = ({ book, favorites }) => {
   const handleAddToFavorites = async (e) => {
     e.preventDefault();
     await dispatch(addFavorite(book.bookId || book.id));
+    toast({
+      description: "Book added to your favorites",
+      status: "success",
+      position: "top",
+      duration: 3000,
+      isClosable: true,
+    });
   };
   const handleRemoveFromFavorites = async (e) => {
     e.preventDefault();
     await dispatch(removeFavorite(book.bookId || book.id));
     dispatch(getAllFavoritesFromUser());
+    toast({
+      description: "Book removed from your favorites",
+      status: "warning",
+      position: "top",
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   return (
