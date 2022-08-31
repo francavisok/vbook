@@ -9,12 +9,24 @@ import {
   Button,
   Image,
 } from "@chakra-ui/react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 const OrderFullfiledCard = ({ order }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const navigate = useNavigate();
-  function handleClick(productId){
-    navigate(`/book/${productId}`)
+  function handleClick(productId) {
+    navigate(`/book/${productId}`);
   }
   return (
     <Flex
@@ -34,7 +46,29 @@ const OrderFullfiledCard = ({ order }) => {
       <Flex align={"center"} w={"100%"}>
         <Text>{order.createdAt.split("T")[0]}</Text>
         <Spacer />
-        <Button size="sm" colorScheme='pink'>View details</Button>
+        <Button size="sm" colorScheme="pink" onClick={onOpen}>
+          View details
+        </Button>
+        <Modal isOpen={isOpen} onClose={onClose} isCentered>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Purchase details</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Flex direction={'column'}>
+                <Heading size={'sm'}>Adress</Heading>
+                <Text>{order.direction}</Text>
+                <Heading size={'sm'} mt={'25px'}>Payment method</Heading>
+                <Text>{order.paymentMethod}</Text>
+              </Flex>
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Flex>
 
       <Divider my={"15px"} />
@@ -44,7 +78,9 @@ const OrderFullfiledCard = ({ order }) => {
           <Image src={book.productImage} boxSize="30px" objectFit={"cover"} />
           <Text ml={"30px"}>{book.productTitle}</Text>
           <Spacer />
-          <Button size="sm" onClick={()=>handleClick(book.productId)}>Leave review</Button>
+          <Button size="sm" onClick={() => handleClick(book.productId)}>
+            Leave review
+          </Button>
         </Flex>
       ))}
     </Flex>

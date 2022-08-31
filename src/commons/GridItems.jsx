@@ -30,11 +30,13 @@ import { starGenerator } from "../utils/starsGenerator";
 import { addToCart } from "../state/cart";
 
 const GridItems = ({ book, favorites }) => {
+
   const dispatch = useDispatch();
   const toast = useToast()
 
   const user = useSelector( (state) => state.user);
-  const isInFavorites = (favorites.indexOf(book.id) !== -1)
+  const isInFavorites = (favorites?.indexOf(book.id) !== -1)
+
 
   const handleFavorite = (e) => {
     e.preventDefault();

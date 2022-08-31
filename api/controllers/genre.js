@@ -53,7 +53,9 @@ class genreController {
       const books = await Book.findAll({
         where:{idGenre: req.params.id}
       })
+      console.log('primero')
       if(books.length) return res.send("Aún hay libros en este género.")
+      console.log('segundo')
 
       const { id } = req.params;
       const deleted = await Genre.destroy({ where: { id } });

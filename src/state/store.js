@@ -15,7 +15,7 @@ import orderReducer from "./order";
 import ordersReducer from "./orders";
 
 const store = configureStore({
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  //middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   reducer: {
     user: userReducer,
     users: usersReducer,
