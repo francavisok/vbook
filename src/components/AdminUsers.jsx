@@ -2,41 +2,24 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { getGenres } from "../state/genres";
-import { addGenre } from "../state/genre";
+import { getUsers } from "../state/users";
 
-import AdminGenreItem from "../commons/AdminGenreItem";
+import AdminUserItem from "../commons/AdminUserItem";
 
-import { useForm } from "react-hook-form";
 
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Input,
   Flex,
-  Button,
-  Select,
 } from "@chakra-ui/react";
 
- const AdminGenres = () => {
+ const AdminUsers = () => {
   const dispatch = useDispatch();
-  //const books = useSelector((state) => state.books);
-  const genres = useSelector((state) => state.genres);
+  const users = useSelector((state) => state.users);
 
-  useEffect(() => {
-    //dispatch(getBooks());
-    dispatch(getGenres());
-  }, [dispatch]);
+   useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]); 
 
-  //modal
+/*   //modal
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = React.useRef(null);
@@ -55,11 +38,11 @@ import {
     await dispatch(addGenre(values));
     dispatch(getGenres()); 
     onClose();
-  }
+  } */
 
   return (
     <Flex direction={"column"}>
-      <Button mb={"40px"} onClick={onOpen}>
+      {/* <Button mb={"40px"} onClick={onOpen}>
         Add new genre
       </Button>
 
@@ -106,14 +89,14 @@ import {
           </form>
         </ModalContent>
       </Modal>
-
+ */}
       <Flex direction={"column"}>
-        {genres.map((genre) => (
-          <AdminGenreItem genre={genre} key={genre.id} />
+        {users.map((user) => (
+          <AdminUserItem user={user} key={user.id} />
         ))}
       </Flex>
     </Flex>
   );
 };
 
-export default AdminGenres
+export default AdminUsers

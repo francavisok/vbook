@@ -36,9 +36,7 @@ export const postLogoutUser = createAsyncThunk(
   }
 );
 
-const userReducer = createReducer(
-  {},
-  {
+const userReducer = createReducer({}, {
     [getUser.fulfilled]: (state, action) => action.payload,
     [postUser.fulfilled]: (state, action) => action.payload,
     [postLoginUser.fulfilled]: (state, action) => action.payload,
