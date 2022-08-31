@@ -61,7 +61,7 @@ const AdminUserItem = ({ user }) => {
   } = useForm();
 
   async function onSubmit(values) {
-    console.log("values", values);
+    //console.log("values", values);
     if (values.role === "admin") {
       await dispatch(promoteUser(user.id));
     } else {

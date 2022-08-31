@@ -36,8 +36,10 @@ import {
 import { isInFavorites } from "../utils/isInFavorites";
 
 const GridItems = ({ book, favorites }) => {
+
   const dispatch = useDispatch();
   const toast = useToast();
+
 
   const user = useSelector((state) => state.user);
 

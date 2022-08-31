@@ -13,9 +13,11 @@ import genresReducer from "./genres";
 import genreReducer from "./genre";
 import orderReducer from "./order";
 import ordersReducer from "./orders";
+import reviewReducer from "./review";
+import reviewsReducer from "./reviews";
 
 const store = configureStore({
-  //middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   reducer: {
     user: userReducer,
     users: usersReducer,
@@ -28,7 +30,9 @@ const store = configureStore({
     orders: ordersReducer,
     boughtItems: boughtItemsReducer,
     genre: genreReducer,
-    genres: genresReducer
+    genres: genresReducer,
+    review: reviewReducer,
+    reviews: reviewsReducer,
   },
 });
 
