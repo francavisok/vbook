@@ -21,11 +21,20 @@ import {
 import { useEffect, useState } from "react";
 import { MdLocalShipping, MdOutlineAddShoppingCart } from "react-icons/md";
 import { RiHeartAddFill } from "react-icons/ri";
+import { FaHeartBroken } from "react-icons/fa";
+
+
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getBook } from "../state/book";
 import { addToCart } from "../state/cart";
+import {
+  addFavorite,
+  getAllFavoritesFromUser,
+  removeFavorite,
+} from "../state/favorites";
 import { starGenerator } from "../utils/starsGenerator";
+import { isInFavorites } from "../utils/isInFavorites";
 
 import LeaveReview from "../components/LeaveReview";
 import ReviewsFromBook from "../components/ReviewsFromBook";
@@ -33,31 +42,64 @@ import ReviewsFromBook from "../components/ReviewsFromBook";
 //TODO:
 
 const ProductPage = () => {
-  const toast = useToast()
+  const toast = useToast();
 
   const dispatch = useDispatch();
   const { id } = useParams();
   const book = useSelector((state) => state.book);
+  const favorites = useSelector((state) => state.favorites);
+
 
   useEffect(() => {
     dispatch(getBook(id));
   }, [dispatch]);
 
+  const handleAddToCart = async (e) => {
+    let message;
+    let typeOfMessage;
+    e.preventDefault();
+    await dispatch(addToCart(book.bookId || book.id)).then((res) => {
+      if (typeof res.payload !== "string") {
+        message = `Book added to your cart`;
+        typeOfMessage = "success";
+      } else {
+        message = `The book is already in your cart`;
+        typeOfMessage = "warning";
+      }
+    });
 
-const handleAddToCart = async (e)=>{
-  e.preventDefault();
-  await dispatch(addToCart(  Number(id)  ))
+    toast({
+      description: message,
+      status: typeOfMessage,
+      position: "top",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
 
-  toast({
-    description: `Book added to your cart`,
-    status: "success",
-    position: "top",
-    duration: 3000,
-    isClosable: true,
-  })
-}
-
-
+  const handleAddToFavorites = async (e) => {
+    e.preventDefault();
+    await dispatch(addFavorite(book.bookId || book.id));
+    toast({
+      description: "Book added to your favorites",
+      status: "success",
+      position: "top",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+  const handleRemoveFromFavorites = async (e) => {
+    e.preventDefault();
+    await dispatch(removeFavorite(book.bookId || book.id));
+    dispatch(getAllFavoritesFromUser());
+    toast({
+      description: "Book removed from your favorites",
+      status: "warning",
+      position: "top",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
 
   return (
     <Container maxW={"6xl"}>
@@ -191,7 +233,9 @@ const handleAddToCart = async (e)=>{
                   Add to cart
                   <MdOutlineAddShoppingCart style={{ marginLeft: "6px" }} />
                 </Button>
+                {isInFavorites(favorites, book.bookId || book.id) ?
                 <Button
+                  onClick={handleRemoveFromFavorites}
                   rounded={"md"}
                   w={"40%"}
                   mt={8}
@@ -199,8 +243,25 @@ const handleAddToCart = async (e)=>{
                   size={"md"}
                   py={"7"}
                   variant="ghost"
-                  color={useColorModeValue("#d43c8c", "#d43c8c")}
-                  textTransform={"uppercase"}
+                  color={"#d43c8c"}
+                  
+                  _hover={{
+                    transform: "translateY(2px)",
+                    boxShadow: "xl",
+                  }}
+                >
+                  Remove from favorites
+                  <FaHeartBroken style={{ marginLeft: "6px" }} />
+                </Button> :  <Button
+                  onClick={handleAddToFavorites}
+                  rounded={"md"}
+                  w={"40%"}
+                  mt={8}
+                  ml={1}
+                  size={"md"}
+                  py={"7"}
+                  variant="ghost"
+                  color={"#d43c8c"}
                   _hover={{
                     transform: "translateY(2px)",
                     boxShadow: "xl",
@@ -208,7 +269,7 @@ const handleAddToCart = async (e)=>{
                 >
                   Add to favorites
                   <RiHeartAddFill style={{ marginLeft: "6px" }} />
-                </Button>
+                </Button>}
               </Box>
             </Stack>
 
