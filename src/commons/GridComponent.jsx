@@ -12,6 +12,7 @@ import { useMediaQuery } from "@chakra-ui/react";
 const GridComponent = () => {
   const dispatch = useDispatch();
   const books = useSelector((state) => state.books);
+  const favorites = useSelector((state) => state.favorites);
 
   const [isNotSmallerScreen] = useMediaQuery('(min-width: 700px)')
   
@@ -24,7 +25,7 @@ const GridComponent = () => {
     books.length ? (
         <SimpleGrid /* templateColumns={isNotSmallerScreen ?  'repeat(3, 1fr)' : 'repeat(1, 1fr)' } gap={'40px'} */ minChildWidth='300px' spacing='40px'> 
           {books.map(book => (
-            <GridItems key={book.id} book={book} />
+            <GridItems key={book.id} book={book} favorites={favorites}/>
           ))}
         </SimpleGrid>
     ) : 'Nothing was found, try again'

@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 
 //estilos de chakra ui
 import {
@@ -11,11 +12,11 @@ import {
   Tooltip,
   useMediaQuery,
   GridItem,
-  Text
+  Text,
 } from "@chakra-ui/react";
 
 //iconos reactIcons
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 
@@ -24,8 +25,15 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { starGenerator } from "../utils/starsGenerator";
 
-const GridItems = ({ book }) => {
-  const user = useSelector((state) => state.user);
+const GridItems = ({ book, favorites }) => {
+  const user = useSelector(async (state) => state.user);
+  console.log(user)
+  const isInFavorites = (favorites.indexOf(book.id) !== -1)
+
+  const handleFavorite = (e) => {
+    e.preventDefault();
+  };
+
   //const [isNotSmallerScreen] = useMediaQuery("(min-width: 700px)");
 
 
@@ -47,7 +55,7 @@ const GridItems = ({ book }) => {
           shadow="lg"
           position="relative"
           objectFit={"cover"}
-          pt='24px'
+          pt="24px"
         >
           <Link to={`/book/${book.id}`}>
             <Image
@@ -90,19 +98,46 @@ const GridItems = ({ book }) => {
                 {book.price.toFixed(2)}
               </Box>
 
-              {user.id && (
+              {user.id ? 
                 <>
-                  <Tooltip
-                    label="Add to favorites"
+                  {!isInFavorites ? (<Tooltip
+                    label="Remove from favorites"
                     bg="white"
                     placement={"top"}
                     color={"gray.800"}
                     fontSize={"1.2em"}
                   >
-                    <Text as={'span'} alignSelf='center' >
-                      <Icon as={FaHeart} h={5} w={5} alignSelf={"center"} _hover={{color: 'red'}}/>
+                    <Text as={"span"} alignSelf="center">
+                      <Icon
+                        as={FaHeart}
+                        h={5}
+                        w={5}
+                        alignSelf={"center"}
+                        _hover={ {color: "red"} }
+                        onClick={handleFavorite}
+                      />
                     </Text>
-                  </Tooltip>
+                  </Tooltip>)
+                  :
+                  (<Tooltip
+                  label="Add to favorites"
+                  bg="white"
+                  placement={"top"}
+                  color={"gray.800"}
+                  fontSize={"1.2em"}
+                >
+                  <Text as={"span"} alignSelf="center">
+                    <Icon
+                      as={FaRegHeart}
+                      h={5}
+                      w={5}
+                      alignSelf={"center"}
+                      _hover={{ color: "red" }}
+                      onClick={handleFavorite}
+                    />
+                  </Text>
+                </Tooltip>)
+                  }
 
                   <Tooltip
                     label="Add to cart"
@@ -111,19 +146,21 @@ const GridItems = ({ book }) => {
                     color={"gray.800"}
                     fontSize={"1.2em"}
                   >
-                    <Text as={'span'} alignSelf='center' >
+                    <Text as={"span"} alignSelf="center">
                       <Icon
                         as={FiShoppingCart}
                         h={5}
                         w={5}
                         alignSelf={"center"}
                         ml="20px"
-                        _hover={{color: 'blue'}}
+                        _hover={{ color: "blue" }}
                       />
                     </Text>
                   </Tooltip>
-                </>
-              )}
+                </>:<></>
+              
+              
+          }
             </Flex>
           </Box>
         </Box>
