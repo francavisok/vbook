@@ -12,7 +12,9 @@ import jwt_decode from "jwt-decode";
 
 import FacebookLogin from "react-facebook-login";
 
-import ReactDOM from "react-dom";
+import axios from "axios";
+
+import { useEffect } from "react";
 
 import {
   FormErrorMessage,
@@ -29,9 +31,8 @@ import {
   Box,
 } from "@chakra-ui/react";
 
-import { useEffect } from "react";
-
 const Login = () => {
+  const queryString = require("query-string");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -53,8 +54,6 @@ const Login = () => {
   }
 
   const responseFacebook = (response) => {
-    console.log("soy split", response.name.split(" "));
-
     const payload = {
       name: response.name.split(" ")[0],
       lastname: response.name.split(" ")[1],
@@ -65,6 +64,10 @@ const Login = () => {
     dispatch(postLoginUser(payload));
     navigate("/");
   };
+  const GITHUB_CLIENT_ID = "e0eca9e086336811ccf5";
+  const GITHUB_CLIENT_SECRET = "de5359490081c49cd159079bab72280c5c3ea5e2";
+  const path = "/";
+  const gitHubRedirectURL = "http://localhost:3001/api/auth/login";
 
   useEffect(() => {
     /* global google */
@@ -181,6 +184,13 @@ const Login = () => {
               fields="name,email"
               callback={responseFacebook}
             />
+          </Box>
+          <Box id="SignInDivGitHub" mt={6}>
+            <a
+              href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${gitHubRedirectURL}?path=${path}&scope=user:email`}
+            >
+              LOGIN WITH GITHUB
+            </a>
           </Box>
 
           <Divider orientation="horizontal" mt={9} />
