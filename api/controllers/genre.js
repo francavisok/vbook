@@ -50,6 +50,11 @@ class genreController {
 
   static deleteGenre = async (req, res) => {
     try {
+      const books = await Book.findAll({
+        where:{idGenre: req.params.id}
+      })
+      if(books.length) return res.send("Aún hay libros en este género.")
+
       const { id } = req.params;
       const deleted = await Genre.destroy({ where: { id } });
       res.sendStatus(204);

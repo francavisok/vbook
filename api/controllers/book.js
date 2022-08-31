@@ -34,15 +34,18 @@ function getBookById(req, res) {
 }
 
 async function getBookByTitle(req, res) {
-  const { title } = req.params;
-  const books = await Book.findAll({
-    where: {
-      title: {
-        [Op.substring]: title,
-      },
-    },
-  });
-  res.send(books);
+  const books = await Book.findAll()
+  let filteredBooks = [];
+    books.forEach((book) => {
+      if (
+        book.title
+        .toLowerCase()
+        .includes(req.params.title.toLowerCase())
+      ) {
+        filteredBooks.push(book);
+      }
+    });
+    res.send(filteredBooks)
 }
 
 module.exports = {
