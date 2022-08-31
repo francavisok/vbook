@@ -15,6 +15,7 @@ class reviewsController{
       reviewComment,
       userId: req.user.id,
       bookId: req.params.id,
+      userName: req.user.userName
     });
     res.send(created)
     }

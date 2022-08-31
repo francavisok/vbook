@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Cart, Order, User } = require("../models");
+const { Cart, Order, User, BoughtItems } = require("../models");
 const transporter = require("../config/transporter");
 
 class OrderController {
@@ -64,6 +64,7 @@ class OrderController {
     if (cart[0].carts) {
       cart[0].carts.forEach(async (cart) => {
         await Cart.update({ state: "fulfilled" }, { where: { id: cart.id } });
+        await BoughtItems.create({productId: cart.productId, userId: req.user.id})
       });
     }
     // await transporter.sendMail({
