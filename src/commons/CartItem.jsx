@@ -11,6 +11,7 @@ import {
   Link,
   Box,
   useMediaQuery,
+  useToast,
 } from "@chakra-ui/react";
 import { FaTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,12 +20,22 @@ import { getOrder } from "../state/order";
 
 const CartItem = ({ book }) => {
   const dispatch = useDispatch();
+  const toast = useToast();
   const order = useSelector((state) => state.order);
   const [isNotSmallerScreen] = useMediaQuery("(min-width: 1300px)");
 
   const handleRemove = (e) => {
     e.preventDefault();
-    dispatch(removeFromCart(book.productId)).then(() => dispatch(getOrder()));
+    dispatch(removeFromCart(book.productId)).then(() =>
+      dispatch(getOrder()).then(() =>
+        toast({
+          description: `Book removed from your cart`,
+          status: "warning",
+          position: "top",
+          isClosable: true,
+        })
+      )
+    );
   };
 
   return (
@@ -40,7 +51,7 @@ const CartItem = ({ book }) => {
       >
         {isNotSmallerScreen ? (
           <Box borderRadius="sm">
-            <Image objectFit="cover" boxSize={"100%"} src={book.productImage} />
+            <Image objectFit="cover" boxSize={"1sm"} src={book.productImage} />
           </Box>
         ) : (
           ""

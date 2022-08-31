@@ -16,6 +16,7 @@ import {
   VisuallyHidden,
   List,
   ListItem,
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { MdLocalShipping, MdOutlineAddShoppingCart } from "react-icons/md";
@@ -32,6 +33,8 @@ import ReviewsFromBook from "../components/ReviewsFromBook";
 //TODO:
 
 const ProductPage = () => {
+  const toast = useToast()
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const book = useSelector((state) => state.book);
@@ -40,10 +43,21 @@ const ProductPage = () => {
     dispatch(getBook(id));
   }, [dispatch]);
 
-  const handleAddToCart = (e) => {
-    e.preventDefault();
-    dispatch(addToCart(Number(id)));
-  };
+
+const handleAddToCart = async (e)=>{
+  e.preventDefault();
+  await dispatch(addToCart(  Number(id)  ))
+
+  toast({
+    description: `Book added to your cart`,
+    status: "success",
+    position: "top",
+    duration: 3000,
+    isClosable: true,
+  })
+}
+
+
 
   return (
     <Container maxW={"6xl"}>

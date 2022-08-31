@@ -35,6 +35,7 @@ import {
   MenuItemOption,
   Radio,
   RadioGroup,
+  Container,
 } from "@chakra-ui/react";
 import CartItem from "../commons/CartItem";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,9 +46,13 @@ import { useForm } from "react-hook-form";
 import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
 
 const Cart = () => {
+  const navigate = useNavigate();
+  const toast = useToast();
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const order = useSelector((state) => state.order);
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
   const [isNotSmallerScreen] = useMediaQuery("(min-width: 1200px)");
   const [paymentMethod, setPaymentMethod] = React.useState("Credit card");
 
@@ -57,8 +62,6 @@ const Cart = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
-  const navigate = useNavigate();
-  const toast = useToast();
 
   const handleBuy = async () => {
     if (order.carts.length) {
@@ -73,22 +76,22 @@ const Cart = () => {
       });
     }
   };
-  const onSubmit = async ({direction}) => {
-    await dispatch(payOrder({direction, paymentMethod}));
+  const onSubmit = async ({ direction }) => {
+    await dispatch(payOrder({ direction, paymentMethod }));
     navigate("/checkout");
   };
 
   useEffect(() => {
-    dispatch(getOrder());
+    user?.id ? dispatch(getOrder()) : navigate("/login");
   }, [dispatch]);
 
   return (
     <>
+    <Container maxW='8xl'>
       <SimpleGrid
         minChildWidth="300px"
         templateRows="repeat(2, 1fr)"
         justifyItems={"center"}
-        ml={isNotSmallerScreen ? "300px" : "0"}
       >
         <Box
           rowSpan={1}
@@ -110,7 +113,7 @@ const Cart = () => {
         <Box
           maxWidth={"300px"}
           w={"100%"}
-          mt={isNotSmallerScreen ? "8px" : "0px"}
+          mt={isNotSmallerScreen ? "8px" : "10px"}
           rounded={"md"}
           h={242}
           boxShadow={"lg"}
@@ -148,7 +151,7 @@ const Cart = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <ModalBody pb={6}>
                   <FormControl isInvalid={errors.direction}>
-                    <FormLabel >Address</FormLabel>
+                    <FormLabel>Address</FormLabel>
                     <Input
                       placeholder="Your address"
                       {...register("direction", {
@@ -165,15 +168,19 @@ const Cart = () => {
                   </FormControl>
 
                   <FormControl mt={10}>
-                    <FormLabel fontWeight={"semibold"}>Payment method</FormLabel>
-                    <RadioGroup onChange={setPaymentMethod} value={paymentMethod}>
+                    <FormLabel fontWeight={"semibold"}>
+                      Payment method
+                    </FormLabel>
+                    <RadioGroup
+                      onChange={setPaymentMethod}
+                      value={paymentMethod}
+                    >
                       <Stack direction="row">
                         <Radio value="Credit card">Credit card</Radio>
                         <Radio value="Debit card">Debit card</Radio>
                         <Radio value="PayPal">PayPal</Radio>
                       </Stack>
                     </RadioGroup>
-                   
                   </FormControl>
                   <Flex mt={7} justify={"end"}>
                     <Button colorScheme="pink" mr={3} type="submit">
@@ -187,6 +194,7 @@ const Cart = () => {
           </Modal>
         </Box>
       </SimpleGrid>
+      </Container>
     </>
   );
 };
