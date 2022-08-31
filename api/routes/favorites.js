@@ -4,8 +4,11 @@ const { validateAuth } = require("../middleware/auth");
 const {
   addToFavorites,
   deleteFavorite,
-  getFavoriteByTitle
+  getFavoriteByTitle,
+  getAllFavoritesFromUser
 } = require("../controllers/favorites");
+
+router.get("/", validateAuth, getAllFavoritesFromUser);
 
 router.post("/:id", validateAuth, addToFavorites);
 

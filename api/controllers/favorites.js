@@ -29,7 +29,7 @@ class favoritesController {
         },
       });
       user.addFavorite(favorite[0]);
-      res.send("added to favorites");
+      res.send(favorite[0]);
     } else {
       res.send("that book is already in your list");
     }
@@ -37,11 +37,22 @@ class favoritesController {
 
   static deleteFavorite = async (req, res) => {
     const favorite = await Favorite.findOne({
-      where: { id: Number(req.params.id) },
+      where: { bookId: Number(req.params.id) },
     });
+    console.log(favorite);
     Favorite.destroy({ where: { id: favorite.id } });
     res.status(204).send("deleted");
   };
+
+  static getAllFavoritesFromUser = async (req,res)=>{
+    const favorites = await Favorite.findAll({
+      where:{ userId : req.user.id }
+    })
+
+    res.send(favorites)
+
+  }
+
 
   static getFavoriteByTitle = async (req, res) => {
     const user = await User.findOne({
