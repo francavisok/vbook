@@ -5,6 +5,7 @@ const User = require("./users");
 const Auth = require("./auth");
 const Cart = require("./cart");
 const Favorites = require("./favorites")
+const Bought = require('./bought')
 
 const Genre = require("./genre");
 
@@ -17,6 +18,7 @@ router.use("/user", User);
 router.use("/auth", Auth);
 router.use("/cart", Cart);
 router.use("/favorites", Favorites);
+router.use("/bought", Bought)
 
 router.use("/genres", Genre);
 

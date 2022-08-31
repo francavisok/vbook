@@ -19,6 +19,10 @@ Reviews.init(
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      userName: {
+        type: Sequelize.STRING,
+        allowNull: false
+      }
     },
     { sequelize: db, modelName: "reviews" }
   );
