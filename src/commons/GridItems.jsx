@@ -13,6 +13,9 @@ import {
   useMediaQuery,
   GridItem,
   Text,
+  LinkBox,
+  LinkOverlay,
+  useToast,
 } from "@chakra-ui/react";
 
 //iconos reactIcons
@@ -22,12 +25,15 @@ import { FiShoppingCart } from "react-icons/fi";
 
 //otros
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { starGenerator } from "../utils/starsGenerator";
+import { addToCart } from "../state/cart";
 
 const GridItems = ({ book, favorites }) => {
-  const user = useSelector(async (state) => state.user);
-  console.log(user)
+  const dispatch = useDispatch();
+  const toast = useToast()
+
+  const user = useSelector( (state) => state.user);
   const isInFavorites = (favorites.indexOf(book.id) !== -1)
 
   const handleFavorite = (e) => {
@@ -35,7 +41,17 @@ const GridItems = ({ book, favorites }) => {
   };
 
   //const [isNotSmallerScreen] = useMediaQuery("(min-width: 700px)");
-
+  const handleAddToCart = async (e)=>{
+    e.preventDefault();
+    await dispatch(addToCart(  book.id  ))
+    toast({
+      description: `Book added to your cart`,
+      status: "success",
+      position: "top",
+      duration: 3000,
+      isClosable: true,
+    })
+  }
 
   return (
     <GridItem>
@@ -98,9 +114,9 @@ const GridItems = ({ book, favorites }) => {
                 {book.price.toFixed(2)}
               </Box>
 
-              {user.id ? 
+              {user?.id ? 
                 <>
-                  {!isInFavorites ? (<Tooltip
+                  {isInFavorites ? (<Tooltip
                     label="Remove from favorites"
                     bg="white"
                     placement={"top"}
@@ -113,7 +129,7 @@ const GridItems = ({ book, favorites }) => {
                         h={5}
                         w={5}
                         alignSelf={"center"}
-                        _hover={ {color: "red"} }
+                        _hover={ {color: "#D83201"} }
                         onClick={handleFavorite}
                       />
                     </Text>
@@ -132,7 +148,7 @@ const GridItems = ({ book, favorites }) => {
                       h={5}
                       w={5}
                       alignSelf={"center"}
-                      _hover={{ color: "red" }}
+                      _hover={{ color: "#D83201" }}
                       onClick={handleFavorite}
                     />
                   </Text>
@@ -153,7 +169,8 @@ const GridItems = ({ book, favorites }) => {
                         w={5}
                         alignSelf={"center"}
                         ml="20px"
-                        _hover={{ color: "blue" }}
+                        _hover={{ color: "#0166D8" }}
+                        onClick={handleAddToCart}
                       />
                     </Text>
                   </Tooltip>
