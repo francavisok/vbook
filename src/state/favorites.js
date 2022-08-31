@@ -7,7 +7,7 @@ export const addFavorite = createAsyncThunk(
     const { user } = thunkAPI.getState();
     if (!user.id) throw new Error("You need to be logged in");
     return axios
-      .put(`/api/user/favorites?userId=${user.id}`, book)
+      .post(`/api/user/favorites/${book.id}`)
       .then((res) => res.data)
       .catch((error) => console.log(error));
   }
@@ -15,11 +15,11 @@ export const addFavorite = createAsyncThunk(
 
 export const removeFavorite = createAsyncThunk(
   "REMOVE_FAVORITE",
-  (bookId, thunkAPI) => {
+  (book, thunkAPI) => {
     const { user } = thunkAPI.getState();
     if (!user.id) throw new Error("You need to be logged in");
     return axios
-      .delete(`/api/user/favorites?userId=${user.id}&bookId=${bookId}`)
+      .delete(`/api/user/favorites/${book.id}`)
       .then((res) => {
         return res.data;
       })
@@ -29,10 +29,10 @@ export const removeFavorite = createAsyncThunk(
 
 export const getAllFavoritesFromUser = createAsyncThunk(
   "GET_FAVORITES_FROM_USER",
-  (userId, thunkAPI) => {
+  () => {
     return axios
-      .get(`/api/user/favorites/all?userId=${userId}`)
-      .then((res) => res.data)
+      .get(`/api/user/auth/me`)
+      .then((res) => res.data.favorites)
       .catch((error) => console.log(error));
   }
 );
