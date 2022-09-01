@@ -1,11 +1,25 @@
 import React from "react";
 import GridComponent from "../commons/GridComponent";
 import Hero from "./Hero";
-import { Heading } from "@chakra-ui/react";
+import { Container, Divider, Heading } from "@chakra-ui/react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import Pagination from "./Pagination";
 
 const Home = () => {
   const [gridTitle, setGridTitle] = useState("OUR BOOKS");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(12);
+
+  const books = useSelector((state) => state.books);
+
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = books.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <>
       <Hero setGridTitle={setGridTitle} />
@@ -21,7 +35,15 @@ const Home = () => {
       >
         {gridTitle}
       </Heading>
-      <GridComponent id="gridView" />
+      <GridComponent books={currentPosts} id="gridView" />
+      <Divider my={8} />
+          <Pagination
+          currentPage={currentPage}
+        postsPerPage={postsPerPage}
+        totalPosts={books.length}
+        paginate={paginate}
+      />
+    
     </>
   );
 };
