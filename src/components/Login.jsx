@@ -12,8 +12,6 @@ import jwt_decode from "jwt-decode";
 
 import FacebookLogin from "react-facebook-login";
 
-import axios from "axios";
-
 import { useEffect } from "react";
 
 import {
@@ -31,8 +29,10 @@ import {
   Box,
 } from "@chakra-ui/react";
 
+// const { resolve } = require("path");
+// require("dotenv").config({ path: resolve(__dirname, "../../../.env") });
+
 const Login = () => {
-  const queryString = require("query-string");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -64,16 +64,14 @@ const Login = () => {
     dispatch(postLoginUser(payload));
     navigate("/");
   };
-  const GITHUB_CLIENT_ID = "e0eca9e086336811ccf5";
-  const GITHUB_CLIENT_SECRET = "de5359490081c49cd159079bab72280c5c3ea5e2";
+
   const path = "/";
-  const gitHubRedirectURL = "http://localhost:3001/api/auth/login";
 
   useEffect(() => {
     /* global google */
+
     google.accounts.id.initialize({
-      client_id:
-        "562725990282-c2kv3hgfmtb2jcs9uknpq9gkarc07d5j.apps.googleusercontent.com",
+      client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
       callback: handleCallbackResponse,
     });
 
@@ -81,11 +79,6 @@ const Login = () => {
       theme: "outline",
       size: "large",
     });
-
-    // ReactDOM.render(
-
-    //   document.getElementById("SignInDivFacebook")
-    // );
   }, []);
 
   const {
@@ -187,7 +180,7 @@ const Login = () => {
           </Box>
           <Box id="SignInDivGitHub" mt={6}>
             <a
-              href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${gitHubRedirectURL}?path=${path}&scope=user:email`}
+              href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_GITHUB_REDIRECT_URL}?path=${path}&scope=user:email`}
             >
               LOGIN WITH GITHUB
             </a>
