@@ -62,10 +62,8 @@ class OrderController {
       { where: { userId: req.user.id, state: "procesing" } }
     );
     
-    console.log('cart', cart)
 
     if (cart[0].carts) {
-      console.log('carts0.carts', cart[0].carts)
       cart[0].carts.forEach(async (cart) => {
         if(cart.state !== 'fulfilled'){
           await Cart.update({ state: "fulfilled" }, { where: { id: cart.id } });
@@ -74,13 +72,13 @@ class OrderController {
         
       });
     }
-    await transporter.sendMail({
+     await transporter.sendMail({
       from: '"Vbook team 🕶" <VbookP5@gmail.com>',
       to: req.user.email, // list of receivers
       subject: "Your order has been fulfilled ✔🛒", // Subject line
-      html: {path: "../../E-commerce/vbook/public/mail.html"}, // html body
+      html: {path: "/home/franca/Documents/trabajos/plataforma5/bootcamp/ecommerce/vbook/public/mail.html"}, // html body
     });
-
+ 
     res.status(203).send(cart);
   };
   static getFullfiled = async (req, res) => {

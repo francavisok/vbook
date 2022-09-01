@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import AdminBooks from "./AdminBooks";
 import AdminGenres from "./AdminGenres";
 import AdminUsers from "./AdminUsers";
+import AdminOrders from "./AdminOrders";
 
 import {
   Tabs,
@@ -56,7 +57,7 @@ const AdminPanel = () => {
             <AdminBooks />
           </TabPanel>
           <TabPanel>
-            <p>orders!</p>
+            <AdminOrders />
           </TabPanel>
         </TabPanels>
       </Tabs>

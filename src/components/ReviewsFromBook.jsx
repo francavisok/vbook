@@ -4,20 +4,10 @@ import { getReviewsOfBook } from "../state/reviews";
 import { useParams } from "react-router-dom";
 
 import {
-  useDisclosure,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
   Flex,
-  Button,
-  RadioGroup,
-  Stack,
-  Radio,
   useColorModeValue,
   Divider,
-  Textarea,
   Heading,
-  Text,
 } from "@chakra-ui/react";
 import SingleReviewCard from "../commons/SingleReviewCard";
 
@@ -28,7 +18,7 @@ const ReviewsFromBook = () => {
 
   useEffect(() => {
     dispatch(getReviewsOfBook(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
   return (
 
     <Flex
@@ -37,13 +27,14 @@ const ReviewsFromBook = () => {
       justify={"center"}
       rounded={"lg"}
       bg={useColorModeValue("white", "gray.700")}
-      boxShadow={"lg"}
+      //boxShadow={"lg"}
       p={8}
       spacing={4}
       maxWidth="fit-content"
       minW={"85%"}
       m={"auto"}
     >
+      <Divider mb={'80px'} />
       <Heading mb={'40px'}>Reviews</Heading>
       {reviews.map((review) => (
         <SingleReviewCard review={review} key={review.id}/>

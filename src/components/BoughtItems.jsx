@@ -32,7 +32,7 @@ const BoughtItems = () => {
       <Heading mb={'40px'}>Purchase history</Heading>
 
       {orders.map(order => (
-        <OrderFullfiledCard order={order} />
+        <OrderFullfiledCard order={order} key={order.id} />
       ))}
 
 

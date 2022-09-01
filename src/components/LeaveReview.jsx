@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import {
-  useDisclosure,
   FormControl,
   FormLabel,
   FormErrorMessage,
@@ -10,7 +9,6 @@ import {
   RadioGroup,
   Stack,
   Radio,
-  useColorModeValue,
   Divider,
   Textarea,
   Heading,
@@ -20,38 +18,30 @@ import { useForm, Controller } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
 import { addReview } from "../state/review";
-import { getReviews } from "../state/reviews";
 import { getReviewsOfBook } from "../state/reviews";
 import { getBoughtItems } from "../state/boughtItems";
+import { getBook } from "../state/book";
 
 import { useDispatch } from "react-redux";
 
 import { useSelector } from "react-redux";
 
 const LeaveReview = () => {
+  const [resize] = React.useState("horizontal");
   const dispatch = useDispatch();
   const { id } = useParams();
   const user = useSelector((state) => state.user);
   const reviews = useSelector((state) => state.reviews);
   const book = useSelector((state) => state.book);
   const boughtItems = useSelector((state) => state.boughtItems);
-  //console.log('bought itemss',boughtItems)
-
 
   const [alreadyLeftComment, setAlreadyLeftComment] = useState(false);
-  //console.log('alreadyleftcomment', alreadyLeftComment)
   const [alreadyBought, setAlreadyBought] = useState(false);
-
-  /*   useEffect(()=>{
-
-  }, []) */
 
   useEffect(() => {
     dispatch(getBoughtItems());
     const findIdUser = reviews.find((review) => review.userId === user.id);
-    console.log('finduserId', findIdUser)
     const findBoughtItems = boughtItems.find((item) => item.productId === parseInt(id));
-    console.log('findBoughtitems', findBoughtItems)
 
     if (findIdUser) {
       setAlreadyLeftComment(true);
@@ -63,7 +53,7 @@ const LeaveReview = () => {
     }else{
       setAlreadyBought(false)
     }
-  }, [reviews, user, book]);
+  }, [reviews, user, book, dispatch]);
 
   const {
     handleSubmit,
@@ -73,15 +63,13 @@ const LeaveReview = () => {
   } = useForm();
 
   async function onSubmit(values) {
-    //console.log("values", values);
     const payload = { ...values, bookId: id };
-    //console.log("values", payload);
     await dispatch(addReview(payload));
     dispatch(getReviewsOfBook(id));
+    dispatch(getBook(id))
   }
 
   const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
 
   return (
     <>
@@ -96,11 +84,11 @@ const LeaveReview = () => {
           p={8}
           spacing={4}
           maxWidth="fit-content"
-          minW={"fit-content"}
+          minW={"85%"}
           m={"auto"}
           mt={"30px"}
         >
-          <Heading size={"md"}>Leave a review</Heading>
+          <Heading size={"md"} alignSelf={'center'}>Leave a review</Heading>
           <Divider my={"15px"} />
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl id="valoration">
@@ -109,7 +97,7 @@ const LeaveReview = () => {
                 name="valoration"
                 control={control}
                 render={({ field }) => (
-                  <RadioGroup {...field}>
+                  <RadioGroup {...field} colorScheme={'pink'}>
                     <Stack direction="row">
                       <Radio value="1">1</Radio>
                       <Radio value="2">2</Radio>
@@ -127,6 +115,8 @@ const LeaveReview = () => {
                 Your comment
               </FormLabel>
               <Textarea
+              resize={resize}
+              size={'lg'}
                 ref={initialRef}
                 type="text"
                 id="reviewComment"
@@ -141,7 +131,7 @@ const LeaveReview = () => {
 
             <Flex mt={7}>
               <Button
-                colorScheme="blue"
+                colorScheme="pink"
                 mr={3}
                 isLoading={isSubmitting}
                 type="submit"

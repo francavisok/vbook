@@ -31,13 +31,22 @@ export const getOrder = createAsyncThunk(
     }
   );
 
+  export const modifyOrder = createAsyncThunk(
+    "MODIFY_ORDER",
+    ({state, orderId}) => {
+      return axios
+        .put(`/api/order/admin/${state}/${orderId}`)
+        .then((res) => res.data)
+        .catch((error) => console.log(error));
+    }
+  );
 
   const orderReducer = createReducer({}, {
 
     [getOrder.fulfilled]: (state, action) => action.payload,
     [continueOrder.fulfilled]: (state, action) => action.payload,
     [payOrder.fulfilled]: (state, action) => action.payload,
-
+    [modifyOrder.fulfilled]: (state, action) => action.payload,
 
   });
   

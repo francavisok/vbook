@@ -39,6 +39,8 @@ import { useParams } from "react-router-dom";
 import { modifyReview } from "../state/review";
 import { getReviewsOfBook } from "../state/reviews";
 import { deleteReview } from "../state/review";
+import { getBook } from "../state/book";
+
 import { useDispatch } from "react-redux";
 
 const SingleReviewCard = ({ review }) => {
@@ -72,6 +74,7 @@ const SingleReviewCard = ({ review }) => {
   async function handleDelete() {
     await dispatch(deleteReview(id));
     dispatch(getReviewsOfBook(id));
+    dispatch(getBook(id))
   }
 
   return (
