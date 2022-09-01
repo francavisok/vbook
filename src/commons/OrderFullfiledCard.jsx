@@ -74,7 +74,7 @@ const OrderFullfiledCard = ({ order }) => {
       <Divider my={"15px"} />
 
       {order.carts.map((book) => (
-        <Flex width={"100%"} my="10px" align={"center"}>
+        <Flex key={book.id} width={"100%"} my="10px" align={"center"}>
           <Image src={book.productImage} boxSize="30px" objectFit={"cover"} />
           <Text ml={"30px"}>{book.productTitle}</Text>
           <Spacer />

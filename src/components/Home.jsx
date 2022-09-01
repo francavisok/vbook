@@ -13,7 +13,6 @@ const Home = () => {
 
   const books = useSelector((state) => state.books);
 
-
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = books.slice(indexOfFirstPost, indexOfLastPost);
@@ -37,13 +36,12 @@ const Home = () => {
       </Heading>
       <GridComponent books={currentPosts} id="gridView" />
       <Divider my={8} />
-          <Pagination
-          currentPage={currentPage}
+      <Pagination
+        currentPage={currentPage}
         postsPerPage={postsPerPage}
         totalPosts={books.length}
         paginate={paginate}
       />
-    
     </>
   );
 };
