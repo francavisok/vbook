@@ -36,10 +36,8 @@ import {
 import { isInFavorites } from "../utils/isInFavorites";
 
 const GridItems = ({ book, favorites }) => {
-
   const dispatch = useDispatch();
   const toast = useToast();
-
 
   const user = useSelector((state) => state.user);
 
@@ -111,7 +109,7 @@ const GridItems = ({ book, favorites }) => {
           objectFit={"cover"}
           pt="24px"
         >
-          <Link to={`/book/${book.id}`}>
+          <Link to={`/book/${book.bookId || book.id}`}>
             <Image
               src={book.posterURL || book.bookImage}
               alt={`Picture of ${book.title || book.bookTitle}`}
@@ -137,9 +135,7 @@ const GridItems = ({ book, favorites }) => {
                 {book.title || book.bookTitle}
               </Box>
             </Flex>
-
-            <Flex>{starGenerator(book.rating)}</Flex>
-
+            {book.bookId ? "" : <Flex>{starGenerator(book.rating)}</Flex>}
             <Flex justifyContent="space-between" alignContent="center">
               <Box
                 fontSize="2xl"
