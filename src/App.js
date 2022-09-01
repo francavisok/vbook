@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
@@ -19,6 +19,7 @@ import Cart from "./components/Cart";
 import CheckOut from "./components/CheckOut";
 import FavoritesPage from "./components/FavoritesPage";
 import { getAllFavoritesFromUser } from "./state/favorites";
+import NotFoundPage from "./commons/NotFoundPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,9 @@ function App() {
           <Route path='/admin' element={<AdminPanel />} />
           <Route path='/me' element={<Profile/>} />
           <Route path='/boughtItems' element={<BoughtItems/>} />
+          <Route path="/404" element={<NotFoundPage />} />
+          <Route path="*" element={<Navigate to="/404" />} />
+
         </Routes>
       </Box>
 
