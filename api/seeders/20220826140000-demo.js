@@ -58,13 +58,11 @@ module.exports = {
       "genres",
       [
         {
-          id: 1,
           genreName: "fantasy",
           updatedAt: "2022-08-23T22:40:23.479Z",
           createdAt: "2022-08-23T22:40:23.479Z",
         },
         {
-          id: 2,
           genreName: "terror",
           updatedAt: "2022-08-23T22:40:23.479Z",
           createdAt: "2022-08-23T22:40:23.479Z",

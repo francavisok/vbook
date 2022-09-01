@@ -37,6 +37,7 @@ const LeaveReview = () => {
   } = useForm();
 
   async function onSubmit(values) {
+    console.log('values', values)
     const payload = {...values, bookId: id}
     console.log("values", payload);
     await dispatch(addReview(payload))
