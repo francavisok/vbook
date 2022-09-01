@@ -46,7 +46,7 @@ const ReviewsFromBook = () => {
     >
       <Heading mb={'40px'}>Reviews</Heading>
       {reviews.map((review) => (
-        <SingleReviewCard review={review} />
+        <SingleReviewCard review={review} key={review.id}/>
       ))}
     </Flex>
   );
