@@ -44,6 +44,15 @@ class OrderController {
 
   static payOrder = async (req, res) => {
     //domicilio paymentmethod
+    const cart = await Order.findAll({
+      
+      where: { userId: req.user.id, state: "procesing" },
+      include: [
+        {
+          model: Cart,
+        },
+      ],
+    });
     await Order.update(
       {
         state: "fulfilled",
@@ -52,16 +61,11 @@ class OrderController {
       },
       { where: { userId: req.user.id, state: "procesing" } }
     );
-    const cart = await Order.findAll({
-      where: { userId: req.user.id, state: "fulfilled" },
-      include: [
-        {
-          model: Cart,
-        },
-      ],
-    });
+    
+    console.log('cart', cart)
 
     if (cart[0].carts) {
+      console.log('carts0.carts', cart[0].carts)
       cart[0].carts.forEach(async (cart) => {
         if(cart.state !== 'fulfilled'){
           await Cart.update({ state: "fulfilled" }, { where: { id: cart.id } });
