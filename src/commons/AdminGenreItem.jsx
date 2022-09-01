@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, Spacer, Icon, Tooltip } from "@chakra-ui/react";
+import { Image, Text, Spacer, Icon, Tooltip, useToast } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -29,9 +29,25 @@ import { editGenre } from "../state/genre";
 const AdminGenreItem = ({ genre }) => {
   const dispatch = useDispatch();
   const genres = useSelector((state) => state.genres);
+  const toast = useToast();
 
   async function handleDeleteClick(genreId) {
-    await dispatch(deleteGenre(genreId));
+    let message = "Genre deleted";
+    let status = "success";
+    await dispatch(deleteGenre(genreId)).then((res) => {
+      if (res.payload.length) {
+        message = `
+        You can't remove this genre because it still has books `;
+        status = "error";
+      }
+    });
+    toast({
+      description: message,
+      status: status,
+      position: "top",
+      duration: 6000,
+      isClosable: true,
+    });
     dispatch(getGenres());
   }
 
