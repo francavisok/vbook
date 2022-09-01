@@ -28,6 +28,8 @@ export const removeFavorite = createAsyncThunk(
   }
 );
 
+
+
 export const getAllFavoritesFromUser = createAsyncThunk(
   "GET_FAVORITES_FROM_USER",
   () => {
@@ -39,6 +41,15 @@ export const getAllFavoritesFromUser = createAsyncThunk(
   }
 );
 
+
+export const searchFavoritesByTitle = createAsyncThunk("FAVORITES_BY_TITLE", (bookTitle) => {
+
+  return axios.get(`/api/favorites/find/${bookTitle}`)
+  .then((res) => res.data)
+  .catch(err=> console.log(err))
+});
+
+
 const favoritesReducer = createReducer([], {
   [addFavorite.fulfilled]: (state, action) => {
     if(typeof action.payload !== "string")  state.push(action.payload);
@@ -49,6 +60,8 @@ const favoritesReducer = createReducer([], {
     });
   },
   [getAllFavoritesFromUser.fulfilled]: (state, action) => action.payload,
+  [searchFavoritesByTitle.fulfilled]: (state, action) => action.payload,
+
 });
 
 export default favoritesReducer;

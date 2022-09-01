@@ -23,6 +23,7 @@ Book.init(
     },
     posterURL: {
       type: Sequelize.STRING,
+      defaultValue: "https://edit.org/photos/img/blog/wdn-editar-portadas-de-libros-gratis.jpg-840.jpg"
       
     },
     releaseDate: {
