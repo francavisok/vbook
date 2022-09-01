@@ -9,9 +9,9 @@ import { getBooks } from "../state/books";
 
 import { useMediaQuery } from "@chakra-ui/react";
 
-const GridComponent = () => {
+const GridComponent = ({books}) => {
   const dispatch = useDispatch();
-  const books = useSelector((state) => state.books);
+  //const books = useSelector((state) => state.books);
   const favorites = useSelector((state) => state.favorites);
 
   const [isNotSmallerScreen] = useMediaQuery('(min-width: 700px)')

@@ -82,7 +82,7 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    user?.id ? dispatch(getOrder()) : navigate("/login");
+    dispatch(getOrder());
   }, [dispatch]);
 
   return (
@@ -124,76 +124,76 @@ const Cart = () => {
           <Heading m={5}>TOTAL</Heading>
           <Text>AR$ {order.carts ? cartTotal(order.carts) : 0} </Text>
 
-          <Button
-            onClick={handleBuy}
-            rounded={"md"}
-            w={"40%"}
-            mt={8}
-            size={"lg"}
-            py={"7"}
-            bg={useColorModeValue("#d43c8c", "gray.50")}
-            color={useColorModeValue("white", "gray.900")}
-            textTransform={"uppercase"}
-            _hover={{
-              transform: "translateY(2px)",
-              boxShadow: "xl",
-            }}
-          >
-            Buy{" "}
-          </Button>
-          <Modal isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>
-                Please complete these fields to continue
-              </ModalHeader>
-              <ModalCloseButton />
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <ModalBody pb={6}>
-                  <FormControl isInvalid={errors.direction}>
-                    <FormLabel>Address</FormLabel>
-                    <Input
-                      placeholder="Your address"
-                      {...register("direction", {
-                        required: true,
-                        minLength: {
-                          value: 4,
-                          message: "Invalid address, add another.",
-                        },
-                      })}
-                    />
-                    <FormErrorMessage>
-                      {errors.direction && errors.direction.message}
-                    </FormErrorMessage>
-                  </FormControl>
+            <Button
+              onClick={handleBuy}
+              rounded={"md"}
+              w={"40%"}
+              mt={8}
+              size={"lg"}
+              py={"7"}
+              bg={useColorModeValue("#d43c8c", "gray.50")}
+              color={useColorModeValue("white", "gray.900")}
+              textTransform={"uppercase"}
+              _hover={{
+                transform: "translateY(2px)",
+                boxShadow: "xl",
+              }}
+            >
+              Buy{" "}
+            </Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>
+                  Please complete these fields to continue
+                </ModalHeader>
+                <ModalCloseButton />
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <ModalBody pb={6}>
+                    <FormControl isInvalid={errors.direction}>
+                      <FormLabel>Address</FormLabel>
+                      <Input
+                        placeholder="Your address"
+                        {...register("direction", {
+                          required: true,
+                          minLength: {
+                            value: 4,
+                            message: "Invalid address, add another.",
+                          },
+                        })}
+                      />
+                      <FormErrorMessage>
+                        {errors.direction && errors.direction.message}
+                      </FormErrorMessage>
+                    </FormControl>
 
-                  <FormControl mt={10}>
-                    <FormLabel fontWeight={"semibold"}>
-                      Payment method
-                    </FormLabel>
-                    <RadioGroup
-                      onChange={setPaymentMethod}
-                      value={paymentMethod}
-                    >
-                      <Stack direction="row">
-                        <Radio value="Credit card">Credit card</Radio>
-                        <Radio value="Debit card">Debit card</Radio>
-                        <Radio value="PayPal">PayPal</Radio>
-                      </Stack>
-                    </RadioGroup>
-                  </FormControl>
-                  <Flex mt={7} justify={"end"}>
-                    <Button colorScheme="pink" mr={3} type="submit">
-                      Confirm purchase
-                    </Button>
-                    <Button onClick={onClose}>Cancel</Button>
-                  </Flex>
-                </ModalBody>
-              </form>
-            </ModalContent>
-          </Modal>
-        </Box>
-      </SimpleGrid>
+                    <FormControl mt={10}>
+                      <FormLabel fontWeight={"semibold"}>
+                        Payment method
+                      </FormLabel>
+                      <RadioGroup
+                        onChange={setPaymentMethod}
+                        value={paymentMethod}
+                      >
+                        <Stack direction="row">
+                          <Radio value="Credit card">Credit card</Radio>
+                          <Radio value="Debit card">Debit card</Radio>
+                          <Radio value="PayPal">PayPal</Radio>
+                        </Stack>
+                      </RadioGroup>
+                    </FormControl>
+                    <Flex mt={7} justify={"end"}>
+                      <Button colorScheme="pink" mr={3} type="submit">
+                        Confirm purchase
+                      </Button>
+                      <Button onClick={onClose}>Cancel</Button>
+                    </Flex>
+                  </ModalBody>
+                </form>
+              </ModalContent>
+            </Modal>
+          </Box>
+        </SimpleGrid>
       </Container>
     </>
   );

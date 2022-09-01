@@ -44,6 +44,15 @@ class OrderController {
 
   static payOrder = async (req, res) => {
     //domicilio paymentmethod
+    const cart = await Order.findAll({
+      
+      where: { userId: req.user.id, state: "procesing" },
+      include: [
+        {
+          model: Cart,
+        },
+      ],
+    });
     await Order.update(
       {
         state: "fulfilled",
@@ -52,27 +61,25 @@ class OrderController {
       },
       { where: { userId: req.user.id, state: "procesing" } }
     );
-    const cart = await Order.findAll({
-      where: { userId: req.user.id, state: "fulfilled" },
-      include: [
-        {
-          model: Cart,
-        },
-      ],
-    });
+    
+    console.log('cart', cart)
 
     if (cart[0].carts) {
+      console.log('carts0.carts', cart[0].carts)
       cart[0].carts.forEach(async (cart) => {
-        await Cart.update({ state: "fulfilled" }, { where: { id: cart.id } });
-        await BoughtItems.create({productId: cart.productId, userId: req.user.id})
+        if(cart.state !== 'fulfilled'){
+          await Cart.update({ state: "fulfilled" }, { where: { id: cart.id } });
+          await BoughtItems.create({productId: cart.productId, userId: req.user.id})
+        }
+        
       });
     }
-    // await transporter.sendMail({
-    //   from: '"Vbook team 🕶" <VbookP5@gmail.com>',
-    //   to: req.user.email, // list of receivers
-    //   subject: "Your order has been fulfilled ✔🛒", // Subject line
-    //   html: "<h1>Thank you for choosing us!</h1>", // html body
-    // });
+    await transporter.sendMail({
+      from: '"Vbook team 🕶" <VbookP5@gmail.com>',
+      to: req.user.email, // list of receivers
+      subject: "Your order has been fulfilled ✔🛒", // Subject line
+      html: {path: "../../E-commerce/vbook/public/mail.html"}, // html body
+    });
 
     res.status(203).send(cart);
   };

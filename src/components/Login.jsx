@@ -159,7 +159,7 @@ const Login = () => {
             isLoading={isSubmitting}
             type="submit"
           >
-            Sing in
+            Sign in
           </Button>
           {/*  <Button
             mt={4}
