@@ -73,6 +73,7 @@ class favoritesController {
         filteredFavorites.push(favorite);
       }
     });
+    console.log(req.user);
     res.send(filteredFavorites)
   };
 }

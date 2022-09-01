@@ -234,7 +234,7 @@ const ProductPage = () => {
                       rounded={"md"}
                       w={"40%"}
                       mt={8}
-                      ml={1}
+                      ml={3}
                       size={"md"}
                       py={"7"}
                       variant="ghost"
@@ -253,7 +253,7 @@ const ProductPage = () => {
                       rounded={"md"}
                       w={"40%"}
                       mt={8}
-                      ml={1}
+                      ml={3}
                       size={"md"}
                       py={"7"}
                       variant="ghost"
