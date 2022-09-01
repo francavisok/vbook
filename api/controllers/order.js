@@ -63,8 +63,11 @@ class OrderController {
 
     if (cart[0].carts) {
       cart[0].carts.forEach(async (cart) => {
-        await Cart.update({ state: "fulfilled" }, { where: { id: cart.id } });
-        await BoughtItems.create({productId: cart.productId, userId: req.user.id})
+        if(cart.state !== 'fulfilled'){
+          await Cart.update({ state: "fulfilled" }, { where: { id: cart.id } });
+          await BoughtItems.create({productId: cart.productId, userId: req.user.id})
+        }
+        
       });
     }
     // await transporter.sendMail({
