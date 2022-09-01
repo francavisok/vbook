@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Stack,
@@ -12,27 +11,16 @@ import {
   Button,
   useColorModeValue,
   Flex,
-  Divider,
   SimpleGrid,
   Box,
-  GridItem,
   Heading,
   useMediaQuery,
   useDisclosure,
   FormControl,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
   FormLabel,
   Input,
   useToast,
   FormErrorMessage,
-  MenuItem,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItemOption,
   Radio,
   RadioGroup,
   Container,
@@ -41,15 +29,14 @@ import CartItem from "../commons/CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { continueOrder, getOrder, payOrder } from "../state/order";
 import { cartTotal } from "../utils/cartTotal";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
+import NotFoundPage from "../commons/NotFoundPage";
 
 const Cart = () => {
   const navigate = useNavigate();
   const toast = useToast();
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
   const order = useSelector((state) => state.order);
   const user = useSelector((state) => state.user);
 
@@ -85,44 +72,44 @@ const Cart = () => {
     dispatch(getOrder());
   }, [dispatch]);
 
-  return (
+  return user.id ? (
     <>
-    <Container maxW='8xl'>
-      <SimpleGrid
-        minChildWidth="300px"
-        templateRows="repeat(2, 1fr)"
-        justifyItems={"center"}
-      >
-        <Box
-          rowSpan={1}
-          colSpan={2}
-          align={"center"}
-          justify={"space-between"}
-          rounded={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
-          boxShadow={"lg"}
-          p={2}
-          m={"auto"}
-        >
-          {order.carts?.length
-            ? order.carts?.map((book) => {
-                return <CartItem book={book} key={book.productId} />;
-              })
-            : "You have nothing in your cart yet."}
-        </Box>
-        <Box
-          maxWidth={"300px"}
-          w={"100%"}
-          mt={isNotSmallerScreen ? "8px" : "10px"}
-          rounded={"md"}
-          h={242}
-          boxShadow={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
+      <Container maxW="8xl">
+        <SimpleGrid
+          minChildWidth="300px"
+          templateRows="repeat(2, 1fr)"
           justifyItems={"center"}
-          align={"center"}
         >
-          <Heading m={5}>TOTAL</Heading>
-          <Text>AR$ {order.carts ? cartTotal(order.carts) : 0} </Text>
+          <Box
+            rowSpan={1}
+            colSpan={2}
+            align={"center"}
+            justify={"space-between"}
+            rounded={"lg"}
+            bg={'white'}
+            boxShadow={"lg"}
+            p={2}
+            m={"auto"}
+          >
+            {order.carts?.length
+              ? order.carts?.map((book) => {
+                  return <CartItem book={book} key={book.productId} />;
+                })
+              : "You have nothing in your cart yet."}
+          </Box>
+          <Box
+            maxWidth={"300px"}
+            w={"100%"}
+            mt={isNotSmallerScreen ? "8px" : "10px"}
+            rounded={"md"}
+            h={242}
+            boxShadow={"lg"}
+            bg={'white'}
+            justifyItems={"center"}
+            align={"center"}
+          >
+            <Heading m={5}>TOTAL</Heading>
+            <Text>AR$ {order.carts ? cartTotal(order.carts) : 0} </Text>
 
             <Button
               onClick={handleBuy}
@@ -131,8 +118,8 @@ const Cart = () => {
               mt={8}
               size={"lg"}
               py={"7"}
-              bg={useColorModeValue("#d43c8c", "gray.50")}
-              color={useColorModeValue("white", "gray.900")}
+              bg={"#d43c8c"}
+              color={'white'}
               textTransform={"uppercase"}
               _hover={{
                 transform: "translateY(2px)",
@@ -196,6 +183,8 @@ const Cart = () => {
         </SimpleGrid>
       </Container>
     </>
+  ) : (
+    <NotFoundPage />
   );
 };
 

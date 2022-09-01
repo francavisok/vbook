@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 
 import { Flex, Heading, useColorModeValue } from "@chakra-ui/react";
 
@@ -6,22 +6,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllOrdersFromUser } from "../state/orders";
 
 import OrderFullfiledCard from "../commons/OrderFullfiledCard";
+import NotFoundPage from "../commons/NotFoundPage";
 
 const BoughtItems = () => {
   const dispatch = useDispatch();
-  const orders = useSelector(state=> state.orders)
+  const orders = useSelector((state) => state.orders);
+  const user = useSelector((state) => state.user);
 
-  useEffect(()=>{
-    dispatch(getAllOrdersFromUser())
-  }, [dispatch])
+  useEffect(() => {
+    dispatch(getAllOrdersFromUser());
+  }, [dispatch]);
 
-  return (
+  return user.id ? (
     <Flex
       direction={"column"}
       align={"center"}
       justify={"center"}
       rounded={"lg"}
-      bg={useColorModeValue("white", "gray.700")}
+      bg={"white"}
       boxShadow={"lg"}
       p={8}
       spacing={4}
@@ -29,14 +31,14 @@ const BoughtItems = () => {
       minW={"80%"}
       m={"auto"}
     >
-      <Heading mb={'40px'}>Purchase history</Heading>
+      <Heading mb={"40px"}>Purchase history</Heading>
 
-      {orders.map(order => (
+      {orders.map((order) => (
         <OrderFullfiledCard order={order} key={order.id} />
       ))}
-
-
     </Flex>
+  ) : (
+    <NotFoundPage />
   );
 };
 

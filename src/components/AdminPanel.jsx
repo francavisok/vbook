@@ -17,6 +17,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../state/user";
 import { useNavigate } from "react-router-dom";
+import NotFoundPage from "../commons/NotFoundPage";
+
 
 const AdminPanel = () => {
   const navigate = useNavigate();
@@ -62,7 +64,7 @@ const AdminPanel = () => {
         </TabPanels>
       </Tabs>
     </Flex>
-  : navigate("/404"))
+  : <NotFoundPage />)
 };
 
 export default AdminPanel;

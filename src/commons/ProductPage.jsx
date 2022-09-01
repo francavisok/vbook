@@ -1,7 +1,5 @@
-import { StarIcon } from "@chakra-ui/icons";
 import {
   Box,
-  chakra,
   Container,
   Stack,
   Text,
@@ -13,16 +11,14 @@ import {
   SimpleGrid,
   StackDivider,
   useColorModeValue,
-  VisuallyHidden,
   List,
   ListItem,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MdLocalShipping, MdOutlineAddShoppingCart } from "react-icons/md";
 import { RiHeartAddFill } from "react-icons/ri";
 import { FaHeartBroken } from "react-icons/fa";
-
 
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -39,16 +35,14 @@ import { isInFavorites } from "../utils/isInFavorites";
 import LeaveReview from "../components/LeaveReview";
 import ReviewsFromBook from "../components/ReviewsFromBook";
 
-//TODO:
-
 const ProductPage = () => {
   const toast = useToast();
-
   const dispatch = useDispatch();
   const { id } = useParams();
+
   const book = useSelector((state) => state.book);
   const favorites = useSelector((state) => state.favorites);
-
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getBook(id));
@@ -213,65 +207,69 @@ const ProductPage = () => {
                 {starGenerator(book.rating)}
               </Box>
             </Stack>
-            <Stack>
-              <Box>
-                <Button
-                  onClick={handleAddToCart}
-                  rounded={"md"}
-                  w={"40%"}
-                  mt={8}
-                  size={"md"}
-                  py={"7"}
-                  bg={useColorModeValue("#d43c8c", "gray.50")}
-                  color={useColorModeValue("white", "gray.900")}
-                  textTransform={"uppercase"}
-                  _hover={{
-                    transform: "translateY(2px)",
-                    boxShadow: "xl",
-                  }}
-                >
-                  Add to cart
-                  <MdOutlineAddShoppingCart style={{ marginLeft: "6px" }} />
-                </Button>
-                {isInFavorites(favorites, book.bookId || book.id) ?
-                <Button
-                  onClick={handleRemoveFromFavorites}
-                  rounded={"md"}
-                  w={"40%"}
-                  mt={8}
-                  ml={1}
-                  size={"md"}
-                  py={"7"}
-                  variant="ghost"
-                  color={"#d43c8c"}
-                  
-                  _hover={{
-                    transform: "translateY(2px)",
-                    boxShadow: "xl",
-                  }}
-                >
-                  Remove from favorites
-                  <FaHeartBroken style={{ marginLeft: "6px" }} />
-                </Button> :  <Button
-                  onClick={handleAddToFavorites}
-                  rounded={"md"}
-                  w={"40%"}
-                  mt={8}
-                  ml={1}
-                  size={"md"}
-                  py={"7"}
-                  variant="ghost"
-                  color={"#d43c8c"}
-                  _hover={{
-                    transform: "translateY(2px)",
-                    boxShadow: "xl",
-                  }}
-                >
-                  Add to favorites
-                  <RiHeartAddFill style={{ marginLeft: "6px" }} />
-                </Button>}
-              </Box>
-            </Stack>
+            {user.id && (
+              <Stack>
+                <Box>
+                  <Button
+                    onClick={handleAddToCart}
+                    rounded={"md"}
+                    w={"40%"}
+                    mt={8}
+                    size={"md"}
+                    py={"7"}
+                    bg={"#d43c8c"}
+                    color={"white"}
+                    textTransform={"uppercase"}
+                    _hover={{
+                      transform: "translateY(2px)",
+                      boxShadow: "xl",
+                    }}
+                  >
+                    Add to cart
+                    <MdOutlineAddShoppingCart style={{ marginLeft: "6px" }} />
+                  </Button>
+                  {isInFavorites(favorites, book.bookId || book.id) ? (
+                    <Button
+                      onClick={handleRemoveFromFavorites}
+                      rounded={"md"}
+                      w={"40%"}
+                      mt={8}
+                      ml={1}
+                      size={"md"}
+                      py={"7"}
+                      variant="ghost"
+                      color={"#d43c8c"}
+                      _hover={{
+                        transform: "translateY(2px)",
+                        boxShadow: "xl",
+                      }}
+                    >
+                      Remove from favorites
+                      <FaHeartBroken style={{ marginLeft: "6px" }} />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={handleAddToFavorites}
+                      rounded={"md"}
+                      w={"40%"}
+                      mt={8}
+                      ml={1}
+                      size={"md"}
+                      py={"7"}
+                      variant="ghost"
+                      color={"#d43c8c"}
+                      _hover={{
+                        transform: "translateY(2px)",
+                        boxShadow: "xl",
+                      }}
+                    >
+                      Add to favorites
+                      <RiHeartAddFill style={{ marginLeft: "6px" }} />
+                    </Button>
+                  )}
+                </Box>
+              </Stack>
+            )}
 
             <Stack
               direction="row"
@@ -285,8 +283,12 @@ const ProductPage = () => {
         </SimpleGrid>
 
         {/* //codigo para reviews */}
-        <ReviewsFromBook />
-        <LeaveReview />
+        {user.id && (
+          <>
+            <ReviewsFromBook />
+            <LeaveReview />
+          </>
+        )}
       </Flex>
     </Container>
   );

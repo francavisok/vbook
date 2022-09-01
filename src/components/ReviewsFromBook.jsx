@@ -8,6 +8,7 @@ import {
   useColorModeValue,
   Divider,
   Heading,
+  Text,
 } from "@chakra-ui/react";
 import SingleReviewCard from "../commons/SingleReviewCard";
 
@@ -17,8 +18,10 @@ const ReviewsFromBook = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getReviewsOfBook(id));
-  }, [dispatch, id]);
+    dispatch(getReviewsOfBook(id))
+    .then(res=> console.log('ressss',res))
+  }, [dispatch]);
+
   return (
 
     <Flex
@@ -27,7 +30,6 @@ const ReviewsFromBook = () => {
       justify={"center"}
       rounded={"lg"}
       bg={useColorModeValue("white", "gray.700")}
-      //boxShadow={"lg"}
       p={8}
       spacing={4}
       maxWidth="fit-content"
@@ -36,9 +38,9 @@ const ReviewsFromBook = () => {
     >
       <Divider mb={'80px'} />
       <Heading mb={'40px'}>Reviews</Heading>
-      {reviews.map((review) => (
+      {reviews?.length ? (reviews.map((review) => (
         <SingleReviewCard review={review} key={review.id}/>
-      ))}
+      ))) : <Text>No reviews yet</Text>}
     </Flex>
   );
 };
