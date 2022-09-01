@@ -63,7 +63,7 @@ class OrderController {
     );
     
 
-    if (cart[0].carts) {
+    if (cart[0]?.carts) {
       cart[0].carts.forEach(async (cart) => {
         if(cart.state !== 'fulfilled'){
           await Cart.update({ state: "fulfilled" }, { where: { id: cart.id } });

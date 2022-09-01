@@ -9,6 +9,7 @@ import OrderFullfiledCard from "../commons/OrderFullfiledCard";
 import { getAllFavoritesFromUser } from "../state/favorites";
 import GridItems from "../commons/GridItems";
 import { useNavigate } from "react-router-dom";
+import NotFoundPage from "../commons/NotFoundPage";
 
 const FavoritesPage = () => {
   const dispatch = useDispatch();
@@ -21,19 +22,18 @@ const FavoritesPage = () => {
 
 
   useEffect(()=>{
-    user?.id ?   dispatch(getAllFavoritesFromUser()):
-    navigate("/login");
-
+    dispatch(getAllFavoritesFromUser())
   }, [dispatch])
 
 
   return (
-    <Flex
+    user.id ? (
+      <Flex
       direction={"column"}
       align={"center"}
       justify={"center"}
       rounded={"lg"}
-      bg={useColorModeValue("white", "gray.700")}
+      bg={'white'}
       boxShadow={"lg"}
       p={8}
       spacing={4}
@@ -52,6 +52,8 @@ const FavoritesPage = () => {
         </Container>
 : "You don't have any favorite"}
     </Flex>
+    ) : <NotFoundPage />
+
   );
 };
 

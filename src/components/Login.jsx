@@ -13,6 +13,7 @@ import jwt_decode from "jwt-decode";
 import FacebookLogin from "react-facebook-login";
 
 import { useEffect } from "react";
+import { FaGithub } from "react-icons/fa";
 
 import {
   FormErrorMessage,
@@ -161,28 +162,42 @@ const Login = () => {
           >
             Sign in
           </Button>
-          {/*  <Button
-            mt={4}
-            color={"black"}
-            leftIcon={<FcGoogle />}
-            variant="outline"
-          >
-            Login with Google
-          </Button>  */}
+
+          <Divider my={'20px'} />
+
           <Box id="SignInDiv" mt={6}></Box>
-          <Box id="SignInDivFacebook" mt={6}>
+          <Box id="SignInDivFacebook" mt={6} >
             <FacebookLogin
               appId="500567122070563"
               autoLoad={false}
               fields="name,email"
               callback={responseFacebook}
+              icon="fa-facebook"
+              buttonStyle={{
+                backgroundColor: "white",
+                color: "#3b5998",
+                padding: "8px",
+                textTransform: "capitalize",
+                borderRadius: "4px",
+                borderColor: "#e2e8f0",
+                minWidth: '245px',
+                //:hover {backgroundColor: "#e2e8f0"}
+              }}
+              
             />
           </Box>
           <Box id="SignInDivGitHub" mt={6}>
             <a
               href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_GITHUB_REDIRECT_URL}?path=${path}&scope=user:email`}
             >
-              LOGIN WITH GITHUB
+              <Button
+                color={"black"}
+                leftIcon={<FaGithub />}
+                variant="outline"
+                minWidth={'245px'}
+              >
+                Login with Github
+              </Button>
             </a>
           </Box>
 

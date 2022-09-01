@@ -72,14 +72,15 @@ const LeaveReview = () => {
   const initialRef = React.useRef(null);
 
   return (
-    <>
+    user.id && (
+<>
       {!alreadyLeftComment && alreadyBought && (
         <Flex
           direction={"column"}
           align={"start"}
           justify={"center"}
           rounded={"lg"}
-          //bg={useColorModeValue("white", "gray.700")}
+          bg={'white'}
           boxShadow={"lg"}
           p={8}
           spacing={4}
@@ -143,6 +144,8 @@ const LeaveReview = () => {
         </Flex>
       )}
     </>
+    )
+    
   );
 };
 

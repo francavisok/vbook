@@ -28,7 +28,6 @@ export const postLogoutUser = createAsyncThunk("LOGOUT_USER", () => {
   return axios
     .post("/api/auth/logout", {})
     .then((res) => {
-      console.log(res.data, "es la resdataaa");
       return res.data;
     })
     .catch((err) => console.log(err));
