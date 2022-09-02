@@ -1,7 +1,7 @@
 const { Op } = require("sequelize");
 const { Cart, Order, User, BoughtItems } = require("../models");
 const transporter = require("../config/transporter");
-require("dotenv").config();
+
 
 class OrderController {
   static getOrder = async (req, res) => {
