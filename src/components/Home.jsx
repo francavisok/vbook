@@ -46,7 +46,7 @@ const Home = () => {
         {gridTitle}
       </Heading>
       <GridComponent books={currentPosts} id="gridView" />
-      {gridTitle === "RESULTS OF YOUR SEARCH" && (
+      {gridTitle !== "OUR BOOKS" && (
         <Button
           onClick={handleClick}
           margin={"0 auto"}
