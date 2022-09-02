@@ -10,16 +10,11 @@ import {
   useDisclosure,
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  Input,
   Flex,
   Button,
-  Select,
   RadioGroup,
   Stack,
   Radio,
-  Checkbox,
-  CheckboxGroup,
 } from "@chakra-ui/react";
 
 import { useForm, Controller } from "react-hook-form";
@@ -28,22 +23,24 @@ import { FaTrashAlt, FaEdit, FaUserEdit, FaUserAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getUsers } from "../state/users";
-import { deleteUser } from "../state/userAdminActions";
 import { promoteUser } from "../state/userAdminActions";
 import { demoteUser } from "../state/userAdminActions";
+import DeleteUser from "./DeleteUser";
 
 const AdminUserItem = ({ user }) => {
   const dispatch = useDispatch();
+  const [deleted,setDeleted] = useState(false)
+  const [open, setOpen] = useState(false)
   const users = useSelector((state) => state.users);
 
   //estado para manejar el valor de radio input
   //const [value, setValue] = React.useState("1");
 
-  //delete user action
-  async function handleDeleteClick(userId) {
-    await dispatch(deleteUser(userId));
-    dispatch(getUsers());
+
+  function handleDeleteClick() {
+  setDeleted(!deleted)
   }
+
 
   //modal
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -147,10 +144,13 @@ const AdminUserItem = ({ user }) => {
             as={FaTrashAlt}
             ml="20px"
             _hover={{ color: "red" }}
-            onClick={() => handleDeleteClick(user.id)}
+            onClick={handleDeleteClick}
+
           />
+        
         </span>
       </Tooltip>
+      {deleted ? <DeleteUser user={user} setDeleted={setDeleted} /> : ""}
     </Flex>
   );
 };

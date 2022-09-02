@@ -2,7 +2,11 @@ const { Book, Genre } = require("../models");
 
 class genreController {
   static getAllGenres = async (req, res) => {
-    res.send(await Genre.findAll());
+    res.send(await Genre.findAll({
+      order: [
+        ["id", "DESC"]
+      ],
+    }));
   };
 
 

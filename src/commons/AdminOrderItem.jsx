@@ -73,7 +73,7 @@ const AdminOrderItem = ({ order }) => {
     >
       <Flex align={"center"} w={"100%"}>
         <Text>{order.createdAt.split("T")[0]}</Text>
-        <Text ml={"20px"}>{order.user.email}</Text>
+        <Text ml={"20px"}>{order.user?.email}</Text>
         <Text ml={"20px"}>{order.state}</Text>
 
         <Spacer />

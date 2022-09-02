@@ -21,7 +21,11 @@ function deleteBook(req, res) {
 }
 
 function getAllBooks(req, res) {
-  Book.findAll()
+  Book.findAll({
+    order: [
+      ["id", "DESC"]
+    ]
+  })
     .then((book) => res.send(book))
     .catch((error) => res.send(error));
 }
