@@ -1,6 +1,7 @@
 const { Op } = require("sequelize");
 const { Cart, Order, User, BoughtItems } = require("../models");
 const transporter = require("../config/transporter");
+require("dotenv").config();
 
 class OrderController {
   static getOrder = async (req, res) => {
@@ -45,7 +46,6 @@ class OrderController {
   static payOrder = async (req, res) => {
     //domicilio paymentmethod
     const cart = await Order.findAll({
-      
       where: { userId: req.user.id, state: "procesing" },
       include: [
         {
@@ -61,24 +61,27 @@ class OrderController {
       },
       { where: { userId: req.user.id, state: "procesing" } }
     );
-    
 
     if (cart[0]?.carts) {
       cart[0].carts.forEach(async (cart) => {
-        if(cart.state !== 'fulfilled'){
+        if (cart.state !== "fulfilled") {
           await Cart.update({ state: "fulfilled" }, { where: { id: cart.id } });
-          await BoughtItems.create({productId: cart.productId, userId: req.user.id})
+          await BoughtItems.create({
+            productId: cart.productId,
+            userId: req.user.id,
+          });
         }
-        
       });
     }
-     await transporter.sendMail({
+    await transporter.sendMail({
       from: '"Vbook team 🕶" <VbookP5@gmail.com>',
       to: req.user.email, // list of receivers
       subject: "Your order has been fulfilled ✔🛒", // Subject line
-      html: {path: "C:/Users/Santiago/Desktop/E-commerce/vbook/public/mail.html"}, // html body
+      html: {
+        path: process.env.PATH,
+      }, // html body
     });
- 
+
     res.status(203).send(cart);
   };
   static getFullfiled = async (req, res) => {
@@ -135,7 +138,7 @@ class OrderController {
       req.params.state !== "pending" &&
       req.params.state !== "rejected"
     ) {
-      return res.send("invalid state")
+      return res.send("invalid state");
     }
 
     const order = await Order.findOne({
