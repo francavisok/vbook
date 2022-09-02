@@ -68,12 +68,13 @@ const SingleReviewCard = ({ review }) => {
     const payload = { ...values, bookId: id };
     await dispatch(modifyReview(payload));
     dispatch(getReviewsOfBook(id));
+    dispatch(getBook(id))
     onClose();
   }
 
   async function handleDelete() {
     await dispatch(deleteReview(id));
-    dispatch(getReviewsOfBook(id));
+    await dispatch(getReviewsOfBook(id));
     dispatch(getBook(id))
   }
 

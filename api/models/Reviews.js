@@ -28,6 +28,7 @@ Reviews.init(
   );
   Reviews.afterBulkUpdate(async (reviews) => {
     let cont = 0;
+    console.log('reviews', reviews)
     const rev = await Reviews.findAll({
       where: {
         bookId: reviews.where.bookId,
@@ -36,6 +37,9 @@ Reviews.init(
     rev.forEach(review => {
       cont += review.valoration
     });
+    console.log('reviews2', rev)
+    console.log('reviews3', cont)
+
     await Book.update(
       { rating: cont / rev.length },
       {
@@ -66,18 +70,23 @@ Reviews.init(
         //console.log(await Book.findOne({where: {id: reviews.bookId}}));
     });
 
-    Reviews.beforeBulkDestroy(async (reviews) => {
+    Reviews.afterBulkDestroy(async (reviews) => {
       let cont = 0;
+      console.log('reviews', reviews)
       const rev = await Reviews.findAll({
         where: {
           bookId: reviews.where.bookId,
         },
       });
+      console.log('reviews2', rev)
+
       rev.forEach(review => {
         cont += review.valoration
       });
+      console.log('reviews3', cont)
+
       await Book.update(
-        { rating: rev.lenght ? cont / rev.length : 0 },
+        { rating: cont / rev.length },
         {
         where: {
           id: reviews.where.bookId,

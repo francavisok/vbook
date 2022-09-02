@@ -34,7 +34,10 @@ const Hero = ({setGridTitle}) => {
     dispatch(searchBooksByTitle(value));
     setValue("");
     setGridTitle('RESULTS OF YOUR SEARCH')
-    window.scrollTo(0, 500)
+    window.scrollTo({
+      top: 900,
+      behavior: 'smooth',
+    })
   };
 
   const handleClick = (e) =>{
