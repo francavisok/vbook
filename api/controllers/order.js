@@ -119,6 +119,7 @@ class OrderController {
 
   static getAllOrders = async (req, res) => {
     const orders = await Order.findAll({
+      
       include: [
         {
           model: User,
@@ -126,6 +127,9 @@ class OrderController {
         {
           model: Cart,
         },
+      ],
+      order: [
+        ["id", "DESC"]
       ],
     });
     res.send(orders);

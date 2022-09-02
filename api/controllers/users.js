@@ -36,18 +36,26 @@ function deleteUser(req, res, next) {
   }
 }
 function getUsers(req, res, next) {
-  User.findAll().then((usuarios) => {
+  User.findAll({
+    order: [
+      ["id", "DESC"]
+    ]
+  }).then((usuarios) => {
     res.send(usuarios);
   });
 }
 
 function getAllUsers(req, res, next) {
   User.findAll({
+  
     where:{
       id: {
         [Op.ne]: req.user.id,
-      }
-    }
+      },
+    },
+    order: [
+      ["id", "DESC"]
+    ],
   }).then((users) => {
     res.send(users)
   });
