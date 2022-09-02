@@ -76,7 +76,7 @@ class OrderController {
       from: '"Vbook team 🕶" <VbookP5@gmail.com>',
       to: req.user.email, // list of receivers
       subject: "Your order has been fulfilled ✔🛒", // Subject line
-      html: {path: "/home/mrueda/workspace/plataforma5/bootcamp/vbook/public/mail.html"}, // html body
+      html: {path: "C:/Users/Santiago/Desktop/E-commerce/vbook/public/mail.html"}, // html body
     });
  
     res.status(203).send(cart);
