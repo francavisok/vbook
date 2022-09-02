@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# Vbook book store
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Getting started - English version
 
-## Available Scripts
+1 - Before trying to start running our repository you should use the command "npm i --force" on the Vbook folder, to install every dependency required for it to work.
+
+2 - After every dependency is installed you will need to create a PSQL database named "vbook", that can be done from your prefered CLI using the command "createdb vbook". Remember that you will need to have PSQL installed and configured for it to work, if you don't have it, click the following link https://www.postgresql.org/docs/current/app-psql.html.
+
+3 - Then, if everything is working as intended, go to your repository and create a .env file, fill it with the .env.example and then provide the required information, that can be finded in Facebook developer settings, Google security settings and GitHub Developers settings, some video tutorials will be provided at the end of this file.
+For the mail HTML path, you should provide the path to the file "mail.html", located inside of the public library included in the repository.
+
+4 - Finally we are ready to start our server, run the command "npm run start" to initialize both the client and server. If that doesn't work for you, use 2 console instances to run "npm run server" and "npm run client".
+
+5 - Now we need some books! Go to /api and run the command "npx sequelize-cli db:seed:all" to create some test users and some books inside your database.
+
+6 - Enjoy our project! 
+
+-Vbook Team!
+
+## Levantando el proyecto - Spanish version
+
+1 - Antes de intentar correr nuestro repositorio, deberías ustilizar el comando "npm i --force" desde la carpeta principal del proyecto, eso instalará todas las dependencias necesarias para que funcione correctamente.
+
+2 - Después de instalar las dependencias vas a necestiar un servidor de PSQL que se llame "vbook", eso lo puedes hacer desde tu CLI usando el comando "createdb vbook". Recuerda que para que eso funcione deberás tener instalado y configurado PSQL, si no lo tienes, has click en el siguiente link https://www.postgresql.org/docs/current/app-psql.html.
+
+3 - Si todo salió bien hasta ahora, entonces crea en tu repositorio un archivo .env, llena el mismo con las variables guardadas en .env.example y rellenalas con tus propias credenciales, las mismas las puedes conseguir en Seguridad de Google, en Developers Facebook y en Developers Github, al final de este archivo encontrarás video tutoriales sobre como hacerlo.
+Para la configuración del mail path html tendrás que insertar la dirección del archivo "mail.html", que se encuentra adentro de la carpeta public de este repositorio.
+
+4 - Llegó la hora de levantar nuestro proyecto! utiliza el comando "npm run start" para inicializar tanto el cliente como el servidor. Si esto no funciona, utiliza dos instancias de consola para correr los comandos "npm run server" y "npm run client".
+
+5 - Ahora necesitamos libros! Para eso dejamos preparados algunos de ejemplo. Adentro de la carpeta /api utiliza el comando "npx sequelize-cli db:seed:all" para crear usuarios de prueba y libros adentro de tu base de datos.
+
+6 - Disfruta nuestro proyecto! 
+
+-Equipo Vbook!
 
 In the project directory, you can run:
 
-### `npm start`
+### Usefull links
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Google APP setup
+https://www.youtube.com/watch?v=J4CtP1MBtOE&ab_channel=TonyTeachesTech
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Facebook APP setup
+https://www.youtube.com/watch?v=XGNjqpaHtk0&ab_channel=themesCode
 
-### `npm test`
+GitHub APP setup
+https://www.youtube.com/watch?v=RwUkG9MMDNM&ab_channel=Webclick
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
