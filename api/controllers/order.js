@@ -73,13 +73,14 @@ class OrderController {
         }
       });
     }
+    console.log('env', process.env.PATH)
     await transporter.sendMail({
       from: '"Vbook team 🕶" <VbookP5@gmail.com>',
       to: req.user.email, // list of receivers
       subject: "Your order has been fulfilled ✔🛒", // Subject line
 
       html: {
-        path: process.env.PATH,
+        path: 'public/mail.html',
       }, // html body
 
     });
