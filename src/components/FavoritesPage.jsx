@@ -55,7 +55,7 @@ const FavoritesPage = () => {
       m={"auto"}
     >
       <Heading mb={'40px'}>Favorites</Heading>
-      <Container mb={5}>
+      <Container mb={"40px"}>
       <form onSubmit={handleSubmit}>
             <InputGroup>
               <InputLeftElement
