@@ -170,7 +170,10 @@ const Cart = () => {
                       </RadioGroup>
                     </FormControl>
                     <Flex mt={7} justify={"end"}>
-                      <Button colorScheme="pink" mr={3} type="submit">
+                      <Button colorScheme="pink" mr={3} type="submit"
+            isLoading={isSubmitting}
+                      
+                      >
                         Confirm purchase
                       </Button>
                       <Button onClick={onClose}>Cancel</Button>
