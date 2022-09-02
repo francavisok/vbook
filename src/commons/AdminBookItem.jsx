@@ -181,17 +181,6 @@ const AdminBookItem = ({ book }) => {
               </FormControl>
 
               <FormControl mt={4}>
-                <FormLabel htmlFor="rating">rating</FormLabel>
-                <Input
-                  ref={initialRef}
-                  type={"number"}
-                  defaultValue={book.rating}
-                  id="rating"
-                  {...register("rating")}
-                />
-              </FormControl>
-
-              <FormControl mt={4}>
                 <FormLabel htmlFor="idGenre">idGenre</FormLabel>
                 <Select ref={initialRef} id="idGenre" defaultValue={book.idGenre} {...register("idGenre")}>
                   {genres.length &&

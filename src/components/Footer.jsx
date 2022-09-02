@@ -13,6 +13,14 @@ import {
 } from "@chakra-ui/react";
 
 const Footer = () => {
+
+  function handleClick(){
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
+
   return (
     <Stack
       direction={"row"}
@@ -26,7 +34,9 @@ const Footer = () => {
         objectFit="cover"
         src="https://media-exp1.licdn.com/dms/image/C560BAQGp306CSTk2yg/company-logo_200_200/0/1586255689376?e=2147483647&v=beta&t=uqldPM3J_8r8Vkg5xdZ0vsou-o3MCjNmgZjzC9nEpk4"
         alt="Dan Abramov"
+        onClick={handleClick}
       />
+
       <Text fontSize="sm">© 2022 VBook company. All rights reserved</Text>
       <Box
         bg={useColorModeValue("gray.50", "gray.900")}

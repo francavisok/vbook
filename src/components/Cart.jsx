@@ -9,7 +9,6 @@ import {
   Stack,
   Text,
   Button,
-  useColorModeValue,
   Flex,
   SimpleGrid,
   Box,
@@ -32,6 +31,8 @@ import { cartTotal } from "../utils/cartTotal";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import NotFoundPage from "../commons/NotFoundPage";
+
+import { deleteOrder } from "../state/order";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -72,6 +73,11 @@ const Cart = () => {
     dispatch(getOrder());
   }, [dispatch]);
 
+  async function handleClick(){
+    await dispatch(deleteOrder(order.id));
+    dispatch(getOrder())
+  }
+
   return user.id ? (
     <>
       <Container maxW="8xl">
@@ -86,10 +92,11 @@ const Cart = () => {
             align={"center"}
             justify={"space-between"}
             rounded={"lg"}
-            bg={'white'}
+            bg={"white"}
             boxShadow={"lg"}
             p={2}
             m={"auto"}
+            height={"fit-content"}
           >
             {order.carts?.length
               ? order.carts?.map((book) => {
@@ -97,16 +104,17 @@ const Cart = () => {
                 })
               : "You have nothing in your cart yet."}
           </Box>
-          <Box
+          <Flex
             maxWidth={"300px"}
             w={"100%"}
             mt={isNotSmallerScreen ? "8px" : "10px"}
             rounded={"md"}
-            h={242}
+            height={"fit-content"}
             boxShadow={"lg"}
-            bg={'white'}
+            bg={"white"}
             justifyItems={"center"}
             align={"center"}
+            direction={"column"}
           >
             <Heading m={5}>TOTAL</Heading>
             <Text>AR$ {order.carts ? cartTotal(order.carts) : 0} </Text>
@@ -119,7 +127,7 @@ const Cart = () => {
               size={"lg"}
               py={"7"}
               bg={"#d43c8c"}
-              color={'white'}
+              color={"white"}
               textTransform={"uppercase"}
               _hover={{
                 transform: "translateY(2px)",
@@ -127,6 +135,14 @@ const Cart = () => {
               }}
             >
               Buy{" "}
+            </Button>
+            <Button
+              colorScheme={"red"}
+              my={"40px"}
+              p={"10px"}
+              onClick={handleClick}
+            >
+              Remove all items
             </Button>
             <Modal isOpen={isOpen} onClose={onClose}>
               <ModalOverlay />
@@ -182,7 +198,7 @@ const Cart = () => {
                 </form>
               </ModalContent>
             </Modal>
-          </Box>
+          </Flex>
         </SimpleGrid>
       </Container>
     </>

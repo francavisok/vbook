@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, {useEffect} from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {useNavigate} from "react-router-dom"
 import {
   Heading,
@@ -14,11 +14,19 @@ import {
   useColorModeValue,
   useMediaQuery
 } from "@chakra-ui/react";
+import { getAllFavoritesFromUser } from "../state/favorites";
 
 const Profile = () => {
+  const dispatch = useDispatch();
     const user = useSelector((state)=>state.user)
+    const favorites = useSelector((state)=>state.favorites)
+
     const [isNotSmallerScreen] = useMediaQuery("(min-width : 700px)")
     const navigate = useNavigate()
+
+    useEffect(()=>{
+      dispatch(getAllFavoritesFromUser())
+    }, [dispatch])
 
     const handleFavoritesButton = (e) =>{
       e.preventDefault()
@@ -71,7 +79,7 @@ const Profile = () => {
 
           <Stack direction={"row"} justify={"center"} spacing={6}>
             <Stack spacing={0} align={"center"}>
-              <Text fontWeight={600}>{user.favorites ? user.favorites.length : "0"}</Text>
+              <Text fontWeight={600}>{favorites ? favorites.length : "0"}</Text>
               <Text fontSize={"sm"} color={"gray.500"}>
                 Favorites
               </Text>

@@ -77,9 +77,11 @@ class OrderController {
       from: '"Vbook team 🕶" <VbookP5@gmail.com>',
       to: req.user.email, // list of receivers
       subject: "Your order has been fulfilled ✔🛒", // Subject line
+
       html: {
         path: process.env.PATH,
       }, // html body
+
     });
 
     res.status(203).send(cart);

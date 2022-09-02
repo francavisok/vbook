@@ -27,6 +27,7 @@ import {
   SearchIcon,
 } from "@chakra-ui/icons";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
+import { FiMenu } from "react-icons/fi";
 import { BiBookBookmark } from "react-icons/bi";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -34,8 +35,8 @@ import { postLogoutUser } from "../state/user";
 import { getGenres } from "../state/genres";
 
 import { useNavigate } from "react-router-dom";
-//TODO:
-//1- Corregir Link to="" de "Categories"
+
+import { useMediaQuery } from "@chakra-ui/react";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -50,8 +51,10 @@ const Navbar = () => {
   const handleClick = (e) => {
     e.preventDefault();
     dispatch(postLogoutUser());
-    navigate('/login')
+    navigate("/login");
   };
+
+  const [isNotSmallerScreen] = useMediaQuery("(min-width: 700px)");
 
   return (
     <Box>
@@ -90,7 +93,7 @@ const Navbar = () => {
             {genres?.map((genre, i) => {
               return (
                 <Link to={`/category/${genre.id} `} key={i}>
-                  <MenuItem _hover={{ color: "#d43c8c" }} >
+                  <MenuItem _hover={{ color: "#d43c8c" }}>
                     {genre.genreName}
                   </MenuItem>
                 </Link>
@@ -101,77 +104,156 @@ const Navbar = () => {
 
         <Spacer />
 
-        {user.id ? (
-          <>
-            <Link to="/cart">
-              <Button
-                variant="ghost"
-                aria-label="Cart"
-                minW={"fit-content"}
-                _hover={{ color: "#d43c8c" }}
-              >
-                <FaShoppingCart />
-              </Button>
-            </Link>
+        {isNotSmallerScreen ? (
+          user.id ? (
+            <>
+              <Link to="/cart">
+                <Button
+                  variant="ghost"
+                  aria-label="Cart"
+                  minW={"fit-content"}
+                  _hover={{ color: "#d43c8c" }}
+                >
+                  <FaShoppingCart />
+                </Button>
+              </Link>
 
-            <Menu>
-              <MenuButton
-                as={Button}
-                rightIcon={<ChevronDownIcon />}
-                variant="ghost"
-                aria-label="user"
-                minW={"fit-content"}
-                _hover={{ color: "#d43c8c" }}
-              >
-                {user.userName}
-              </MenuButton>
-              <MenuList>
-                <Link to={`/favorites`}>
-                  <MenuItem icon={<FaHeart />} _hover={{ color: "#d43c8c" }}>
-                    Favorites
-                  </MenuItem>
-                </Link>
-                <Link to={`/boughtItems`}>
-                  <MenuItem
-                    icon={<BiBookBookmark />}
-                    _hover={{ color: "#d43c8c" }}
-                  >
-                    Purchase history
-                  </MenuItem>
-                </Link>
-                <MenuDivider />
-                <Link to={`/me`}>
-                  <MenuItem
-                    icon={<ExternalLinkIcon />}
-                    _hover={{ color: "#d43c8c" }}
-                  >
-                    Your account
-                  </MenuItem>
-                </Link>
-                {user.role === "admin" && (
-                  <Link to={`/admin`}>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rightIcon={<ChevronDownIcon />}
+                  variant="ghost"
+                  aria-label="user"
+                  minW={"fit-content"}
+                  _hover={{ color: "#d43c8c" }}
+                >
+                  {user.userName}
+                </MenuButton>
+                <MenuList>
+                  <Link to={`/favorites`}>
+                    <MenuItem icon={<FaHeart />} _hover={{ color: "#d43c8c" }}>
+                      Favorites
+                    </MenuItem>
+                  </Link>
+                  <Link to={`/boughtItems`}>
+                    <MenuItem
+                      icon={<BiBookBookmark />}
+                      _hover={{ color: "#d43c8c" }}
+                    >
+                      Purchase history
+                    </MenuItem>
+                  </Link>
+                  <MenuDivider />
+                  <Link to={`/me`}>
                     <MenuItem
                       icon={<ExternalLinkIcon />}
                       _hover={{ color: "#d43c8c" }}
                     >
-                      Admin panel
+                      Your account
                     </MenuItem>
                   </Link>
-                )}
-              </MenuList>
-            </Menu>
+                  {user.role === "admin" && (
+                    <Link to={`/admin`}>
+                      <MenuItem
+                        icon={<ExternalLinkIcon />}
+                        _hover={{ color: "#d43c8c" }}
+                      >
+                        Admin panel
+                      </MenuItem>
+                    </Link>
+                  )}
+                </MenuList>
+              </Menu>
 
-            <Button
-              colorScheme="pink"
-              rounded="md"
+              <Button
+                colorScheme="pink"
+                rounded="md"
+                variant="ghost"
+                aria-label="Logout"
+                minW={"fit-content"}
+                onClick={handleClick}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Link to="/login">
+              <Button
+                colorScheme="pink"
+                rounded="md"
+                variant="ghost"
+                aria-label="Login"
+                mx={1}
+                my={5}
+                w="100%"
+              >
+                Login
+              </Button>
+            </Link>
+          )
+        ) : user.id ? (
+          <Menu>
+            <MenuButton
+              as={Button}
+              rightIcon={<FiMenu />}
               variant="ghost"
-              aria-label="Logout"
+              aria-label="user"
               minW={"fit-content"}
-              onClick={handleClick}
+              _hover={{ color: "#d43c8c" }}
             >
-              Logout
-            </Button>
-          </>
+              
+            </MenuButton>
+            <MenuList>
+              <Link to={`/favorites`}>
+                <MenuItem icon={<FaHeart />} _hover={{ color: "#d43c8c" }}>
+                  Favorites
+                </MenuItem>
+              </Link>
+              <Link to={`/cart`}>
+                <MenuItem
+                  icon={<FaShoppingCart />}
+                  _hover={{ color: "#d43c8c" }}
+                >
+                  Cart
+                </MenuItem>
+              </Link>
+              <Link to={`/boughtItems`}>
+                <MenuItem
+                  icon={<BiBookBookmark />}
+                  _hover={{ color: "#d43c8c" }}
+                >
+                  Purchase history
+                </MenuItem>
+              </Link>
+              <MenuDivider />
+              <Link to={`/me`}>
+                <MenuItem
+                  icon={<ExternalLinkIcon />}
+                  _hover={{ color: "#d43c8c" }}
+                >
+                  Your account
+                </MenuItem>
+              </Link>
+              {user.role === "admin" && (
+                <Link to={`/admin`}>
+                  <MenuItem
+                    icon={<ExternalLinkIcon />}
+                    _hover={{ color: "#d43c8c" }}
+                  >
+                    Admin panel
+                  </MenuItem>
+                </Link>
+              )}
+              <MenuItem
+                icon={<ExternalLinkIcon />}
+                color="#d43c8c"
+                aria-label="Logout"
+                onClick={handleClick}
+              >
+                Logout
+              </MenuItem>
+            </MenuList>
+          </Menu>
         ) : (
           <Link to="/login">
             <Button
